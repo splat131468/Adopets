@@ -14,12 +14,7 @@
 		<property name="hibernate.show_sql">true</property>
 		<property name="hibernate.current_session_context_class">thread</property>
 
-		<mapping class="com.product.model.VO.AttributesVO" />
-		<mapping class="com.product.model.VO.CategoryVO" />
-		<mapping class="com.product.model.VO.SpuVO" />
-		<mapping class="com.product.model.VO.PImgVO" />
-		<mapping class="com.product.model.VO.SkuVO" />
-		<mapping class="com.product.model.VO.ValueVO" />
+
 
 
 
