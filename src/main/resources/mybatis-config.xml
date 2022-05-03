@@ -23,6 +23,11 @@
 		</environment>
 	</environments>
 
+	<mappers>
+		<mapper resource="web/product/mapper/SpuMapper.xml"></mapper>
+	</mappers>
+
+
 
 
 

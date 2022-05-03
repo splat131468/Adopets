@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="web.product.dao.SpuDAO">
+
+	<!-- spu -->
+	<resultMap id="product" type="web.product.entity.SpuVO">
+		<id column="spuID" property="spuID" jdbcType="INTEGER" />
+		<result column="ctgID" property="ctgID" jdbcType="INTEGER" />
+		<result column="spuName" property="spuName" jdbcType="VARCHAR" />
+		<result column="descript" property="descript"
+			jdbcType="VARCHAR" />
+
+
+		<!-- <result column="imgID" property="pImgVO.imgID" jdbcType="INTEGER" 
+			/> <result column="spuID" property="pImgVO.spuID" jdbcType="INTEGER" /> <result 
+			column="spuImg" property="pImgVO.spuImg" jdbcType="LONGVARBINARY" /> <result 
+			column="mainImg" property="pImgVO.mainImg" jdbcType="BIT" /> -->
+
+		<!-- <collection property="skuVO" ofType="com.product.model.VO.SkuVO"> 
+			<id column="skuID" property="skuID" jdbcType="INTEGER" /> <result column="spuID" 
+			property="spuID" jdbcType="INTEGER" /> <result column="skuPrice" property="skuPrice" 
+			jdbcType="INTEGER" /> <result column="stock" property="stock" jdbcType="INTEGER" 
+			/> <result column="specAttr" property="specAttr" jdbcType="CHAR" /> <result 
+			column="status" property="status" jdbcType="INTEGER" /> <result column="addedTime" 
+			property="addedTime" jdbcType="TIMESTAMP" /> </collection> -->
+	</resultMap>
+
+	<!-- sku -->
+	<resultMap id="prodMap" type="web.product.entity.SkuVO">
+		<id column="skuID" property="skuID" jdbcType="INTEGER" />
+		<result column="spuID" property="spuID" jdbcType="INTEGER" />
+		<result column="skuPrice" property="skuPrice"
+			jdbcType="INTEGER" />
+		<result column="stock" property="stock" jdbcType="INTEGER" />
+		<result column="specAttr" property="specAttr" jdbcType="CHAR" />
+		<result column="status" property="status" jdbcType="INTEGER" />
+		<result column="addedTime" property="addedTime"
+			jdbcType="TIMESTAMP" />
+
+		<result column="spuID" property="spuVO.spuID"
+			jdbcType="INTEGER" />
+		<result column="ctgID" property="spuVO.ctgID"
+			jdbcType="INTEGER" />
+		<result column="spuName" property="spuVO.spuName"
+			jdbcType="VARCHAR" />
+		<result column="descript" property="spuVO.descript"
+			jdbcType="VARCHAR" />
+			
+
+		<!-- <result column="imgID" property="pImgVO.imgID"
+			jdbcType="INTEGER" />
+		<result column="spuID" property="pImgVO.spuID"
+			jdbcType="INTEGER" />
+		<result column="spuImg" property="pImgVO.spuImg"
+			jdbcType="LONGVARBINARY" />
+		<result column="mainImg" property="pImgVO.mainImg"
+			jdbcType="BIT" /> -->
+
+
+
+	</resultMap>
+
+
+
+	<!-- 後台取得所有產品 -->
+	<select id="getAllProd" resultMap="prodMap">
+		select * from
+		SPU p join SKU k
+		on p.spuID = k.spuID
+		order by k.skuID desc;
+	</select>
+
+	<!-- 後台根據名字做查詢 -->
+	<select id="queryByName" parameterType="java.lang.String"
+		resultMap="prodMap">
+		select * from
+		SPU p join SKU k
+		on p.spuID = k.spuID
+		where
+		p.spuName like '%${prodName}%'
+	</select>
+
+
+
+	<!-- 後台新增商品spu -->
+	<insert id="inserSPU" parameterType="web.product.entity.SkuVO"
+		useGeneratedKeys="true" keyProperty="spuID">
+		insert into SPU
+		(ctgID, spuName,
+		descript )
+		values
+		(#{ctgID}, #{spuName}, #{descript})
+	</insert>
+
+
+	<!-- 前台首頁列出產品 -->
+	<select id="getMainPage" resultMap="prodMap">
+
+		select
+		k.skuID,k.spuID,k.skuPrice,k.stock,k.specAttr,p.ctgID,p.spuName,spuImg
+		from sku k
+		join spu p
+		on k.spuID = p.spuID
+		join pImg c
+		on p.spuID =
+		c.spuID
+		where mainImg = 1 and status = 1 and stock >0;
+
+	</select>
+
+
+
+
+</mapper>
