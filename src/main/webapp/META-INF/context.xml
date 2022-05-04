@@ -2,13 +2,13 @@
 <Context>
 
     <Resource
-    name="jdbc/jndi"
+    name="jdbc/TestDB3"
     type="javax.sql.DataSource"
     maxActive="8"
     maxWait="10000"
     maxIdle="10"
     username="root"
-    password="password"
+    password="20130301"
     driverClassName="com.mysql.cj.jdbc.Driver"
     url="jdbc:mysql://localhost:3306/ADOPETS"
     />
