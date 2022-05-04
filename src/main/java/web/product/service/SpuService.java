@@ -21,12 +21,10 @@ public interface SpuService {
 		
 		List<SkuVO> queryByName(String prodName); 
 	
-	// 一對多關係
+	// 一對多關係 分頁處理
 		
-		List<SkuVO> getMainPage();
+		PageInfo<SkuVO> getMainPage(int curPage,Integer pageSize);
 		
-	// 分頁處理  getMainPage的升級版
-		
-		PageInfo<SkuVO> getMainPageHelper(int curPage,Integer pageSize);
+	
 	
 }

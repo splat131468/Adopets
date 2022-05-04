@@ -104,7 +104,7 @@
 		join pImg c
 		on p.spuID =
 		c.spuID
-		where mainImg = 1 and status = 1 and stock >0;
+		where mainImg = 1 and status = 1 and stock >0
 
 	</select>
 

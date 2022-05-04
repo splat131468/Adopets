@@ -26,18 +26,13 @@ import web.product.service.SpuService;
 public class SpuServiceImp implements SpuService {
 	
 
-	
 	public static void main(String[] args) {
-		
-	List<SkuVO> mainPage = new SpuServiceImp().getMainPage();
-		System.out.println(mainPage);
-		
-		
+		PageInfo<SkuVO> mainPage = new SpuServiceImp().getMainPage(1, 3);
+		long total = mainPage.getTotal();
+		System.out.println(total);
 	}
 	
 	
-	
-
 	public int insertSPU(int ctgID, String spuName, String descript) {
 
 		SpuVO spuVO = new SpuVO();
@@ -90,11 +85,8 @@ public class SpuServiceImp implements SpuService {
 			SqlSession session = factory.openSession();
 
 			SpuDAO spuDAO = session.getMapper(SpuDAO.class);
-			allProd = spuDAO.queryByName(prodName);
-			
+			allProd = spuDAO.queryByName(prodName);			
 			allProd =jsonPaser(allProd);
-			
-			
 			session.commit();
 		} catch (Exception e) {
 		
@@ -107,9 +99,9 @@ public class SpuServiceImp implements SpuService {
 	
 	
 	
-	// 首頁
+	// 首頁 分頁處理
 	@Override
-	public List<SkuVO> getMainPage() {
+	public PageInfo<SkuVO> getMainPage(int curPage, Integer pageSize) {
 		
 		List<SkuVO> mainPage = new ArrayList<>();
 		try {
@@ -117,14 +109,16 @@ public class SpuServiceImp implements SpuService {
 			SqlSessionFactoryBuilder sqlSessionFactoryBuilder = new SqlSessionFactoryBuilder();
 			SqlSessionFactory factory = sqlSessionFactoryBuilder.build(inputStream);
 			SqlSession session = factory.openSession();
-
-			SpuDAO spuDAO = session.getMapper(SpuDAO.class);
-			 mainPage = spuDAO.getMainPage();
 			
-			mainPage = jsonPaser(mainPage);
-			 
+			SpuDAO spuDAO = session.getMapper(SpuDAO.class);
+			
+			 PageHelper.startPage(curPage,pageSize);
+			 mainPage = spuDAO.getMainPage();
+			mainPage = jsonPaser(mainPage);	
+			 PageInfo<SkuVO> spuPageInfo = new PageInfo<>(mainPage);
+
 			session.commit();
-			return mainPage;
+			return spuPageInfo;
 		} catch (Exception e) {
 		
 		}
@@ -134,26 +128,7 @@ public class SpuServiceImp implements SpuService {
 	}
 	
 	
-	// 分頁處理
-	@Override
-	public PageInfo< SkuVO> getMainPageHelper(int curPage, Integer pageSize) {
-		
-		// 用pageHelper
-        PageHelper.startPage(curPage,pageSize);
-     
-        List<SkuVO> mainPage = getMainPage(); 
-
-     
-        // 2. 封裝 SkuVO 3. 並把list給pageInfo管理
-        PageInfo< SkuVO> spuPageInfo = new PageInfo<>( mainPage);
-        
-        
-        return  spuPageInfo;
-		
-		
-		
-		
-	}
+	
 	
 	
 	

@@ -6,7 +6,10 @@
 
 
 	<plugins>
-		<plugin interceptor="com.github.pagehelper.PageInterceptor"></plugin>
+		<plugin interceptor="com.github.pagehelper.PageInterceptor">
+
+			<property name="helperDialect" value="mysql" />
+		</plugin>
 	</plugins>
 
 	<!--預設給mysql -->

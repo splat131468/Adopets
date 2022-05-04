@@ -1,5 +1,6 @@
 package web.product.entity;
 
+
 import java.sql.Timestamp;
 
 import javax.persistence.Column;
