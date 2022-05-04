@@ -1,0 +1,26 @@
+
+  .value {
+    font-size: 50px;
+  }
+
+  .region-footer-right {
+    /* border: 2px white solid; */
+    border-radius : 15px;
+
+  }
+
+  .footer-top {
+    padding: 0px;
+  }
+
+  .persionin-formation {
+    border : 2px white solid;
+  }
+  .block-signup {
+    border:1px white solid; 
+    border-radius: 15px;
+
+  }
+
+
+  
