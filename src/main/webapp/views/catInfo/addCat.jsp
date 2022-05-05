@@ -142,46 +142,46 @@ ul>li {
 			<tr>
 				<td>貓咪品種:</td>
 				<td><select name="breed" size="1">
-						<option value="0" ${(catInfoVO.breed == 0) ? 'selected' : ''}>米克斯</option>
-						<option value="1" ${(catInfoVO.breed == 1) ? 'selected' : ''}>美國短毛貓</option>
-						<option value="2" ${(catInfoVO.breed == 2) ? 'selected' : ''}>英國短毛貓</option>
-						<option value="3" ${(catInfoVO.breed == 3) ? 'selected' : ''}>金吉拉</option>
-						<option value="4" ${(catInfoVO.breed == 4) ? 'selected' : ''}>布偶貓</option>
+						<option value="米克斯" ${(catInfoVO.breed == "米克斯") ? 'selected' : ''}>米克斯</option>
+						<option value="美國短毛貓" ${(catInfoVO.breed == "美國短毛貓") ? 'selected' : ''}>美國短毛貓</option>
+						<option value="英國短毛貓" ${(catInfoVO.breed == "英國短毛貓") ? 'selected' : ''}>英國短毛貓</option>
+						<option value="金吉拉" ${(catInfoVO.breed == "金吉拉") ? 'selected' : ''}>金吉拉</option>
+						<option value="布偶貓" ${(catInfoVO.breed == "布偶貓") ? 'selected' : ''}>布偶貓</option>
 				</select></td>
 			</tr>
 			<tr>
 				<td>貓咪性別:</td>
 				<td><select name="sex" size="1">
-						<option value="0" ${(catInfoVO.sex == 0) ? 'selected' : ''}>公</option>
-						<option value="1" ${(catInfoVO.sex == 1) ? 'selected' : ''}>母</option>
+						<option value="公" ${(catInfoVO.sex == '公') ? 'selected' : ''}>公</option>
+						<option value="母" ${(catInfoVO.sex == '母') ? 'selected' : ''}>母</option>
 				</select></td>
 			</tr>
 			<tr>
 				<td>貓咪大小:</td>
 				<td><select name="size" size="1">
-						<option value="0" ${(catInfoVO.size == 0) ? 'selected' : ''}>小型</option>
-						<option value="1" ${(catInfoVO.size == 1) ? 'selected' : ''}>中型</option>
-						<option value="2" ${(catInfoVO.size == 2) ? 'selected' : ''}>大型</option>
+						<option value="小型" ${(catInfoVO.size == "小型") ? 'selected' : ''}>小型</option>
+						<option value="中型" ${(catInfoVO.size == "中型") ? 'selected' : ''}>中型</option>
+						<option value="大型" ${(catInfoVO.size == "大型") ? 'selected' : ''}>大型</option>
 				</select></td>
 			</tr>
 			<tr>
 				<td>貓咪毛色:</td>
 				<td><select name="coatColor" size="1">
-						<option value="0" ${(catInfoVO.coatColor == 0) ? 'selected' : ''}>黑色</option>
-						<option value="1" ${(catInfoVO.coatColor == 1) ? 'selected' : ''}>白色</option>
-						<option value="2" ${(catInfoVO.coatColor == 2) ? 'selected' : ''}>虎斑</option>
-						<option value="3" ${(catInfoVO.coatColor == 3) ? 'selected' : ''}>橘色</option>
-						<option value="4" ${(catInfoVO.coatColor == 4) ? 'selected' : ''}>三花</option>
-						<option value="5" ${(catInfoVO.coatColor == 5) ? 'selected' : ''}>藍色</option>
-						<option value="6" ${(catInfoVO.coatColor == 6) ? 'selected' : ''}>玳瑁</option>
-						<option value="7" ${(catInfoVO.coatColor == 7) ? 'selected' : ''}>豹紋</option>
+						<option value="黑色" ${(catInfoVO.coatColor == "黑色") ? 'selected' : ''}>黑色</option>
+						<option value="白色" ${(catInfoVO.coatColor == "白色") ? 'selected' : ''}>白色</option>
+						<option value="虎斑" ${(catInfoVO.coatColor == "虎斑") ? 'selected' : ''}>虎斑</option>
+						<option value="橘色" ${(catInfoVO.coatColor == "橘色") ? 'selected' : ''}>橘色</option>
+						<option value="三花" ${(catInfoVO.coatColor == "三花") ? 'selected' : ''}>三花</option>
+						<option value="藍色" ${(catInfoVO.coatColor == "藍色") ? 'selected' : ''}>藍色</option>
+						<option value="玳瑁" ${(catInfoVO.coatColor == "玳瑁") ? 'selected' : ''}>玳瑁</option>
+						<option value="豹紋" ${(catInfoVO.coatColor == "豹紋") ? 'selected' : ''}>豹紋</option>
 				</select></td>
 			</tr>
 			<tr>
 				<td>貓咪眼睛顏色:</td>
 				<td><select name="eyeColor" size="1">
-						<option value="0" ${(catInfoVO.eyeColor == 0) ? 'selected' : ''}>黃色</option>
-						<option value="1" ${(catInfoVO.eyeColor == 1) ? 'selected' : ''}>綠色</option>
+						<option value="黃色" ${(catInfoVO.eyeColor == "黃色") ? 'selected' : ''}>黃色</option>
+						<option value="綠色" ${(catInfoVO.eyeColor == "綠色") ? 'selected' : ''}>綠色</option>
 				</select></td>
 			</tr>
 			<tr>

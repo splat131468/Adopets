@@ -47,7 +47,7 @@ public class DBGifReader extends HttpServlet {
 	public void init() throws ServletException {
 		try {
 			Context ctx = new javax.naming.InitialContext();
-			DataSource ds = (DataSource) ctx.lookup("java:comp/env/jdbc/TestDB3");
+			DataSource ds = (DataSource) ctx.lookup("java:comp/env/jdbc/jndi");
 			con = ds.getConnection();
 		} catch (NamingException e) {
 			// TODO Auto-generated catch block

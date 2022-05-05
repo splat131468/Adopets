@@ -63,8 +63,8 @@ h4 {
 			</FORM>
 		</li>
 
-		<jsp:useBean id="empSvc" scope="page"
-			class="web.catInfo.service.CatInfoService" />
+<%-- 		<jsp:useBean id="empSvc" scope="page"
+			class="web.catInfo.service.CatInfoService" /> --%>
 
 
 	</ul>
