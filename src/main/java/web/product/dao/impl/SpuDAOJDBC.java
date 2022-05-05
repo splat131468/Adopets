@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.util.List;
 
 import web.product.dao.SpuDAO;
+import web.product.entity.ProdSelection;
 import web.product.entity.SkuVO;
 import web.product.entity.SpuVO;
 
@@ -62,6 +63,14 @@ public class SpuDAOJDBC implements SpuDAO {
 
 	@Override
 	public List<SkuVO> getMainPage() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+
+	@Override
+	public List<SkuVO> selectedPage(ProdSelection prodSelection) {
 		// TODO Auto-generated method stub
 		return null;
 	}

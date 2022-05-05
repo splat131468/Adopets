@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
+import web.product.entity.ProdSelection;
 import web.product.entity.SkuVO;
 import web.product.entity.SpuVO;
 
@@ -23,5 +24,8 @@ public interface SpuDAO {
 	
 	// 列出商城首頁
 	List<SkuVO> getMainPage();
+	
+	// 條件查詢 動態查詢
+	List<SkuVO> selectedPage(ProdSelection prodSelection);
 	
 }

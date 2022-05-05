@@ -45,18 +45,12 @@
 			jdbcType="VARCHAR" />
 		<result column="descript" property="spuVO.descript"
 			jdbcType="VARCHAR" />
-			
-
-		<!-- <result column="imgID" property="pImgVO.imgID"
-			jdbcType="INTEGER" />
-		<result column="spuID" property="pImgVO.spuID"
-			jdbcType="INTEGER" />
-		<result column="spuImg" property="pImgVO.spuImg"
-			jdbcType="LONGVARBINARY" />
-		<result column="mainImg" property="pImgVO.mainImg"
-			jdbcType="BIT" /> -->
 
 
+		<!-- <result column="imgID" property="pImgVO.imgID" jdbcType="INTEGER" 
+			/> <result column="spuID" property="pImgVO.spuID" jdbcType="INTEGER" /> <result 
+			column="spuImg" property="pImgVO.spuImg" jdbcType="LONGVARBINARY" /> <result 
+			column="mainImg" property="pImgVO.mainImg" jdbcType="BIT" /> -->
 
 	</resultMap>
 
@@ -97,14 +91,55 @@
 	<select id="getMainPage" resultMap="prodMap">
 
 		select
-		k.skuID,k.spuID,k.skuPrice,k.stock,k.specAttr,p.ctgID,p.spuName,spuImg
-		from sku k
+		k.skuID,k.spuID,k.skuPrice,k.stock,k.specAttr,p.ctgID,p.spuName
+		from
+		sku k
 		join spu p
 		on k.spuID = p.spuID
-		join pImg c
-		on p.spuID =
-		c.spuID
-		where mainImg = 1 and status = 1 and stock >0
+		where status = 1 and stock >0
+
+	</select>
+
+	<!-- 3種可能 低價 低價高價 高價
+		1. 只輸入最低價 price > 低價
+		2. 只輸入最高價 price < 高價
+		3. 都輸入 就是之間
+	 -->
+	<select id="selectedPage"
+		parameterType="web.product.entity.ProdSelection" resultMap="prodMap">
+
+		select
+		k.skuID,k.spuID,k.skuPrice,k.stock,k.specAttr,p.ctgID,p.spuName
+		from
+		sku k
+		join spu p
+		on k.spuID = p.spuID
+		<where>
+			and status = 1 and stock >0
+			<if
+				test="(lowC != null and lowC !='') and (highC == null or highC =='')">
+				and k.skuPrice &gt;= #{lowC}
+			</if> 
+			<if
+				test="(lowC == null and lowC =='') and (highC != null or highC !='')">
+				and k.skuPrice &lt;= #{highC}
+			</if>
+			<if
+				test="(lowC != null and lowC !='') and (highC != null and highC !='')">
+				and k.skuPrice between #{lowC} and #{highC}
+			</if>
+			 <if test="prodName !=null and prodName != ''">
+                and p.spuName like '%${prodName}%'
+            </if>
+  
+             <if test="ctgID !=null and ctgID != ''">
+                and p.ctgID = #{ctgID}
+            </if>
+            
+			
+			
+		</where>
+
 
 	</select>
 

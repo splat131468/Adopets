@@ -47,11 +47,28 @@
 
       <script>
         $(function () {
-          console.log("ok")
 
-          $(document).on("click", ".pg", function () {
+
+          // 分頁選單
+          $(document).on("click", ".ppppg", function () {
             let curPage = $(this).attr("name");
+
+
+            // 分頁查詢
+            // let lowC = 0;
+            // let highC = 0;
+            // let prodName = 0;
+            // let ctgName = 0;
+            // lowC = $("#lowC").val();
+            // highC = $("#highC").val();
+            // prodName = $("#prodName").val();
+            // ctgName = $(".ctg").val();
+
+
+
             $.ajax({
+
+
               url: "${pageContext.request.contextPath}/comAction",
               data: JSON.stringify({
                 "action": "ecoMainP",
@@ -63,6 +80,48 @@
                 $("#prodList").load("http://localhost:8081/Adopets/views/ecommerce/Pet_Supplement.jsp #prodList")
               }
             })
+
+
+          });
+          // 查詢選單
+          $(document).on("click",".pg", function () {
+
+            let lowC = 0;
+            let highC = 0;
+            let prodName = 0;
+            let ctgName = 0;
+            let curPage = 0;
+            lowC = $("#lowC").val();
+            highC = $("#highC").val();
+            prodName = $("#prodName").val();
+            ctgName = $(".ctg").val();
+
+            curPage = $(this).attr("name");
+            // 預設值 ctgName = -1;
+            if(typeof(curPage) == "undefined"){
+              curPage=0;
+            }
+
+            console.log(lowC + " " + highC + " " + prodName + " " + ctgName+ " "+curPage)
+
+            $.ajax({
+              url: "${pageContext.request.contextPath}/comAction",
+              data: JSON.stringify({
+                "lowC": lowC,
+                "highC": highC,
+                "prodName": prodName,
+                "action": "requirement",
+                "ctgID": ctgName,
+                "curPage": curPage
+              }),
+              type: "POST",
+              success: function () {
+                $("#prodList").load("http://localhost:8081/Adopets/views/ecommerce/Pet_Supplement.jsp #prodList")
+              }
+
+            })
+
+
 
 
           })
@@ -420,9 +479,10 @@
               <div style="border: 1px; border-color: black; border-top-style: solid; border-bottom-style: solid; ">
                 <form action="#">
 
-                  <select>
+                  <select class="ctg" name="ctgName">
                     <c:forEach items="${categoryList}" var="category">
-                      <option>${category.ctgName}</option>
+                      <option value="-1">選擇類型</option>
+                      <option value="${category.ctgID}">${category.ctgName}</option>
                     </c:forEach>
                   </select>
 
@@ -430,13 +490,13 @@
 
 
 
-                  <input style="margin-left: 20px;" type="text" placeholder="最低價格">
-                  <input style="margin-left: 20px;" type="text" placeholder="最高價格">
+                  <input id="lowC" style="margin-left: 20px;" type="number" placeholder="最低價格">
+                  <input id="highC" style="margin-left: 20px;" type="number" placeholder="最高價格">
 
 
 
-                  <input style="margin-left: 20px;" type="text" placeholder="請輸入你需要什麼?">
-                  <button type="submit" class="site-btn" style="margin-left: 20px;">SEARCH</button>
+                  <input id="prodName" style="margin-left: 20px;" type="text" placeholder="請輸入你需要什麼?">
+                  <p  class="site-btn pg" style="margin-left: 20px;">Search</p>
 
 
 
@@ -535,7 +595,7 @@
                 </div>
               </div>
             </div>
-            <div  class="col-lg-9 col-md-7">
+            <div class="col-lg-9 col-md-7">
 
               <div class="filter__item">
                 <div class="row">
