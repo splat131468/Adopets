@@ -480,8 +480,8 @@
                 <form action="#">
 
                   <select class="ctg" name="ctgName">
+                    <option value="-1">選擇類型</option>
                     <c:forEach items="${categoryList}" var="category">
-                      <option value="-1">選擇類型</option>
                       <option value="${category.ctgID}">${category.ctgName}</option>
                     </c:forEach>
                   </select>

@@ -131,8 +131,14 @@ public class SpuServiceImp implements SpuService {
 
 			SpuDAO spuDAO = session.getMapper(SpuDAO.class);
 			
+			// 		prodSelection 都為null 做預設查詢
+			
+	
+				 
+
+			
 			// 每次查詢 若沒有指定頁碼就預設為1
-			if(curPage!=null) {
+			if(curPage!=0) {
 				PageHelper.startPage(curPage, pageSize);
 			}else {
 				PageHelper.startPage(1, pageSize);

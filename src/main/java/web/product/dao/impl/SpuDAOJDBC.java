@@ -27,7 +27,7 @@ public class SpuDAOJDBC implements SpuDAO {
 	@Override
 	public SpuVO inserSPU(SpuVO spuVO) {
 		
-		// array 接gk value
+		// array 指定生成後返回的id名稱
 		String[] spuID = { "spuID" };
 		int gk = -1;
 		try (Connection connection = DriverManager.getConnection(url, user, password);

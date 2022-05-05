@@ -121,7 +121,7 @@
 				and k.skuPrice &gt;= #{lowC}
 			</if> 
 			<if
-				test="(lowC == null and lowC =='') and (highC != null or highC !='')">
+				test="(lowC == null or lowC =='') and (highC != null and highC !='')">
 				and k.skuPrice &lt;= #{highC}
 			</if>
 			<if

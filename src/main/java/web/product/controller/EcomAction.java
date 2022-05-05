@@ -159,12 +159,21 @@ public class EcomAction extends HttpServlet {
 				curPage= Integer.parseInt(jsonCurPage);
 				
 			}
-			System.out.print("!!!!!!!!!!!!!!!"+curPage);
 			
-			 prodName= fromJson.get("prodName").getAsString();
+		
+			 String jsonprodName = fromJson.get("prodName").getAsString();
+			 if (jsonprodName != null&&!"".equals(jsonprodName)) {
+				 prodName = jsonprodName;		
+				}else {
+					prodName=null;
+				}
+			 
 			
 			 prodSelection = new ProdSelection(lowC, highC, ctgID, prodName);
-			
+			 System.out.println("============================");
+			 System.out.print(prodSelection);
+			 System.out.print(prodName);
+			 System.out.println("============================");
 			// 查詢處理 放入session
 			skuPage = spuService.selectedPage(prodSelection,curPage, PAGE_SIZE);
 			req.getSession().setAttribute("skuPage", skuPage);
