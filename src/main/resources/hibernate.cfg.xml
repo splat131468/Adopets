@@ -21,18 +21,5 @@
 		<mapping class="web.product.entity.SkuVO" />
 		<mapping class="web.product.entity.ValueVO" />
 
-
-
-		<mapping class="web.product.entity.AttributesVO" />
-		<mapping class="web.product.entity.CategoryVO" />
-		<mapping class="web.product.entity.SpuVO" />
-		<mapping class="web.product.entity.PImgVO" />
-		<mapping class="web.product.entity.SkuVO" />
-		<mapping class="web.product.entity.ValueVO" />
-
-
-
-
-
 	</session-factory>
 </hibernate-configuration>
