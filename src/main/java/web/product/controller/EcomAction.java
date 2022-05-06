@@ -93,6 +93,10 @@ public class EcomAction extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
+		req.setCharacterEncoding("UTF-8");
+		resp.setContentType("text/html; charset=UTF-8");
+
+		
 		// 處理json
 		String data = IOUtils.toString(req.getInputStream(), StandardCharsets.UTF_8);
 
@@ -180,6 +184,7 @@ public class EcomAction extends HttpServlet {
 			req.getRequestDispatcher("/views/ecommerce/Pet_Supplement.jsp").forward(req, resp);
 			return;
 
+			
 		}
 
 		return;

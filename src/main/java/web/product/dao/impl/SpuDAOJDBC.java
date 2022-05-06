@@ -75,6 +75,12 @@ public class SpuDAOJDBC implements SpuDAO {
 		return null;
 	}
 
+	@Override
+	public List<SpuVO> getDetail(SpuVO souSpuVO) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	
 
 }

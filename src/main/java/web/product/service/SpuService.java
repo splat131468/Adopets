@@ -8,6 +8,7 @@ import web.product.dao.SpuDAO;
 import web.product.dao.impl.SpuDAOJDBC;
 import web.product.entity.ProdSelection;
 import web.product.entity.SkuVO;
+import web.product.entity.SpuVO;
 
 public interface SpuService {
 
@@ -25,5 +26,10 @@ public interface SpuService {
 	PageInfo<SkuVO> getMainPage(int curPage, Integer pageSize);
 	// 一對多關係 動態查詢
 	PageInfo<SkuVO> selectedPage(ProdSelection prodSelection,Integer curPage,Integer pageSize);
+	
+	// 多對一關係 
+	List<SpuVO>  getDetail(SpuVO spuVO);
+
+
 
 }
