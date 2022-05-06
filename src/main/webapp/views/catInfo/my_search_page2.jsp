@@ -1,4 +1,40 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+  <%if (pageNumber>1) {%>
+
+                   <div class="">
+                   
+				    <div class="container">
+	                    <div class="droppage">
+	    	                <div class="select">
+                            第 <%=whichPage%> 頁
+                            <i class="fa fa-chevron-left"></i>
+                          	</div>
+                             <input type="hidden" name="special_care">
+	      		            
+	      		            <ul class="droppage-menu">
+								
+							           <%for (int i=1; i<=pageNumber; i++){%>
+						            	<%if(i != whichPage) {%>
+						            <li 
+						            	onclick="location.href='<%=request.getRequestURI()%>?whichPage=<%=i%>'"
+						            	value="<%=i%>">第<%=i%>頁
+						            </li>
+						            	<%}%> 
+						       		<%}%> 
+	                      	</ul>
+	                     </div>    
+                     <div>
+                   </div>
+                     
+	                <!-- <div class="animalSearchSelect-customSelect-btn">
+	                    <div class="split m-split_fullHeight">
+	                    	這裡是1/4頁
+	                    </div>
+	                </div> -->
+	            </div>
+	        </div>
+
+  <%}%>
 
   <%if (rowsPerPage<rowNumber) {%>
     <%if(pageIndex>=rowsPerPage){%>
@@ -21,45 +57,9 @@
     <%}%>
     
 <!--分頁標籤分頁標籤分頁標籤分頁標籤分頁標籤分頁標籤分頁標籤分頁標籤分頁標籤-->
-  <%if (pageNumber>1) {%>
-	<div class="grid-col grid-col_1/2 grid-col_1/3@minMd">
-	    <div id="page-select">
-	        <div class="animalSearchSelect animalSearchSelect_shadowed animalSearchSelect_checkmarks ">
-	            <div class="animalSearchSelect-customSelect">
-                    <FORM METHOD="post" ACTION="<%=request.getRequestURI()%>">   
-				       <select size="1" name="whichPage">
-				         <%for (int i=1; i<=pageNumber; i++){%>
-				            <option value="<%=i%>">跳至第<%=i%>頁
-				         <%}%> 
-				       </select>
-				       <input type="submit" value="確定" >  
-				    </FORM>
-				    
-                    <div class="dropdown">
-                      <div class="select">
-                        <span>任意</span> 
-                        <i class="fa fa-chevron-left"></i>
-                      </div>
-                      <input type="hidden" name="Gender">
-                      <ul class="dropdown-menu whichPage">
-	                       <%for (int i=1; i<=pageNumber; i++){%>
-					            <li value="<%=i%>">跳至第<%=i%>頁</li>
-					       <%}%> 
-                      </ul>
-                    </div>
-	                <!-- <div class="animalSearchSelect-customSelect-btn">
-	                    <div class="split m-split_fullHeight">
-	                    	這裡是1/4頁
-	                    </div>
-	                </div> -->
-	            </div>
-	        </div>
-	    </div>
-	</div>
-  <%}%>
   
     <%if(pageIndex<pageIndexArray[pageNumber-1]){%>
-        <div class="grid-col grid-col_1/2 grid-col_1/3@minMd">
+        <div class="grid-col grid-col_1/3 u-isHidden@maxMd">
     <button
         class="fieldBtn fieldBtn_altHover m-fieldBtn_iconRt m-fieldBtn_tight m-fieldBtn_full"
         onclick="location.href='<%=request.getRequestURI()%>?whichPage=<%=whichPage+1%>'"	
@@ -76,7 +76,7 @@
             </span>
         </span>
     </button>
-</div>&nbsp;
+</div>
         
     <%}%>
   <%}%>  

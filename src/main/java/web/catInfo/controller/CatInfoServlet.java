@@ -29,6 +29,8 @@ public class CatInfoServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) 
 			throws ServletException, IOException {
+		String str = req.getParameter("id");
+		System.out.println("hello:" + str);
 		doPost(req, res);	
 	}
 

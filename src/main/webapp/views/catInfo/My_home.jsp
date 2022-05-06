@@ -396,7 +396,7 @@
                                 <div class="recommendations m-recommendations_singleRow u-isHidden@maxMd">
                                   <div class="recommendations-header u-vr5x">
                                     <div class="tier"><a
-                                        href="https://www.petfinder.com/search/cats-for-adoption/us/new-jersey/?sort[]=best_match"
+                                        href="${pageContext.request.contextPath}/views/catInfo/My_search.jsp"
                                         class="u-displayBlock txt">
                                         <h2 class="txt txt_h1 m-txt_tight m-txt_colorPrimary m-txt_alignCenter">貓咪配對結果
                                         </h2>
@@ -562,7 +562,7 @@
                                           class="grid-col grid-col_1/4 grid-col_1/3@minMd grid-col_1/4@minLg grid-col_1/5@minXl ">
                                           <div class="actionCard m-actionCard_overflowVisible">
                                             <div><a class="actionCard-overlay"
-                                                href="https://www.petfinder.com/search/cats-for-adoption/us/new-jersey/?sort[]=best_match"
+                                                href="${pageContext.request.contextPath}/views/catInfo/My_search.jsp"
                                                 aria-label="8600 more pets available on Petfinder: Meet them"></a></div>
                                             <div class="actionCard-body actionCard-body_split">
                                               <div class="actionCard-body-icon"><span
@@ -586,7 +586,7 @@
                                 <div class="recommendations m-recommendations_twoRow u-isHidden@minMd">
                                   <div class="recommendations-header u-vr5x">
                                     <div class="tier"><a
-                                        href="https://www.petfinder.com/search/cats-for-adoption/us/new-jersey/?sort[]=best_match"
+                                        href="${pageContext.request.contextPath}/views/catInfo/My_home.jsp"
                                         class="u-displayBlock txt">
                                         <h2 class="txt txt_h1 m-txt_tight m-txt_colorPrimary m-txt_alignCenter">Your
                                           Best Matches</h2>
@@ -680,7 +680,7 @@
                                         <div class="grid-col grid-col_1/2">
                                           <div class="actionCard m-actionCard_overflowVisible">
                                             <div><a class="actionCard-overlay"
-                                                href="https://www.petfinder.com/search/cats-for-adoption/us/new-jersey/?sort[]=best_match"
+                                                href="${pageContext.request.contextPath}/views/catInfo/My_search.jsp"
                                                 aria-label="8600 more pets available on Petfinder: Meet them"></a></div>
                                             <div class="actionCard-body actionCard-body_split">
                                               <div class="actionCard-body-icon"><span
