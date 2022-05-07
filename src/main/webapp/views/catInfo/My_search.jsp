@@ -845,6 +845,71 @@
                                         </div>
                                         <!-- cat bodycat bodycat bodycat bodycat bodycat bodycat bodycat bodycat body-->
                                         <div class="searchContainer-body">
+                                        	 
+                                        	<!-- add tag add tag add tag add tag add tag add tag -->
+                                        	  <div class="split split_stack@maxMd m-split_alignTop">
+                                                <div class="split-item">
+                                                    <div id="Pet_Search_Applied_Filters" class="u-hr6x"></div>
+                                                    
+                                                    123
+                                                    123
+                                                </div>
+                                                <div class="split-item u-isHidden@maxLg">
+                                                    <pfdc-generic-select id="sort-select"
+                                                        pf-mix-change="$closest.onSortByChanged($element.value)"
+                                                        observe-state="animalSearch.filters.sortBy"
+                                                        input-aria-label="Select Sort By Field"
+                                                        sort-by-select-label="Sort By">
+                                                        <div
+                                                            class="field field_select m-field_minWidthSm s-field_hasInput u-vr4x">
+                                                            <div class="field-label">
+                                                                <label class="field-label-text" for="sort">Sort
+                                                                    By:</label>
+                                                            </div>
+                                                            <select id="sort-select_6_nativeSelect" class="field-input"
+                                                                name="sort" aria-label="Select Sort By Field"
+                                                                aria-invalid="false"
+                                                                pf-mix-change="$closest.onNativeSelectChanged($event, $element)">
+
+                                                                <option value="best_match" selected="">
+                                                                    Best match
+                                                                </option>
+
+                                                                <option value="recently_added">
+                                                                    Newest addition
+                                                                </option>
+
+                                                                <option value="available_longest">
+                                                                    Oldest addition
+                                                                </option>
+
+                                                                <option value="nearest">
+                                                                    Nearest
+                                                                </option>
+
+                                                                <option value="furthest">
+                                                                    Furthest
+                                                                </option>
+
+                                                                <option value="random">
+                                                                    Randomize
+                                                                </option>
+
+                                                            </select>
+                                                        </div>
+                                                    </pfdc-generic-select>
+                                                    <pf-element id="Best_Matches_Modal_Trigger" class="u-isHidden"
+                                                        on-click="ui.activate" data-target="#Best_Matches_Modal">
+                                                    </pf-element>
+                                                    <pf-element id="Best_Matches_Modal_Guest_Trigger" class="u-isHidden"
+                                                        on-click="ui.activate" data-target="#Best_Matches_Modal_Guest">
+                                                    </pf-element>
+                                                </div>
+                                            </div>
+                                        	
+                                        	
+                                        	
+                                        	 
                                            
 
                                             <h1 pf-mix-id="pageChangeFocusTarget" class="u-isVisuallyHidden"
@@ -885,13 +950,8 @@
                                                             <!--貓咪資訊貓咪資訊貓咪資訊貓咪資訊貓咪資訊貓咪資訊貓咪資訊貓咪資訊-->
                                                             <div class="grid-col grid-col_1/4@minXl">
                                                                 <div class="petCard">
-                                                                    <a class="petCard-link" href="${pageContext.request.contextPath}/CatInfoServlet?id=${catInfoVO.catID}">
-                                                                    貓id : ${catInfoVO.catID}
-                                                                    <FORM METHOD="post" ACTION="${pageContext.request.contextPath}/CatInfoServlet" style="margin-bottom: 0px;">
-																	     <input type="submit" value="修改">
-																	     <input type="hidden" name="catID"  value="${catInfoVO.catID}">
-																	     <input type="hidden" name="action"	value="getOne_For_Update">
-																     </FORM>
+                                                                    <a class="petCard-link" href="${pageContext.request.contextPath}/CatInfoServlet?action=getOne_For_Update&catID=${catInfoVO.catID}">
+                                                                  
                                                                         <!--貓照片-->
                                                                         <jsp:useBean id="catPhotoGalleryService" scope="page" class="web.catInfo.service.CatPhotoGalleryService" />
                                                                         <div alt="" class="petCard-media">

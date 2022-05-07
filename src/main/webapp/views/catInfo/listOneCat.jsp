@@ -9,7 +9,7 @@
 
 <html>
 <head>
-<title>貓咪資料 - listOneCat.jsp</title>
+<title>貓咪資料</title>
 
 <style>
   table#table-1 {
@@ -51,7 +51,8 @@
 <table id="table-1">
 	<tr><td>
 		 <h3>貓咪資料 - ListOneCat.jsp</h3>
-		 <h4><a href="${pageContext.request.contextPath}/views/catInfo/select_page.jsp">回首頁</a></h4>
+		 <h4><a href="${pageContext.request.contextPath}/views/catInfo/select_page.jsp">回後台首頁</a></h4>
+		 <h4><a href="${pageContext.request.contextPath}/views/catInfo/My_home.jsp">回Adopets首頁</a></h4>
 	</td></tr>
 </table>
 <table>

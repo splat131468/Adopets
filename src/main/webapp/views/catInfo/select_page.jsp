@@ -36,7 +36,9 @@ h4 {
 	<table id="table-1">
 		<tr>
 			<td><h3>ADOPETS</h3>
-				<h4>(貓咪後台管理)</h4></td>
+				<h4>(貓咪後台管理)</h4>
+				<h4><a href="${pageContext.request.contextPath}/views/catInfo/My_home.jsp">回Adopets首頁</a></h4>
+			</td>
 		</tr>
 	</table>
 
