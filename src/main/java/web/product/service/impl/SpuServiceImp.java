@@ -28,7 +28,7 @@ public class SpuServiceImp implements SpuService {
 	public static void main(String[] args) {
 		PageInfo<SkuVO> mainPage = new SpuServiceImp().getMainPage(1, 3);
 		long total = mainPage.getTotal();
-		System.out.println(total);
+		
 	}
 
 	public int insertSPU(int ctgID, String spuName, String descript) {
@@ -120,7 +120,7 @@ public class SpuServiceImp implements SpuService {
 	}
 
 	@Override
-	public PageInfo<SkuVO> selectedPage(ProdSelection prodSelection,Integer curPage, Integer pageSize) {
+	public PageInfo<SkuVO> selectedPage(ProdSelection prodSelection, Integer curPage, Integer pageSize) {
 
 		List<SkuVO> selectedPage = new ArrayList<>();
 		try {
@@ -130,19 +130,44 @@ public class SpuServiceImp implements SpuService {
 			SqlSession session = factory.openSession();
 
 			SpuDAO spuDAO = session.getMapper(SpuDAO.class);
-			
+
+			// prodSelection 都為null 做預設查詢
+
 			// 每次查詢 若沒有指定頁碼就預設為1
-			if(curPage!=null) {
+			if (curPage != 0) {
 				PageHelper.startPage(curPage, pageSize);
-			}else {
+			} else {
 				PageHelper.startPage(1, pageSize);
-			}	
+			}
 			selectedPage = spuDAO.selectedPage(prodSelection);
 			selectedPage = jsonPaser(selectedPage);
 			PageInfo<SkuVO> spuPageInfo = new PageInfo<>(selectedPage);
 
 			session.commit();
 			return spuPageInfo;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return null;
+	}
+
+	// 取得產品細節
+	public List<SpuVO> getDetail(SpuVO spuVO) {
+
+		try {
+			InputStream inputStream = Resources.getResourceAsStream("mybatis-config.xml");
+			SqlSessionFactoryBuilder sqlSessionFactoryBuilder = new SqlSessionFactoryBuilder();
+			SqlSessionFactory factory = sqlSessionFactoryBuilder.build(inputStream);
+			SqlSession session = factory.openSession();
+
+			SpuDAO spuDAO = session.getMapper(SpuDAO.class);
+
+			List<SpuVO> detail = spuDAO.getDetail(spuVO);
+			
+
+			session.commit();
+			return detail;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

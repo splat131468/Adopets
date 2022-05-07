@@ -4,12 +4,14 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.List;
 
 
 
 import web.product.dao.PImgDAO;
 import web.product.entity.PImgVO;
+import web.product.entity.SpuVO;
 
 
 public class PImgJDBC implements PImgDAO {
@@ -72,6 +74,37 @@ public class PImgJDBC implements PImgDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		
+		
+		return null;
+	}
+
+	String getPic = "select spuImg, mainImg from PIMG where spuID = ? ;";
+	@Override
+	public List<PImgVO> getSpuPics(SpuVO spuVO) {
+		
+		
+			List<PImgVO> list = new ArrayList<PImgVO>();
+			
+			try (Connection connection = DriverManager.getConnection(url, user, password);
+					PreparedStatement ps = connection.prepareStatement(getPic);) {
+				
+				ps.setInt(1, spuVO.getSpuID());
+				ResultSet rs = ps.executeQuery();
+				
+				while(rs.next()) {
+					PImgVO pImgVO = new PImgVO();
+					pImgVO.setSpuImg(rs.getBytes(1));
+					pImgVO.setMainImg(rs.getInt(2));
+					list.add(pImgVO);
+				}
+				return list;
+				
+				
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		
 		
 		return null;

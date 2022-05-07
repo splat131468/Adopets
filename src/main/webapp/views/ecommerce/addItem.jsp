@@ -82,7 +82,7 @@
 
                             <div class="form-group"> <label class="form-control-label">商品描述 * :</label>
                                 <textarea id="itemdesc" name="lname" placeholder="" class="form-control f2"
-                                    onblur="validate1(2)"></textarea>
+                                    onblur="validate1(2)" style="height: 250px;"></textarea>
                             </div>
 
                             <div class="form-group"> <label class="form-control-label">商品主要照片 * :</label>

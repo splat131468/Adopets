@@ -50,41 +50,29 @@
 
 
           // 分頁選單
-          $(document).on("click", ".ppppg", function () {
-            let curPage = $(this).attr("name");
+          // $(document).on("click", ".ppppg", function () {
+          //   let curPage = $(this).attr("name");
+
+          //   $.ajax({
 
 
-            // 分頁查詢
-            // let lowC = 0;
-            // let highC = 0;
-            // let prodName = 0;
-            // let ctgName = 0;
-            // lowC = $("#lowC").val();
-            // highC = $("#highC").val();
-            // prodName = $("#prodName").val();
-            // ctgName = $(".ctg").val();
+          //     url: "${pageContext.request.contextPath}/comAction",
+          //     data: JSON.stringify({
+          //       "action": "ecoMainP",
+          //       "curPage": curPage
+          //     }),
+          //     type: "POST",
+          //     success: function () {
+          //       // 表示重新載入url 在指定的定方load
+          //       $("#prodList").load("http://localhost:8081/Adopets/views/ecommerce/Pet_Supplement.jsp #prodList")
+          //     }
+          //   })
+
+          // });
 
 
-
-            $.ajax({
-
-
-              url: "${pageContext.request.contextPath}/comAction",
-              data: JSON.stringify({
-                "action": "ecoMainP",
-                "curPage": curPage
-              }),
-              type: "POST",
-              success: function () {
-                // 表示重新載入url 在指定的定方load
-                $("#prodList").load("http://localhost:8081/Adopets/views/ecommerce/Pet_Supplement.jsp #prodList")
-              }
-            })
-
-
-          });
           // 查詢選單
-          $(document).on("click",".pg", function () {
+          $(document).on("click", ".pg", function () {
 
             let lowC = 0;
             let highC = 0;
@@ -98,12 +86,11 @@
 
             curPage = $(this).attr("name");
             // 預設值 ctgName = -1;
-            if(typeof(curPage) == "undefined"){
-              curPage=0;
+            if (typeof (curPage) == "undefined") {
+              curPage = 0;
             }
 
-            console.log(lowC + " " + highC + " " + prodName + " " + ctgName+ " "+curPage)
-
+         
             $.ajax({
               url: "${pageContext.request.contextPath}/comAction",
               data: JSON.stringify({
@@ -125,10 +112,12 @@
 
 
           })
-
-
-
-
+          ///// 滑鼠移入 移出 顯示
+          $(".mos").mouseenter( function() {
+            $(this).css("border-bottom","5px solid purple");
+          }).mouseleave(function () {
+            $(this).css("border-bottom","none");
+          });
 
         })
       </script>
@@ -480,8 +469,8 @@
                 <form action="#">
 
                   <select class="ctg" name="ctgName">
+                    <option value="-1">選擇類型</option>
                     <c:forEach items="${categoryList}" var="category">
-                      <option value="-1">選擇類型</option>
                       <option value="${category.ctgID}">${category.ctgName}</option>
                     </c:forEach>
                   </select>
@@ -496,7 +485,7 @@
 
 
                   <input id="prodName" style="margin-left: 20px;" type="text" placeholder="請輸入你需要什麼?">
-                  <p  class="site-btn pg" style="margin-left: 20px;">Search</p>
+                  <p class="site-btn pg" style="margin-left: 20px;">Search</p>
 
 
 
@@ -600,13 +589,13 @@
               <div class="filter__item">
                 <div class="row">
                   <div class="col-lg-4 col-md-5">
-                    <div class="filter__sort">
+                    <!-- <div class="filter__sort">
                       <span>價格排序</span>
-                      <select>
+                      <select >
                         <option value="0">低到高</option>
                         <option value="0">高到低</option>
                       </select>
-                    </div>
+                    </div> -->
                   </div>
                   <div class="col-lg-4 col-md-4">
                     <div class="filter__found">
@@ -623,7 +612,7 @@
                 <%-- 應該是多對一--%>
                   <c:forEach items="${skuPage.list}" var="skuPage">
                     <div class="col-lg-3 col-md-4 col-sm-6">
-                      <div class="product__item">
+                      <div id="mos" class="product__item mos">
                         <div class="product__item__pic ">
                           <!-- 路徑 -->
                           <img src="${pageContext.request.contextPath}/comAction?action=getPic&skuID=${skuPage.skuID}"
@@ -635,10 +624,10 @@
                         </div>
                         <div class="product__item__text">
 
-                          <h6><a href="#">${skuPage.spuVO.spuName}</a></h6>
+                          <h6><b><a href="${pageContext.request.contextPath}/cartAction?action=getDetail&spuID=${skuPage.spuVO.spuID}">${skuPage.spuVO.spuName}</a></b></h6>
 
                           <p style="margin-bottom:5px;">${skuPage.specAttr}</p>
-                          <h5>${skuPage.skuPrice}</h5>
+                          <h5 style="color:purple">${skuPage.skuPrice}</h5>
                         </div>
                       </div>
                     </div>

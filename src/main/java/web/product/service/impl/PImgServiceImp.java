@@ -6,6 +6,7 @@ import java.util.List;
 
 import web.product.entity.ImgTFVO;
 import web.product.entity.PImgVO;
+import web.product.entity.SpuVO;
 import web.product.service.PImgService;
 
 
@@ -37,6 +38,12 @@ public class PImgServiceImp implements PImgService {
 		
 		
 		return pImgDAO.getPicByID(spuID);
+	}
+
+	@Override
+	public List<PImgVO> getSpuPics(SpuVO spuVO) {
+		
+		return pImgDAO.getSpuPics(spuVO);
 	}
 
 }

@@ -7,6 +7,7 @@ import org.hibernate.Transaction;
 
 import web.product.dao.PImgDAO;
 import web.product.entity.PImgVO;
+import web.product.entity.SpuVO;
 import web.product.util.HibernateUtil;
 
 
@@ -35,6 +36,12 @@ public class PImgDAOImp implements PImgDAO {
 
 	@Override
 	public PImgVO getPicByID(Integer skuID) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<PImgVO> getSpuPics(SpuVO spuVO) {
 		// TODO Auto-generated method stub
 		return null;
 	}

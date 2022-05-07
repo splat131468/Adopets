@@ -28,4 +28,7 @@ public interface SpuDAO {
 	// 條件查詢 動態查詢
 	List<SkuVO> selectedPage(ProdSelection prodSelection);
 	
+	// 取得商品細節
+	List<SpuVO> getDetail(SpuVO spuVO);
+	
 }

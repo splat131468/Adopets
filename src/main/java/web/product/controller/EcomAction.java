@@ -93,6 +93,10 @@ public class EcomAction extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
+		req.setCharacterEncoding("UTF-8");
+		resp.setContentType("text/html; charset=UTF-8");
+
+		
 		// 處理json
 		String data = IOUtils.toString(req.getInputStream(), StandardCharsets.UTF_8);
 
@@ -159,18 +163,28 @@ public class EcomAction extends HttpServlet {
 				curPage= Integer.parseInt(jsonCurPage);
 				
 			}
-			System.out.print("!!!!!!!!!!!!!!!"+curPage);
 			
-			 prodName= fromJson.get("prodName").getAsString();
+		
+			 String jsonprodName = fromJson.get("prodName").getAsString();
+			 if (jsonprodName != null&&!"".equals(jsonprodName)) {
+				 prodName = jsonprodName;		
+				}else {
+					prodName=null;
+				}
+			 
 			
 			 prodSelection = new ProdSelection(lowC, highC, ctgID, prodName);
-			
+			 System.out.println("============================");
+			 System.out.print(prodSelection);
+			 System.out.print(prodName);
+			 System.out.println("============================");
 			// 查詢處理 放入session
 			skuPage = spuService.selectedPage(prodSelection,curPage, PAGE_SIZE);
 			req.getSession().setAttribute("skuPage", skuPage);
 			req.getRequestDispatcher("/views/ecommerce/Pet_Supplement.jsp").forward(req, resp);
 			return;
 
+			
 		}
 
 		return;

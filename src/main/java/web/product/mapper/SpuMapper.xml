@@ -11,18 +11,28 @@
 			jdbcType="VARCHAR" />
 
 
-		<!-- <result column="imgID" property="pImgVO.imgID" jdbcType="INTEGER" 
-			/> <result column="spuID" property="pImgVO.spuID" jdbcType="INTEGER" /> <result 
-			column="spuImg" property="pImgVO.spuImg" jdbcType="LONGVARBINARY" /> <result 
-			column="mainImg" property="pImgVO.mainImg" jdbcType="BIT" /> -->
+		<!-- <result column="imgID" property="pImgVO.imgID"
+			jdbcType="INTEGER" />
+		<result column="spuID" property="pImgVO.spuID"
+			jdbcType="INTEGER" />
+		<result column="spuImg" property="pImgVO.spuImg"
+			jdbcType="LONGVARBINARY" />
+		<result column="mainImg" property="pImgVO.mainImg"
+			jdbcType="BIT" /> -->
 
-		<!-- <collection property="skuVO" ofType="com.product.model.VO.SkuVO"> 
-			<id column="skuID" property="skuID" jdbcType="INTEGER" /> <result column="spuID" 
-			property="spuID" jdbcType="INTEGER" /> <result column="skuPrice" property="skuPrice" 
-			jdbcType="INTEGER" /> <result column="stock" property="stock" jdbcType="INTEGER" 
-			/> <result column="specAttr" property="specAttr" jdbcType="CHAR" /> <result 
-			column="status" property="status" jdbcType="INTEGER" /> <result column="addedTime" 
-			property="addedTime" jdbcType="TIMESTAMP" /> </collection> -->
+
+		<collection property="skuVO"
+			ofType="web.product.entity.SkuVO">
+			<id column="skuID" property="skuID" jdbcType="INTEGER" />
+			<result column="spuID" property="spuID" jdbcType="INTEGER" />
+			<result column="skuPrice" property="skuPrice"
+				jdbcType="INTEGER" />
+			<result column="stock" property="stock" jdbcType="INTEGER" />
+			<result column="specAttr" property="specAttr" jdbcType="CHAR" />
+			<result column="status" property="status" jdbcType="INTEGER" />
+			<result column="addedTime" property="addedTime"
+				jdbcType="TIMESTAMP" />
+		</collection>
 	</resultMap>
 
 	<!-- sku -->
@@ -45,14 +55,27 @@
 			jdbcType="VARCHAR" />
 		<result column="descript" property="spuVO.descript"
 			jdbcType="VARCHAR" />
-
+</resultMap>
 
 		<!-- <result column="imgID" property="pImgVO.imgID" jdbcType="INTEGER" 
 			/> <result column="spuID" property="pImgVO.spuID" jdbcType="INTEGER" /> <result 
 			column="spuImg" property="pImgVO.spuImg" jdbcType="LONGVARBINARY" /> <result 
 			column="mainImg" property="pImgVO.mainImg" jdbcType="BIT" /> -->
 
-	</resultMap>
+	
+
+	<!-- 取得商品細節 -->
+	<select id="getDetail" resultMap="product">
+
+		select
+		spuName, p.spuID, descript, specAttr
+		from spu p
+		join sku k
+		on p.spuID = k.spuID
+		where k.spuID = #{spuID}
+
+	</select>
+
 
 
 
@@ -100,11 +123,7 @@
 
 	</select>
 
-	<!-- 3種可能 低價 低價高價 高價
-		1. 只輸入最低價 price > 低價
-		2. 只輸入最高價 price < 高價
-		3. 都輸入 就是之間
-	 -->
+	<!-- 3種可能 低價 低價高價 高價 1. 只輸入最低價 price > 低價 2. 只輸入最高價 price < 高價 3. 都輸入 就是之間 -->
 	<select id="selectedPage"
 		parameterType="web.product.entity.ProdSelection" resultMap="prodMap">
 
@@ -119,25 +138,24 @@
 			<if
 				test="(lowC != null and lowC !='') and (highC == null or highC =='')">
 				and k.skuPrice &gt;= #{lowC}
-			</if> 
+			</if>
 			<if
-				test="(lowC == null and lowC =='') and (highC != null or highC !='')">
+				test="(lowC == null or lowC =='') and (highC != null and highC !='')">
 				and k.skuPrice &lt;= #{highC}
 			</if>
 			<if
 				test="(lowC != null and lowC !='') and (highC != null and highC !='')">
 				and k.skuPrice between #{lowC} and #{highC}
 			</if>
-			 <if test="prodName !=null and prodName != ''">
-                and p.spuName like '%${prodName}%'
-            </if>
-  
-             <if test="ctgID !=null and ctgID != ''">
-                and p.ctgID = #{ctgID}
-            </if>
-            
-			
-			
+			<if test="prodName !=null and prodName != ''">
+				and p.spuName like '%${prodName}%'
+			</if>
+
+			<if test="ctgID !=null and ctgID != ''">
+				and p.ctgID = #{ctgID}
+			</if>
+
+
 		</where>
 
 
