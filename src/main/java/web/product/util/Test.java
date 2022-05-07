@@ -2,6 +2,7 @@ package web.product.util;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.ibatis.io.Resources;
@@ -17,7 +18,7 @@ import web.product.entity.SpuVO;
 public class Test {
 
 	public static void main(String[] args) throws IOException {
-		testmapper2();
+		testMapper();
 	}
 	
 	public static void testMapper() throws IOException {
@@ -30,11 +31,11 @@ public class Test {
 		
 		SpuDAO spuDAO = session.getMapper(SpuDAO.class);
 		
-		List<SkuVO> selectedPage = spuDAO.selectedPage(new ProdSelection(800,1000,2,null));
-		selectedPage.forEach(e->{
-		
-			System.out.println(e);
-		});
+		ArrayList<String> arrayList = new ArrayList<String>();
+		arrayList.add("5kg");
+		arrayList.add("鮭魚");
+		SkuVO priceAndStock = spuDAO.getPriceAndStock(arrayList,4);
+		System.out.println(priceAndStock);
 		
 		
 		

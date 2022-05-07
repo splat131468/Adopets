@@ -88,9 +88,7 @@
             // 預設值 ctgName = -1;
             if (typeof (curPage) == "undefined") {
               curPage = 0;
-            }
-
-         
+            }      
             $.ajax({
               url: "${pageContext.request.contextPath}/comAction",
               data: JSON.stringify({

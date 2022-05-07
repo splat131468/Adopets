@@ -1,6 +1,7 @@
 package web.product.controller;
 
 import java.io.ByteArrayInputStream;
+import java.io.DataOutput;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -18,12 +19,15 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.io.IOUtils;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 import web.product.entity.PImgVO;
+import web.product.entity.SkuVO;
 import web.product.entity.SpuVO;
 import web.product.service.PImgService;
+import web.product.service.SkuService;
 import web.product.service.SpuService;
 import web.product.service.impl.PImgServiceImp;
 import web.product.service.impl.SpuServiceImp;
@@ -127,7 +131,35 @@ public class EcomCartAction extends HttpServlet {
 		String data = IOUtils.toString(request.getInputStream(), StandardCharsets.UTF_8);
 
 		JsonObject fromJson = gson.fromJson(data, JsonObject.class);
-//		String action = fromJson.get("action").getAsString();
+			
+		JsonElement jsonElement = fromJson.get("action");
+		String action = null;
+		if(jsonElement!=null) {
+			 action = jsonElement.getAsString();
+		}
+		if("getPrcSk".equals(action)) {
+			System.out.println(action);
+			
+			JsonArray asJsonArray = fromJson.get("arr").getAsJsonArray();
+			// 迴圈處理
+			List<String> arr = new ArrayList<String>();
+			
+			asJsonArray.forEach(e->{
+				arr.add(e.getAsString().trim());
+			});
+			 jsonElement = fromJson.get("spuID");
+			 Integer spuID =null;
+			 if(jsonElement!=null) {
+				  spuID = jsonElement.getAsInt();
+			}
+			 
+			 
+			 SkuVO stockAndPrice = spuService.getStockAndPrice(arr, spuID);
+			 System.out.println(stockAndPrice);
+			 response.getWriter().append(gson.toJson(stockAndPrice));
+			
+			
+		}
 
 	}
 

@@ -60,6 +60,7 @@
                     });
 
 
+
                     // 規格排版
                     let attr = [];
                     <c:forEach items="${skuVO}" var="skuVO">
@@ -79,7 +80,13 @@
                             attrN1 = n1;
                         }
                         if (n2.length != 0) {
+
+
                             attrN2 = n2;
+
+
+
+                            console.log("84" + attrN1);
                         }
                         let v1 = attr[i].attrV1.trim();
                         let v2 = attr[i].attrV2.trim();
@@ -104,28 +111,102 @@
                     // 嵌入 ist
                     if (attrN1.length != null) {
                         // 先加入元素
-                        row += attrN1+" : ";
+                        row += attrN1 + " : ";
                         // v1元素
-                        for(let i = 0 ; i<attrV1.length; i++){
-                           row += '<span style="margin:0px 3px">'+attrV1[i]+'</span>';
-                           row+='<input type="radio" name="spec1" >'
+                        for (let i = 0; i < attrV1.length; i++) {
+                            row += '<span style="margin:0px 3px">' + attrV1[i] + '</span>';
+                            row += '<input id="ck" type="radio" name="spec1" value="' + attrV1[i] + '" >'
                         }
-                        row+="<br><br>"
-                    } 
-                    
-                    if (attrN2.length != null) {
-                        
-                        // 先加入元素
-                        row += attrN2+" : ";
-                        // v1元素
-                        for(let i = 0 ; i<attrV2.length; i++){
-                            row += '<span style="margin:0px 3px">'+attrV2[i]+'</span>';
-                           row+='<input type="radio" name="spec2" style="margin:0px 3px" >'
-                        }
-                        row+="<br><br>"
+                        row += "<br><br>"
+                        console.log(row);
                     }
-                    console.log(row);
                     $("#ist").after(row);
+                    row = "";
+
+                    if (attrN2 != null) {
+
+                        // 先加入元素
+                        row += attrN2 + " : ";
+                        // v1元素
+                        for (let i = 0; i < attrV2.length; i++) {
+                            row += '<span style="margin:0px 3px">' + attrV2[i] + '</span>';
+                            row += '<input id="ck" type="radio" name="spec2" value="' + attrV2[i] + '"  style="margin:0px 3px" >'
+                        }
+                        row += "<br><br>"
+                    }
+
+                    $("#ist").after(row);
+
+                    console.log(attrN1)
+                    console.log(attrN2)
+                    console.log(attrV1)
+                    console.log(attrV2)
+
+
+
+                    // 選擇屬性後尋找對應的數量以及價格
+                    $(document).on("change", "#ck", function () {
+
+
+
+                        let spuID = $("#spuID").val();
+                        let key1 = null;
+                        key1 = $("input[name='spec1']:checked").val();
+
+
+
+                        let key2 = null;
+                        // 如果attrN2 == null 就不取
+                        if (attrN2 != null) {
+                            key2 = $("input[name='spec2']:checked").val();
+                        }
+
+
+                        // 若n2不為null 代表有兩個屬性，需點選兩個才傳請求
+                        if (attrN2 != null && key1 != null && key2 != null) {
+                            let arr = [key1, key2];
+                            let data = { arr: arr, action: "getPrcSk", spuID, spuID };
+
+
+                            fetch("${pageContext.request.contextPath}/cartAction", {
+                                method: 'POST',
+                                body: JSON.stringify(data)
+                            }).then(function (response) {
+                                return response.json(); 
+                            }).then(function (res) {
+                                $("#pnum").text(res.stock); 
+                                $("#price").text(res.skuPrice); 
+                                
+                            })
+
+                        } else if (attrN1 != null && key1 != null) {
+                            let arr = [key1];
+                            let data = { arr: arr, action: "getPrcSk", spuID, spuID };
+
+
+                            fetch("${pageContext.request.contextPath}/cartAction", {
+                                method: 'POST',
+                                body: JSON.stringify(data)
+                            }).then(function (response) {
+                                return response.json(); 
+                            }).then(function (res) {
+                                $("#pnum").text(res.stock); 
+                                $("#price").text(res.skuPrice); 
+                                
+                            })
+
+
+
+                        }
+
+                    });
+
+
+
+
+
+
+
 
                 });
             </script>
@@ -516,11 +597,13 @@
                             </div>
                         </div>
                         <div class="col-lg-6 col-md-6">
+                            <input id="spuID" type="hidden" value="${spuID}">
                             <div class="product__details__text">
                                 <h3>${prodName}</h3>
                                 <!-- <div class="product__details__price">$價格</div> -->
                                 <h6><strong>商品詳情</strong></h6>
                                 <p id="ist">${descript}</p>
+
 
                                 <div class="product__details__quantity">
                                     <div class="quantity">
@@ -532,15 +615,8 @@
                                 <a href="#" class="primary-btn">加入購物車</a>
                                 <a href="#" class="primary-btn">立刻購買</a>
                                 <ul>
-                                    <li><b>剩餘數量</b> <span>寫數量</span></li>
-                                    <li><b>分享</b>
-                                        <div class="share">
-                                            <a href="#"><i class="fa fa-facebook"></i></a>
-                                            <a href="#"><i class="fa fa-twitter"></i></a>
-                                            <a href="#"><i class="fa fa-instagram"></i></a>
-                                            <a href="#"><i class="fa fa-pinterest"></i></a>
-                                        </div>
-                                    </li>
+                                    <li><b >剩餘數量</b> <span style="font-size: 25px; color:red" id="pnum"></span></li>
+                                    <li><b >價格</b> <span style="font-size: 25px; color:red" id="price"></span></li>
                                 </ul>
                             </div>
                         </div>

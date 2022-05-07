@@ -31,6 +31,31 @@ public class SpuServiceImp implements SpuService {
 		
 	}
 
+	
+	// 取得產品價格 數量
+	public SkuVO getStockAndPrice(List<String> key, Integer spuID) {
+		
+		try {
+			InputStream inputStream = Resources.getResourceAsStream("mybatis-config.xml");
+			SqlSessionFactoryBuilder sqlSessionFactoryBuilder = new SqlSessionFactoryBuilder();
+			SqlSessionFactory factory = sqlSessionFactoryBuilder.build(inputStream);
+			SqlSession session = factory.openSession();
+
+			SpuDAO spuDAO = session.getMapper(SpuDAO.class);
+			
+			SkuVO skuVO = spuDAO.getPriceAndStock(key, spuID);
+		
+
+			session.commit();
+			return skuVO;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
+	
+	
 	public int insertSPU(int ctgID, String spuName, String descript) {
 
 		SpuVO spuVO = new SpuVO();
@@ -204,5 +229,7 @@ public class SpuServiceImp implements SpuService {
 		private String attrV1;
 		private String attrV2;
 	}
+
+	
 
 }

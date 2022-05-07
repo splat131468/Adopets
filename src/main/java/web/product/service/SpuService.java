@@ -29,6 +29,8 @@ public interface SpuService {
 	
 	// 多對一關係 
 	List<SpuVO>  getDetail(SpuVO spuVO);
+	
+	SkuVO getStockAndPrice(List<String> key , Integer spuID);
 
 
 

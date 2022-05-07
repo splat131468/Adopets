@@ -31,4 +31,6 @@ public interface SpuDAO {
 	// 取得商品細節
 	List<SpuVO> getDetail(SpuVO spuVO);
 	
+	SkuVO getPriceAndStock( @Param("key") List<String> key,@Param("spuID")Integer spuID);
+	
 }

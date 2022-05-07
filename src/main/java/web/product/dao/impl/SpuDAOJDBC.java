@@ -81,6 +81,12 @@ public class SpuDAOJDBC implements SpuDAO {
 		return null;
 	}
 
+	@Override
+	public SkuVO getPriceAndStock(List<String> key,Integer spuID) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	
 
 }
