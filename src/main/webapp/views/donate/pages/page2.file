@@ -1,0 +1,44 @@
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+
+<head>
+<style>
+	 .form-group{
+	  margin-left: 22px;
+	  font-weight: 500;
+	  font-size: 16px;
+	  margin-top: 10px;
+	}
+	nav .pagination{
+	  margin-right: 20px;
+	  margin-top: 1px;
+	}
+
+</style>	
+	
+</head>
+
+<div style="width: 100%;">
+<nav aria-label="Page navigation example">
+	<div class="form-group form-inline" style="float: left;">
+         總共<%=pageNumber%>頁，共有 <%=rowNumber%> 筆的資料。
+     </div>
+     	
+	<ul class="pagination" style="float: right;">
+		<li class="page-item"><a class="page-link" href="<%=request.getRequestURI()%>?whichPage=1">首頁</a></li>
+	<%if(pageIndex>=rowsPerPage){%>
+		<li class="page-item"><a class="page-link" href="<%=request.getRequestURI()%>?whichPage=<%=whichPage-1%>">上一頁</a></li>
+	<%}%>
+		<li class="page-item"><a class="page-link" href="<%=request.getRequestURI()%>?whichPage=1">1</a></li>
+		<li class="page-item"><a class="page-link" href="<%=request.getRequestURI()%>?whichPage=2">2</a></li>
+		<li class="page-item"><a class="page-link" href="<%=request.getRequestURI()%>?whichPage=3">3</a></li>
+	<%if(pageIndex<pageIndexArray[pageNumber-1]){%>
+		<li class="page-item"><a class="page-link" href="<%=request.getRequestURI()%>?whichPage=<%=whichPage+1%>">下一頁</a></li>
+	<%}%>
+		<li class="page-item"><a class="page-link" href="<%=request.getRequestURI()%>?whichPage=<%=pageNumber%>">最後一頁</a></li>
+	</ul>
+</nav>
+</div>
+
+
+ 
+ 
