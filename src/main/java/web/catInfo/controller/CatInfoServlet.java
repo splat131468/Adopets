@@ -36,9 +36,14 @@ public class CatInfoServlet extends HttpServlet {
 			throws ServletException, IOException {
 		req.setCharacterEncoding("UTF-8");
 		res.setContentType("text/html; charset=UTF-8");
+		String id = req.getParameter("id");
 		String action = req.getParameter("action");
-		PrintWriter out = res.getWriter();
 		
+		System.out.println("hello:" + id + " hello: " + action);
+		
+		
+		PrintWriter out = res.getWriter();
+		out.println(id);
 		
 		
 		

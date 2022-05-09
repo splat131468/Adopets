@@ -12,7 +12,7 @@
 <html>
 <head>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-<title>貓咪資料修改 - update_cat_input.jsp</title>
+<title>貓咪資料修改</title>
 
 <style>
   table#table-1 {
@@ -97,8 +97,9 @@
 
 <table id="table-1">
 	<tr><td>
-		 <h3>貓咪資料修改 - update_cat_input.jsp</h3>
-		 <h4><a href="${pageContext.request.contextPath}/views/catInfo/select_page.jsp">回首頁</a></h4>
+		 <h3>貓咪資料修改(update_cat_input.jsp)</h3>
+		 <h4><a href="${pageContext.request.contextPath}/views/catInfo/select_page.jsp">回後台首頁</a></h4>
+		 <h4><a href="${pageContext.request.contextPath}/views/catInfo/My_home.jsp">回Adopets首頁</a></h4>
 	</td></tr>
 </table>
 
@@ -127,6 +128,44 @@
 	<tr>
 		<td>貓咪編號:<font color=red><b>*</b></font></td>
 		<td><%=catInfoVO.getCatID()%></td>
+	</tr>
+	<tr>
+		<td>貓咪品種:<font color=red><b>*</b></font></td>
+		<td><%=catInfoVO.getBreed()%></td>
+	</tr>
+	<tr>
+		<td>貓咪年齡:<font color=red><b>*</b></font></td>
+		
+		<c:choose>
+		   <c:when	 test="${catInfoVO.age == 0}">
+		   	<td>幼貓</td>
+		   </c:when>
+		   <c:when	 test="${catInfoVO.age == 1}">
+		   	<td>小貓</td>
+		   </c:when>
+		   <c:when	 test="${catInfoVO.age == 2}">
+		   	<td>成貓</td>
+		   </c:when>
+		   <c:otherwise>
+			<td>老貓</td>		   	
+		   </c:otherwise>
+		</c:choose>
+	</tr>
+	<tr>
+		<td>貓咪大小:<font color=red><b>*</b></font></td>
+		<td><%=catInfoVO.getSize()%></td>
+	</tr>
+	<tr>
+		<td>貓咪性別:<font color=red><b>*</b></font></td>
+		<td><%=catInfoVO.getSex()%></td>
+	</tr>
+	<tr>
+		<td>貓咪毛色:<font color=red><b>*</b></font></td>
+		<td><%=catInfoVO.getCoatColor()%></td>
+	</tr>
+	<tr>
+		<td>貓咪眼睛顏色:<font color=red><b>*</b></font></td>
+		<td><%=catInfoVO.getEyeColor()%></td>
 	</tr>
 	<tr>
 		<td>認養人會員編號:</td>

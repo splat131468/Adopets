@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Context>
 
-    <Resource
-    name="jdbc/jndi"
-    type="javax.sql.DataSource"
-    maxActive="8"
-    maxWait="10000"
-    maxIdle="10"
-    username="root"
-    password="password"
-    driverClassName="com.mysql.cj.jdbc.Driver"
-    url="jdbc:mysql://localhost:3306/ADOPETS"
-    />
+    
+    <Resource 
+	auth="Container"
+	driverClassName="com.mysql.cj.jdbc.Driver" 
+	maxIdle="10" 
+	maxTotal="20"
+	maxWaitMillis="-1" 
+	name="jdbc/jndi" 
+	password="password"
+	type="javax.sql.DataSource"
+	url="jdbc:mysql://localhost:3306/ADOPETS?serverTimezone=Asia/Taipei"
+	username="root" />
 
 </Context>

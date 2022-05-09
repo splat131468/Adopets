@@ -53,8 +53,9 @@
 
 <table id="table-1">
 	<tr><td>
-		 <h3>Cat Info - listAllCat.jsp</h3>
-		 <h4><a href="${pageContext.request.contextPath}/views/catInfo/select_page.jsp">回首頁</a></h4>
+		 <h3>貓咪列表 (listAllCat.jsp)</h3>
+		 <h4><a href="${pageContext.request.contextPath}/views/catInfo/select_page.jsp">回後台首頁</a></h4>
+		 <h4><a href="${pageContext.request.contextPath}/views/catInfo/My_search.jsp">回Adopets search首頁</a></h4>
 	</td></tr>
 </table>
 
