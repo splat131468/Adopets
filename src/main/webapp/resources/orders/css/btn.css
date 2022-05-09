@@ -1,0 +1,11 @@
+button{
+  cursor: pointer;
+}
+
+.btn_modal {
+  border-radius: 4px;
+ }
+ 
+ .btn_modal_del {
+   border-radius: 4px;
+  }
