@@ -8,11 +8,26 @@
 
 <%
 	CatInfoService catInfoService = new CatInfoService();
-    List<CatInfoVO> list = catInfoService.getAll();
-    pageContext.setAttribute("list",list);
+	/* CatInfoVO catInfoVO = new CatInfoVO(); */
+	CatInfoVO catInfoVO = (CatInfoVO) request.getSession().getAttribute("catInfoVO");
+	/* List<CatInfoVO> list = catInfoService.getMulti(catInfoVO); */
+	
+	/* int listn = (Integer) request.getSession().getAttribute("size"); */
+	/* List<CatInfoVO> list = catInfoService.getAll(); */
+ 	List<CatInfoVO> lists = (ArrayList) request.getSession().getAttribute("lists");
+ 	/* pageContext.setAttribute("list",list); */
+  	pageContext.setAttribute("lists",request.getSession().getAttribute("lists"));
+ 	/* pageContext.setAttribute("list",request.getSession().getAttribute("list")); */
+ /* 	if (!request.getSession().isNew()) {
+	 	Integer n = (Integer) request.getSession().getAttribute("size");
+ 		
+ 	} */
+    
+  
 %>
 
-
+<%-- --${catInfoVO.breed}--
+--${catInfoVO.breed == null}-- --%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -22,8 +37,9 @@
 
 
     <title>貓咪搜尋頁面</title>
-    <link rel="stylesheet" href="./files/my_search_1.css">
-    <link rel="stylesheet" href="./files/my_search_2.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/views/catInfo/files/my_search_1.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/views/catInfo/files/my_search_2_1.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/views/catInfo/files/my_search_3.css">
     
     <style>
         body {
@@ -39,6 +55,7 @@
 
 
 <body class="js-globalEnsighten ">
+			  
     <!--常用標籤常用標籤常用標籤常用標籤常用標籤常用標籤常用標籤常用標籤常用標籤常用標籤常用標籤常用標籤常用標籤-->
     <div id="Svg_Defs_Critical" class="u-isHidden">
         <svg>
@@ -131,7 +148,9 @@
                 <pfdc-tracking-bridge pf-mix-id="trackingBridge"></pfdc-tracking-bridge>
                 <pfdc-header class="header">
                     <header class="header-inner">
+
                         <!--我是logo我是logo我是logo我是logo我是logo我是logo我是logo我是logo我是logo我是logo我是logo我是logo-->
+
                         <div class="header-inner-main">
                             <a href="${pageContext.request.contextPath}/views/catInfo/My_home.jsp" rel="home" class="site-logo">
                                 <img src="${pageContext.request.contextPath}/views/catInfo/img/Adopets.svg" alt="Home">
@@ -263,13 +282,20 @@
                                                                     <use xlink:href="#icon-cat"></use>
                                                                 </svg>
                                                                 
-                                                                <%@ include file="my_search_page1.file" %> 
+                                                                <%@ include file="my_search_page1.file" %>
                                                                 
-                                                                <span
-                                                                    class="animalSearchHeader-inner-fundamentalSelectComplete-field-txt-wrap"
-                                                                    data-test="Search_Pet_Results_Count">
-                                                                    共有<span class="animalSearchHeader-inner-fundamentalSelectComplete-field-txt-light">
-                                                                        <%=rowNumber%> </span> 隻喵
+                                                              <%--   <div> 
+                                                                test 
+                                                                test 
+                                                                test 
+                                                               	<%=request.getAttribute("size") %>
+                                                               	<%=lists.size() %>
+                                                                <%=pageContext.getAttribute("lists") %>
+                                                                <%=request.getSession().getId() %>
+                                                                <%=request.getSession().isNew() %>
+                                                                </div> --%>
+                                                                <span class="count">
+                                                                    共有 ${lists.size()} 隻喵
                                                                 </span>
                                                             </button>
                                                         </pf-focus-manager>
@@ -330,7 +356,7 @@
                                                                                 Black</div>
                                                                         </a></li>
                                                                 </ul><a
-                                                                    href="https://www.petfinder.com/user/search-alerts"
+                                                                    href=""
                                                                     class="savedSearchAnimalSearch-editBtn">
                                                                     <div class="txt m-txt_lg">Edit saved searches</div>
                                                                     <span class="icon icon_sm"><svg focusable="false"
@@ -348,14 +374,14 @@
                                                     <div class="savedSearchAnimalSearch-wrap u-isHidden">
                                                         <ul class="savedSearchAnimalSearch-list" aria-expanded="false">
                                                             <li><a class="u-displayBlock"
-                                                                    href="https://www.petfinder.com/search/?saved_search=5ed47179-4e1b-46ba-80e3-3a1884162a45">
+                                                                    href="">
                                                                     <div class="txt m-txt_xl m-txt_ellipsisOverflow">
                                                                         Cats near New York City, NY | Calico</div>
                                                                     <div class="txt txt_md m-txt_ellipsisOverflow">Cats,
                                                                         New York City, NY, 100 miles, Calico</div>
                                                                 </a></li>
                                                             <li><a class="u-displayBlock"
-                                                                    href="https://www.petfinder.com/search/?saved_search=0f5f3e82-39e7-45a9-8d70-9a194e29cdc8">
+                                                                    href="">
                                                                     <div class="txt m-txt_xl m-txt_ellipsisOverflow">
                                                                         Cats near New York City, NY | Tabby (Tiger
                                                                         Striped)</div>
@@ -364,13 +390,13 @@
                                                                         Striped)</div>
                                                                 </a></li>
                                                             <li><a class="u-displayBlock"
-                                                                    href="https://www.petfinder.com/search/?saved_search=b5aea7d2-f716-4016-9f83-08301123956a">
+                                                                    href="">
                                                                     <div class="txt m-txt_xl m-txt_ellipsisOverflow">
                                                                         Cats near New York City, NY | Black</div>
                                                                     <div class="txt txt_md m-txt_ellipsisOverflow">Cats,
                                                                         New York City, NY, 100 miles, Black</div>
                                                                 </a></li>
-                                                        </ul><a href="https://www.petfinder.com/user/search-alerts"
+                                                        </ul><a href=""
                                                             class="savedSearchAnimalSearch-editBtn">
                                                             <div class="txt m-txt_lg">Edit saved searches</div><span
                                                                 class="icon icon_sm"><svg focusable="false"
@@ -389,7 +415,7 @@
                         </div>
                     </div>
 
-                    <div class="tier tier_padCustom@maxMd u-vr6x" style="--tier-pad-size: 10px;">
+                    <div id="main1" class="tier tier_padCustom@maxMd u-vr6x" style="--tier-pad-size: 10px;">
 
                         <pfdc-element observe-state="animalSearch.savedSearch">
                             <p pf-mix-state-value="searchSetAlertText" class="u-isVisuallyHidden" aria-live="polite">
@@ -405,7 +431,7 @@
                                     <br>find your best match
                                 </h1>
                                 <p class="txt txt_h3 u-vr6x m-txt_alignCenter">It only takes 60 seconds!</p>
-                                <a href="https://www.petfinder.com/user/profile/create/"
+                                <a href=""
                                     class="btn m-btn_full">Continue</a>
                                 <pf-element on-click="ui.deactivate" data-target="#Best_Matches_Modal">
                                     <button pf-modal-close-btn="" class="modal-closeBtn" id="Best_Matches_Close"
@@ -423,12 +449,12 @@
                                     <br>sort by best match
                                 </h1>
                                 <p class="txt m-txt_lg u-vr4x m-txt_alignCenter">It only takes 60 seconds!</p>
-                                <a href="https://www.petfinder.com/user/profile/create/?experience=loginAtEnd"
+                                <a href=""
                                     class="btn m-btn_full u-vr4x">Continue</a>
                                 <div>
                                     <p class="txt m-txt_lg u-vr4x m-txt_alignCenter">
                                         Already have a profile?
-                                        <a href="https://www.petfinder.com/user/login/?next=https%3A%2F%2Fwww.petfinder.com%2Fuser%2Fprofile%2Fcreate%2F%3Fexperience%3DloginAtEnd"
+                                        <a href=""
                                             class="txt txt_link m-txt_lg m-txt_underline ">
                                             Log in.
                                         </a>
@@ -444,406 +470,214 @@
                         </pfdc-modal>
 
                         <pfdc-animal-search class="u-vr6x" pf-mix-id="animalSearchElement">
-                            <div class="loadableContent s-notObserved"
-                                pf-mix-state-class="loadableContent_isLoading: ui.animalSearch.isPerformingFirstLoad, s-notObserved: !ui.animalSearch.isPerformingFirstLoad">
-                                <div>
-                                    <div class="loadableContent-displayWhileLoading" data-test="Search_Sneezeguard">
-                                        <div class="loadableContent-displayWhileLoading-filters">
-                                            <ul class="vrArray m-vrArray_4x">
-                                                <li>
-                                                    <div class="blockTxt m-blockText_centered u-vr2x"></div>
-                                                    <div class="placeholder placeholder_button"></div>
-                                                </li>
-                                                <li>
-                                                    <div class="blockTxt m-blockText_centered u-vr2x"></div>
-                                                    <div class="placeholder placeholder_button"></div>
-                                                </li>
-                                                <li>
-                                                    <div class="blockTxt m-blockText_centered u-vr2x"></div>
-                                                    <div class="placeholder placeholder_button"></div>
-                                                </li>
-                                                <li>
-                                                    <div class="blockTxt m-blockText_centered u-vr2x"></div>
-                                                    <div class="placeholder placeholder_button"></div>
-                                                </li>
-                                                <li>
-                                                    <div class="blockTxt m-blockText_centered u-vr2x"></div>
-                                                    <div class="placeholder placeholder_button"></div>
-                                                </li>
-                                                <li>
-                                                    <div class="blockTxt m-blockText_centered u-vr2x"></div>
-                                                    <div class="placeholder placeholder_button"></div>
-                                                </li>
-                                                <li>
-                                                    <div class="blockTxt m-blockText_centered u-vr2x"></div>
-                                                    <div class="placeholder placeholder_button"></div>
-                                                </li>
-                                                <li>
-                                                    <div class="blockTxt m-blockText_centered u-vr2x"></div>
-                                                    <div class="placeholder placeholder_button"></div>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                        <div class="loadableContent-displayWhileLoading-filtersBtn">
-                                            <div class="placeholder placeholder_button"></div>
-                                        </div>
-
-                                        <div class="loadableContent-displayWhileLoading-cards">
-                                            <div class="grid grid_gutter grid_gutterLg@minMd m-grid_stretch u-vr6x">
-                                                <div
-                                                    class="grid-col grid-col_1/2@minSm grid-col_1/3@minMd grid-col_1/4@minXl">
-                                                    <div class="petCard petCard_placeholder">
-                                                        <div class="petCard-media"></div>
-                                                        <div class="petCard-body">
-                                                            <div class="petCard-body-details">
-                                                                <div class="blockTxt"></div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div
-                                                    class="grid-col grid-col_1/2@minSm grid-col_1/3@minMd grid-col_1/4@minXl">
-                                                    <div class="petCard petCard_placeholder">
-                                                        <div class="petCard-media"></div>
-                                                        <div class="petCard-body">
-                                                            <div class="petCard-body-details">
-                                                                <div class="blockTxt"></div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div
-                                                    class="grid-col grid-col_1/2@minSm grid-col_1/3@minMd grid-col_1/4@minXl">
-                                                    <div class="petCard petCard_placeholder">
-                                                        <div class="petCard-media"></div>
-                                                        <div class="petCard-body">
-                                                            <div class="petCard-body-details">
-                                                                <div class="blockTxt"></div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div
-                                                    class="grid-col grid-col_1/2@minSm grid-col_1/3@minMd grid-col_1/4@minXl">
-                                                    <div class="petCard petCard_placeholder">
-                                                        <div class="petCard-media"></div>
-                                                        <div class="petCard-body">
-                                                            <div class="petCard-body-details">
-                                                                <div class="blockTxt"></div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div
-                                                    class="grid-col grid-col_1/2@minSm grid-col_1/3@minMd grid-col_1/4@minXl">
-                                                    <div class="petCard petCard_placeholder">
-                                                        <div class="petCard-media"></div>
-                                                        <div class="petCard-body">
-                                                            <div class="petCard-body-details">
-                                                                <div class="blockTxt"></div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div
-                                                    class="grid-col grid-col_1/2@minSm grid-col_1/3@minMd grid-col_1/4@minXl">
-                                                    <div class="petCard petCard_placeholder">
-                                                        <div class="petCard-media"></div>
-                                                        <div class="petCard-body">
-                                                            <div class="petCard-body-details">
-                                                                <div class="blockTxt"></div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="grid-col">
-                                                    <div class="placeholder placeholder_ad"></div>
-                                                </div>
-
-                                                <div
-                                                    class="grid-col grid-col_1/2@minSm grid-col_1/3@minMd grid-col_1/4@minXl">
-                                                    <div class="petCard petCard_placeholder">
-                                                        <div class="petCard-media"></div>
-                                                        <div class="petCard-body">
-                                                            <div class="petCard-body-details">
-                                                                <div class="blockTxt"></div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div
-                                                    class="grid-col grid-col_1/2@minSm grid-col_1/3@minMd grid-col_1/4@minXl">
-                                                    <div class="petCard petCard_placeholder">
-                                                        <div class="petCard-media"></div>
-                                                        <div class="petCard-body">
-                                                            <div class="petCard-body-details">
-                                                                <div class="blockTxt"></div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div
-                                                    class="grid-col grid-col_1/2@minSm grid-col_1/3@minMd grid-col_1/4@minXl">
-                                                    <div class="petCard petCard_placeholder">
-                                                        <div class="petCard-media"></div>
-                                                        <div class="petCard-body">
-                                                            <div class="petCard-body-details">
-                                                                <div class="blockTxt"></div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div
-                                                    class="grid-col grid-col_1/2@minSm grid-col_1/3@minMd grid-col_1/4@minXl">
-                                                    <div class="petCard petCard_placeholder">
-                                                        <div class="petCard-media"></div>
-                                                        <div class="petCard-body">
-                                                            <div class="petCard-body-details">
-                                                                <div class="blockTxt"></div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div
-                                                    class="grid-col grid-col_1/2@minSm grid-col_1/3@minMd grid-col_1/4@minXl">
-                                                    <div class="petCard petCard_placeholder">
-                                                        <div class="petCard-media"></div>
-                                                        <div class="petCard-body">
-                                                            <div class="petCard-body-details">
-                                                                <div class="blockTxt"></div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div
-                                                    class="grid-col grid-col_1/2@minSm grid-col_1/3@minMd grid-col_1/4@minXl">
-                                                    <div class="petCard petCard_placeholder">
-                                                        <div class="petCard-media"></div>
-                                                        <div class="petCard-body">
-                                                            <div class="petCard-body-details">
-                                                                <div class="blockTxt"></div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                            <div class="x">
+                                <div class="xx">
+                                    
 
                                     <div class="searchContainer loadableContent-displayWhenLoaded">
                                         <!-- Animal Search: Loaded -->
-                                        <div class="searchContainer-filters">
-                                            <pfdc-element
-                                                render-on-state-change="animalSearch.results.searchSummary.animalType">
-                                                <div
-                                                    pf-mix-show="state.animalSearch.results.searchSummary.animalType === &#39;Dogs&#39;">
-                                                </div>
-                                                <div
-                                                    pf-mix-show="state.animalSearch.results.searchSummary.animalType === &#39;Cats&#39;">
-                                                    <pfdc-search-match-cta></pfdc-search-match-cta>
-                                                </div>
-                                            </pfdc-element>
-                                            <div pf-mix-id="pageChangeScrollTarget" class="u-isHidden@minLg"></div>
-
-                                            <!--側邊欄側邊欄側邊欄側邊欄側邊欄側邊欄側邊欄側邊欄側邊欄側邊欄側邊欄側邊欄-->
                                         
-                                            <div render-on-state-change="ui.filtersDisplay"
-                                                class="u-fadeInChildren"
-                                                data-transport-href="https://www.petfinder.com/pet-adoption/pet-adoption-information/pet-transport/"
-                                                style="">
-                                                <!-- Sneeze guard -->
-                                                
-
-                                                <ul class="vrArray m-vrArray_4x">
-                                                    <!--品種-->
-                                                    <li>
-                                                        <div class="txt txt_label m-txt_heavy m-txt_uppercase m-txt_alignCenter u-vr1x">
-                                                            品種</div>
-                                                        <div class="container">
-                                                            <div class="dropdown">
-                                                              <div class="select">
-                                                                <span>任意</span> 
-                                                                <i class="fa fa-chevron-left"></i>
-                                                              </div>
-                                                              <input type="hidden" name="gender">
-                                                              <ul class="dropdown-menu">
-                                                                <li id="">美國短毛貓</li>
-                                                                <li id="">米克斯</li>
-                                                              </ul>
+                                        <form METHOD="post" ACTION="${pageContext.request.contextPath}/CatInfoServlet">
+                                        <!--側邊欄側邊欄側邊欄側邊欄側邊欄側邊欄側邊欄側邊欄側邊欄側邊欄側邊欄側邊欄-->
+	                                        <div class="searchContainer-filters">
+	                                            <div class="u-fadeInChildren">
+	                                                <ul class="vrArray m-vrArray_4x">
+	                                                    <!--品種-->
+	                                                    <li>
+	                                                        <div class="txt txt_label m-txt_heavy m-txt_uppercase m-txt_alignCenter u-vr1x">品種</div>
+	                                                        <div class="container">
+	                                                            <div class="dropdown breed">
+	                                                              <div class="select">
+	                                                                <span class="sp1">任意</span> 
+	                                                                <i class="fa fa-chevron-left"></i>
+	                                                              </div>
+	                                                              <input type="hidden" name="breed">
+	                                                              <ul class="dropdown-menu">
+	                                                                <li value="美國短毛貓">美國短毛貓</li>
+	                                                                <li value="米克斯">米克斯</li>
+	                                                                <li value="布偶貓">布偶貓</li>
+	                                                              </ul>
+	                                                            </div>
+	                                                        </div>
+	                                                    </li>
+	                                                    <!--年齡-->
+	                                                    <li>
+	                                                        <div class="txt txt_label m-txt_heavy m-txt_uppercase m-txt_alignCenter u-vr1x">年齡</div>
+	                                                        <div class="container">
+	                                                            <div class="dropdown age">
+	                                                              <div class="select">
+	                                                                <span class="sp2">任意</span> 
+	                                                                <i class="fa fa-chevron-left"></i>
+	                                                              </div>
+	                                                              <input type="hidden" name="age">
+	                                                              <ul class="dropdown-menu">
+	                                                                <li value="幼貓">幼貓</li>
+	                                                                <li value="小貓">小貓</li>
+	                                                                <li value="成貓">成貓</li>
+	                                                                <li value="老貓">老貓</li>
+	                                                              </ul>
+	                                                            </div>
+	                                                        </div>
+	                                                    </li>
+	                                                    
+	                                                    
+	                                                    <!--體型大小-->
+	                                                    <li>
+	                                                        <div class="txt txt_label m-txt_heavy m-txt_uppercase m-txt_alignCenter u-vr1x">大小</div>
+	                                                        <div class="container">
+	                                                            <div class="dropdown size">
+	                                                              <div class="select">
+	                                                                <span>任意</span> 
+	                                                                <i class="fa fa-chevron-left"></i>
+	                                                              </div>
+	                                                              <input type="hidden" name="size">
+	                                                              <ul class="dropdown-menu">
+	                                                                <li value="小型">小型</li>
+	                                                                <li value="中型">中型</li>
+	                                                                <li value="大型">大型</li>
+	                                                              </ul>
+	                                                            </div>
+	                                                        </div>
+	                                                    </li>
+	                                                    <!--性別-->
+	                                                    <li>
+	                                                        <div
+	                                                            class="txt txt_label m-txt_heavy m-txt_uppercase m-txt_alignCenter u-vr1x">性別</div>
+	                                                            <div class="container">
+	                                                                <div class="dropdown sex">
+	                                                                  <div class="select">
+	                                                                    <span>任意</span> 
+	                                                                    <i class="fa fa-chevron-left"></i>
+	                                                                  </div>
+	                                                                  <input id="gender" type="hidden" name="Gender">
+	                                                                  <ul class="dropdown-menu">
+	                                                                    <li value="公">公</li>
+	                                                                    <li value="母">母</li>
+	                                                                  </ul>
+	                                                                </div>
+	                                                            </div>
+	                                                    </li>
+	                                                    <!--適合對象-->
+	                                                  <!--   <li>
+	                                                        <div
+	                                                            class="txt txt_label m-txt_heavy m-txt_uppercase m-txt_alignCenter u-vr1x">
+	                                                            適合對象</div>
+	                                                            <div class="container">
+	                                                                <div class="dropdown">
+	                                                                  <div class="select">
+	                                                                    <span>任意</span> 
+	                                                                    <i class="fa fa-chevron-left"></i>
+	                                                                  </div>
+	                                                                  <input type="hidden" name="Good With">
+	                                                                  <ul class="dropdown-menu">
+	                                                                    <li id="">小孩</li>
+	                                                                    <li id="">家裡有狗狗</li>
+	                                                                    <li id="">家裏有其他貓貓</li>
+	                                                                  </ul>
+	                                                                </div>
+	                                                            </div>                                                
+	                                                    </li> -->
+	                                                    <!--毛長-->
+	                                              <!--       <li>
+	                                                        <div
+	                                                            class="txt txt_label m-txt_heavy m-txt_uppercase m-txt_alignCenter u-vr1x">
+	                                                            毛長</div>
+	                                                            <div class="container">
+	                                                                <div class="dropdown">
+	                                                                  <div class="select">
+	                                                                    <span>任意</span> 
+	                                                                    <i class="fa fa-chevron-left"></i>
+	                                                                  </div>
+	                                                                  <input type="hidden" name="Coat Length">
+	                                                                  <ul class="dropdown-menu">
+	                                                                    <li id="">無毛</li>
+	                                                                    <li id="">短毛</li>
+	                                                                    <li id="">中等</li>
+	                                                                    <li id="">長毛</li>
+	                                                                  </ul>
+	                                                                </div>
+	                                                            </div>  
+	                                                    </li> -->
+	                                                    <!--毛色-->
+	                                                    <li>
+	                                                        <div
+	                                                            class="txt txt_label m-txt_heavy m-txt_uppercase m-txt_alignCenter u-vr1x">
+	                                                            毛色</div>
+	                                                            <div class="container">
+	                                                                <div class="dropdown coatcolor">
+	                                                                  <div class="select">
+	                                                                    <span>任意</span> 
+	                                                                    <i class="fa fa-chevron-left"></i>
+	                                                                  </div>
+	                                                                  <input type="hidden" name="Color">
+	                                                                  <ul class="dropdown-menu">
+	                                                                    <li value="黑色">黑色</li>
+	                                                                    <li value="白色">白色</li>
+	                                                                    <li value="虎斑">虎斑</li>
+	                                                                    <li value="橘色">橘色</li>
+	                                                                    <li value="三花">三花</li>
+	                                                                    <li value="藍色">藍色</li>
+	                                                                    <li value="玳瑁">玳瑁</li>
+	                                                                    <li value="豹紋">豹紋</li>
+	                                                                  </ul>
+	                                                                </div>
+	                                                            </div>
+	                                                    </li>
+	                                                    <!--是否需要特殊照顧-->
+	                                                 <!--    <li>
+	                                                        <div
+	                                                            class="txt txt_label m-txt_heavy m-txt_uppercase m-txt_alignCenter u-vr1x">是否需要特殊照顧</div>
+	                                                            <div class="container">
+	                                                                <div class="dropdown">
+	                                                                  <div class="select">
+	                                                                    <span>任意</span> 
+	                                                                    <i class="fa fa-chevron-left"></i>
+	                                                                  </div>
+	                                                                  <input type="hidden" name="special_care">
+	                                                                  <ul class="dropdown-menu">
+	                                                                    <li id="">愛滋貓</li>
+	                                                                    <li id="">傳染性腹膜炎</li>
+	                                                                    <li id="">腎臟病</li>
+	                                                                  </ul>
+	                                                                </div>
+	                                                            </div>
+	
+	                                                    </li> -->
+	                                                    <!--在收容所天數-->
+	                                                    <li>
+	                                                        <div class="txt txt_label m-txt_heavy m-txt_uppercase m-txt_alignCenter u-vr1x">
+	                                                            在收容所天數</div>
+	                                                            <div class="container">
+	                                                                <div class="dropdown shelter">
+	                                                                  <div class="select">
+	                                                                    <span>任意</span> 
+	                                                                    <i class="fa fa-chevron-left"></i>
+	                                                                  </div>
+	                                                                  <input type="hidden" name="shelter_day">
+	                                                                  <ul class="dropdown-menu">
+	                                                                    <li value="1">1</li>
+	                                                                    <li value="7">7</li>
+	                                                                    <li value="14">14</li>
+	                                                                    <li value="30">30</li>
+	                                                                  </ul>
+	                                                                </div>
+	                                                            </div>
+	                                                    </li>
+	                                                    <li>
+	                                                    	<div
+	                                                            class="txt txt_label m-txt_heavy m-txt_uppercase m-txt_alignCenter u-vr1x">
+							                                        <button class="submit_btn" type="submit" >Submit</button>
                                                             </div>
-                                                        </div>
-                                                    </li>
-                                                    <!--年齡-->
-                                                    <li>
-                                                        <div class="txt txt_label m-txt_heavy m-txt_uppercase m-txt_alignCenter u-vr1x">
-                                                            年齡
-                                                        </div>
-                                                        <div class="container">
-                                                            <div class="dropdown">
-                                                              <div class="select">
-                                                                <span>任意</span> 
-                                                                <i class="fa fa-chevron-left"></i>
-                                                              </div>
-                                                              <input type="hidden" name="age">
-                                                              <ul class="dropdown-menu">
-                                                                <li id="">幼貓</li>
-                                                                <li id="">小貓</li>
-                                                                <li id="">成貓</li>
-                                                                <li id="">老貓</li>
-                                                              </ul>
-                                                            </div>
-                                                        </div>
-                                                    </li>
-                                                    <!--體型大小-->
-                                                    <li>
-                                                        <div class="txt txt_label m-txt_heavy m-txt_uppercase m-txt_alignCenter u-vr1x">大小</div>
-                                                        <div class="container">
-                                                            <div class="dropdown">
-                                                              <div class="select">
-                                                                <span>任意</span> 
-                                                                <i class="fa fa-chevron-left"></i>
-                                                              </div>
-                                                              <input type="hidden" name="size">
-                                                              <ul class="dropdown-menu">
-                                                                <li id="">小型</li>
-                                                                <li id="">中性</li>
-                                                                <li id="">大型</li>
-                                                              </ul>
-                                                            </div>
-                                                        </div>
-                                                    </li>
-                                                    <!--性別-->
-                                                    <li>
-                                                        <div
-                                                            class="txt txt_label m-txt_heavy m-txt_uppercase m-txt_alignCenter u-vr1x">性別</div>
-                                                            <div class="container">
-                                                                <div class="dropdown">
-                                                                  <div class="select">
-                                                                    <span>任意</span> 
-                                                                    <i class="fa fa-chevron-left"></i>
-                                                                  </div>
-                                                                  <input type="hidden" name="Gender">
-                                                                  <ul class="dropdown-menu">
-                                                                    <li id="">幼貓</li>
-                                                                    <li id="">小貓</li>
-                                                                    <li id="">成貓</li>
-                                                                    <li id="">老貓</li>
-                                                                  </ul>
-                                                                </div>
-                                                            </div>
-                                                    </li>
-                                                    <!--適合對象-->
-                                                    <li>
-                                                        <div
-                                                            class="txt txt_label m-txt_heavy m-txt_uppercase m-txt_alignCenter u-vr1x">
-                                                            適合對象</div>
-                                                            <div class="container">
-                                                                <div class="dropdown">
-                                                                  <div class="select">
-                                                                    <span>任意</span> 
-                                                                    <i class="fa fa-chevron-left"></i>
-                                                                  </div>
-                                                                  <input type="hidden" name="Good With">
-                                                                  <ul class="dropdown-menu">
-                                                                    <li id="">小孩</li>
-                                                                    <li id="">家裡有狗狗</li>
-                                                                    <li id="">家裏有其他貓貓</li>
-                                                                  </ul>
-                                                                </div>
-                                                            </div>                                                
-                                                    </li>
-                                                    <!--毛長-->
-                                                    <li>
-                                                        <div
-                                                            class="txt txt_label m-txt_heavy m-txt_uppercase m-txt_alignCenter u-vr1x">
-                                                            毛長</div>
-                                                            <div class="container">
-                                                                <div class="dropdown">
-                                                                  <div class="select">
-                                                                    <span>任意</span> 
-                                                                    <i class="fa fa-chevron-left"></i>
-                                                                  </div>
-                                                                  <input type="hidden" name="Coat Length">
-                                                                  <ul class="dropdown-menu">
-                                                                    <li id="">無毛</li>
-                                                                    <li id="">短毛</li>
-                                                                    <li id="">中等</li>
-                                                                    <li id="">長毛</li>
-                                                                  </ul>
-                                                                </div>
-                                                            </div>  
-                                                    </li>
-                                                    <!--毛色-->
-                                                    <li>
-                                                        <div
-                                                            class="txt txt_label m-txt_heavy m-txt_uppercase m-txt_alignCenter u-vr1x">
-                                                            毛色</div>
-                                                            <div class="container">
-                                                                <div class="dropdown">
-                                                                  <div class="select">
-                                                                    <span>任意</span> 
-                                                                    <i class="fa fa-chevron-left"></i>
-                                                                  </div>
-                                                                  <input type="hidden" name="Color">
-                                                                  <ul class="dropdown-menu">
-                                                                    <li id="">黑色</li>
-                                                                    <li id="">白色</li>
-                                                                    <li id="">虎斑</li>
-                                                                    <li id="">橘色</li>
-                                                                    <li id="">三花</li>
-                                                                    <li id="">藍色</li>
-                                                                    <li id="">玳瑁</li>
-                                                                    <li id="">豹紋</li>
-                                                                  </ul>
-                                                                </div>
-                                                            </div>
-                                                    </li>
-                                                    <!--是否需要特殊照顧-->
-                                                    <li>
-                                                        <div
-                                                            class="txt txt_label m-txt_heavy m-txt_uppercase m-txt_alignCenter u-vr1x">是否需要特殊照顧</div>
-                                                            <div class="container">
-                                                                <div class="dropdown">
-                                                                  <div class="select">
-                                                                    <span>任意</span> 
-                                                                    <i class="fa fa-chevron-left"></i>
-                                                                  </div>
-                                                                  <input type="hidden" name="special_care">
-                                                                  <ul class="dropdown-menu">
-                                                                    <li id="">愛滋貓</li>
-                                                                    <li id="">傳染性腹膜炎</li>
-                                                                    <li id="">腎臟病</li>
-                                                                  </ul>
-                                                                </div>
-                                                            </div>
-
-                                                    </li>
-                                                    <!--在收容所天數-->
-                                                    <li>
-                                                        <div
-                                                            class="txt txt_label m-txt_heavy m-txt_uppercase m-txt_alignCenter u-vr1x">
-                                                            在收容所天數</div>
-                                                            <div class="container">
-                                                                <div class="dropdown">
-                                                                  <div class="select">
-                                                                    <span>任意</span> 
-                                                                    <i class="fa fa-chevron-left"></i>
-                                                                  </div>
-                                                                  <input type="hidden" name="shelter_day">
-                                                                  <ul class="dropdown-menu">
-                                                                    <li id="">1</li>
-                                                                    <li id="">7</li>
-                                                                    <li id="">14</li>
-                                                                    <li id="">30+</li>
-                                                                  </ul>
-                                                                </div>
-                                                            </div>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                        <!-- cat bodycat bodycat bodycat bodycat bodycat bodycat bodycat bodycat body-->
+	                                                    </li>
+	                                                </ul>
+	                                            </div>
+	                                        </div>
+<!-- 	                                       	<input type="submit" value="送出"> -->
+        									<input type="hidden" name="action" value="listEmps_ByCompositeQuery">
+	                                        
+	                                        
+                                        </form>
+                                        <!-- cat body cat body cat body cat body cat body cat body cat body cat body cat body -->
                                         <div class="searchContainer-body">
                                         	 
                                         	<!-- add tag add tag add tag add tag add tag add tag -->
@@ -851,8 +685,7 @@
                                                 <div class="split-item">
                                                     <div id="Pet_Search_Applied_Filters" class="u-hr6x"></div>
                                                     
-                                                    123
-                                                    123
+                                                   	add tag
                                                 </div>
                                                 <div class="split-item u-isHidden@maxLg">
                                                     <pfdc-generic-select id="sort-select"
@@ -944,9 +777,9 @@
                                                     template="animalSearchResults" class="u-fadeInChildren">
                                                     <div class="animalSearchBody">
                                                         <div class="grid grid_gutter grid_gutterLg@minMd m-grid_stretch u-vr6x">
-                                                        
                                                          <%-- <%@ include file="my_search_page1.file" %>  --%>
-															<c:forEach var="catInfoVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
+                                                   
+															<c:forEach var="catInfoVO" items="${lists}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
                                                             <!--貓咪資訊貓咪資訊貓咪資訊貓咪資訊貓咪資訊貓咪資訊貓咪資訊貓咪資訊-->
                                                             <div class="grid-col grid-col_1/4@minXl">
                                                                 <div class="petCard">
@@ -1023,7 +856,7 @@
                                                                     </a>
                                                                     <!--愛心-->
                                                                     <div class="petCard-favoriteBtn">
-                                                                        <button class="favoriteBtn">
+                                                                        <button class="favoriteBtn favoriteBtn_searchResult">
                                                                             <svg role="img">
                                                                                 <use
                                                                                     xlink:href="#icon-favorite_outline">
@@ -1049,7 +882,7 @@
                                                 <pfdc-element class="u-displayBlock u-vr6x"
                                                     render-on-state-change="animalSearch.results"
                                                     template="animalSearchFooter">
-                                                    <div class="animalSearchFooter u-isLoaded"
+                                                    <div id="spage" class="animalSearchFooter u-isLoaded"
                                                         pf-mix-class="u-isLoaded: viewModel.hasSearched, u-noResults: !viewModel.hasResults">
                                                         <div class="grid grid_gutterLg">
                                                             <div
@@ -1060,7 +893,7 @@
                                                             <div class="grid-col grid-col_3/4@minMd grid-col_3/5@minXl">
                                                                 <!-- 分頁控制分頁控制分頁控制分頁控制分頁控制分頁控制分頁控制 -->
                                                                 <pfdc-page-controls>
-                                                                    <div class="grid grid_gutterLg">
+                                                                    <div  class="grid grid_gutterLg">
                                                                         
 		                                                                <%@ include file="my_search_page2.jsp" %>
                                                                         
@@ -2090,18 +1923,119 @@
 
 
 
-    <script src="./Cats for Adoption Near New York City, NY _ Petfinder_files/jquery.min.js"></script>
+    <script src="${pageContext.request.contextPath}/views/catInfo/files/jquery.min.js"></script>
 
+<script>
 
+/* document.getElementById("gender").setAttribute('value','My default value'); */
+	
+	let breed;
+	let age;
+	let size;
+	
+ 	$(".dropdown-menu li").on("click", function(){
+ 		/* console.log("hello"); */
+		$(".dropdown-menu li").removeClass('selected');
+		$(this).addClass('selected');
+		$(this).parents('.dropdown').find('input').attr('value', $(this).attr('value'));
+		/* var value = $('.dropdown-menu li.selected').attr('value'); */
+		/* 
+		  $.ajax({
+			     url: "${pageContext.request.contextPath}/CatInfoServlet",
+	              data: {
+	            	"breed":breed,
+	                "value":value
+	                
+	              },
+	              type: "POST",
+	              success: function () {
+	               $(".animalSearchBody").load("http://localhost:8081/Adopets/views/catInfo/My_search.jsp .animalSearchBody");
+ 	               $(".count").load("http://localhost:8081/Adopets/views/catInfo/My_search.jsp .count");
+ 	               $("#	").load("http://localhost:8081/Adopets/views/catInfo/My_search.jsp #spage");
+	               $("#spage").css("border", "1px solid red");
+	               }
+		  }) */
+	});
+ 	//用js判斷EL有沒有值，有的話再回填標籤
+ 	$(document).ready(function() {
+ 		//品種
+ 		var breedtf = `${catInfoVO.breed == null}`
+	 	if (breedtf == "false") {
+	 		$(".breed > .select > span").text(`${catInfoVO.breed}`);
+	 	 	$(".breed > input").attr('value', `${catInfoVO.breed}`);
+	 	}
+ 		//年齡
+ 		let agetf = `${catInfoVO.age == null}`
+ 		let age;
+	 	if (agetf == "false") {
+	 		let num = `${catInfoVO.age}`;
+	 		switch (num) {	 		
+		 		case "0":
+		 			age = "幼貓";
+		 			break;
+		 		case "1":
+		 			age = "小貓";
+		 			break;
+		 		case "2":
+		 			age = "成貓";
+		 			break;
+		 		case "3":
+		 			age = "老貓";
+		 			break;
+	 		}
+	 		$(".age > .select > span").text(age);
+	 	 	$(".age > input").attr('value', age);
+	 	}
+ 		//性別
+ 		var hasSex = `${catInfoVO.sex == null}`
+	 	if (hasSex == "false") {
+	 		$(".sex > .select > span").text(`${catInfoVO.sex}`);
+	 	 	$(".sex > input").attr('value', `${catInfoVO.sex}`);
+	 	}
+ 		//大小
+ 		var hasSize = `${catInfoVO.size == null}`
+	 	if (hasSize == "false") {
+	 		$(".size > .select > span").text(`${catInfoVO.size}`);
+	 	 	$(".size > input").attr('value', `${catInfoVO.size}`);
+	 	}
+ 		//毛色
+ 		var hasCoatColor = `${catInfoVO.coatColor == null}`
+	 	if (hasCoatColor == "false") {
+	 		$(".coatcolor > .select > span").text(`${catInfoVO.coatColor}`);
+	 	 	$(".coatcolor > input").attr('value', `${catInfoVO.coatColor}`);
+	 	}
+ 		//在收容所天數
+ 		var hasShelter = `${catInfoVO.createDate == null}`
+	 	if (hasShelter == "false") {
+	 		let beforeString = `${catInfoVO.createDate}`; //EL取到String
+	 		let now = new Date().getTime();//js的1970毫秒(number)
+	 		let day = 24 * 3600 * 1000;
+	 		let diff = now - Date.parse(beforeString);
+	 		let diffday = parseInt(diff / day);
+	 		
+	 		$(".shelter > .select > span").text(diffday);
+	 	 	$(".shelter > input").attr('value', diffday);
+	 	}
+	});
+ 	//我的最愛效果
+ 	$(".petCard-favoriteBtn > button").on("click", function(){
+ 		/* console.log("favorite btn"); */
+ 		$(this).toggleClass("s-favoriteBtn_favorited s-favoriteBtn_sessionFavorited");
+ 		
+ 	})
+
+	
+	</script>
     <!-- pkg:dotcom-search-web -->
     <!-- <script src="./Cats for Adoption Near New York City, NY _ Petfinder_files/common.1797671f.js"></script> -->
     <!-- <script src="./Cats for Adoption Near New York City, NY _ Petfinder_files/dotcom-search-web.1797671f.js"></script> -->
-<link rel="prefetch"
+<!-- <link rel="prefetch"
         href="https://www.petfinder.com/assets/www/scripts/vendors_dotcom-animal-detail-web_dotcom-happy-tails-submission-web_dotcom-legacy.1797671f.js">
     <link rel="prefetch" href="https://www.petfinder.com/assets/www/scripts/dotcom-animal-detail-web.1797671f.js">
-    <link href="./Cats for Adoption Near New York City, NY _ Petfinder_files/css" rel="stylesheet">
+    <link href="./Cats for Adoption Near New York City, NY _ Petfinder_files/css" rel="stylesheet"> -->
     
-    <script src="./files/my_search.js"></script>
+    <script src="${pageContext.request.contextPath}/views/catInfo/files/my_search.js"></script>
+    <%-- <script src="${pageContext.request.contextPath}/views/catInfo/files/my_search2.js"></script> --%>
 
 
 </body>

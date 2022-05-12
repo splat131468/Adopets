@@ -12,7 +12,8 @@ public interface CatInfoDAO {
 	public CatInfoVO getOne(Integer catID);
 	public List<CatInfoVO> getAll();
 	public Integer getLastCatID();
-//	public List<CatInfoVO> getMulti(CatInfoVO catInfoVO);
+	public List<CatInfoVO> getMulti(CatInfoVO catInfoVO);
+	
 
 	
 	

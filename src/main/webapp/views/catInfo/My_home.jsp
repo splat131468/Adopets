@@ -9,14 +9,15 @@
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Adopet Home</title>
-  <link rel="stylesheet" href="files/homepage.css">
-  <link rel="stylesheet" href="files/css_L5nWqD5SQK8ZrCIRrm01g1QcB7QmIYINuJjhTPq7WFs.css">
-  <link rel="stylesheet" href="files/css_48il_hUScvaXu5Lky-fqRm9LjbUTybcek-Dq368IMAI.css">
-  <link rel="stylesheet" href="files/flickity.min.css">
-  <link rel="stylesheet" href="files/style.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/views/catInfo/files/homepage.css">
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/views/catInfo/files/css_L5nWqD5SQK8ZrCIRrm01g1QcB7QmIYINuJjhTPq7WFs.css">
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/views/catInfo/files/css_48il_hUScvaXu5Lky-fqRm9LjbUTybcek-Dq368IMAI.css">
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/views/catInfo/files/flickity.min.css">
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/views/catInfo/files/style.css">
 </head>
 
 <body>
+ 
 
 
   <div class="dialog-off-canvas-main-canvas" data-off-canvas-main-canvas="">
@@ -395,12 +396,13 @@
                               <section id="recommended-pets">
                                 <div class="recommendations m-recommendations_singleRow u-isHidden@maxMd">
                                   <div class="recommendations-header u-vr5x">
-                                    <div class="tier"><a
-                                        href="${pageContext.request.contextPath}/views/catInfo/My_search.jsp"
-                                        class="u-displayBlock txt">
-                                        <h2 class="txt txt_h1 m-txt_tight m-txt_colorPrimary m-txt_alignCenter">貓咪配對結果
-                                        </h2>
-                                      </a></div>
+                                    <div class="tier">
+                                    	<a
+                                        	href="${pageContext.request.contextPath}/CatInfoServlet?action=listEmps_ByCompositeQuery"
+                                        	class="u-displayBlock txt">
+                                        	<h2 class="txt txt_h1 m-txt_tight m-txt_colorPrimary m-txt_alignCenter">貓咪配對結果</h2>
+                                      </a>
+                                   </div>
                                   </div>
                                   <div class="recommendations-body">
                                     <div class="recommendations-body-inner">

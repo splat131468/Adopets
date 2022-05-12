@@ -187,5 +187,11 @@ public class CatInfoDAOimpl implements CatInfoDAO {
 		}
 		return catID;
 	}
+
+	@Override
+	public List<CatInfoVO> getMulti(CatInfoVO catInfoVO) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 }

@@ -5,11 +5,11 @@
     int whichPage=1;      //第幾頁
     int pageIndexArray[]=null;
     int pageIndex=0; 
+    int num_l = Integer.parseInt(request.getParameter("lists"));
 %>
 
 <%  
-
- 		rowNumber=lists.size();
+    rowNumber=list.size();
     if (rowNumber%rowsPerPage !=0)
          pageNumber=rowNumber/rowsPerPage + 1;
     else pageNumber=rowNumber/rowsPerPage;    
