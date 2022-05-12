@@ -63,17 +63,17 @@ public class EcomCartAction extends HttpServlet {
 				
 
 			
-				// 商品資訊 這地方寫錯 不是List 之後改
-				List<SpuVO> detail = spuService.getDetail(spuVO);
+				// 商品資訊 
+				SpuVO detail = spuService.getDetail(spuVO);
 				// 傳屬性
 				List<String> attrList = new ArrayList<String>();
 
-				request.setAttribute("prodName", detail.get(0).getSpuName());
-				request.setAttribute("descript", detail.get(0).getDescript());
-				request.setAttribute("spuID", detail.get(0).getSpuID());
+				request.setAttribute("prodName", detail.getSpuName());
+				request.setAttribute("descript", detail.getDescript());
+				request.setAttribute("spuID", detail.getSpuID());
 			
 		
-				detail.get(0).getSkuVO().forEach(e->{
+				detail.getSkuVO().forEach(e->{
 					attrList.add(e.getSpecAttr());
 				});
 				request.setAttribute("skuVO",attrList);
@@ -137,6 +137,7 @@ public class EcomCartAction extends HttpServlet {
 		if(jsonElement!=null) {
 			 action = jsonElement.getAsString();
 		}
+		// 取得商品指定規格的價格和數量
 		if("getPrcSk".equals(action)) {
 			System.out.println(action);
 			
@@ -155,9 +156,8 @@ public class EcomCartAction extends HttpServlet {
 			 
 			 
 			 SkuVO stockAndPrice = spuService.getStockAndPrice(arr, spuID);
-			 System.out.println(stockAndPrice);
+		
 			 response.getWriter().append(gson.toJson(stockAndPrice));
-			
 			
 		}
 

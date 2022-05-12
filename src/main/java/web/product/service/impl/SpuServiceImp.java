@@ -28,13 +28,12 @@ public class SpuServiceImp implements SpuService {
 	public static void main(String[] args) {
 		PageInfo<SkuVO> mainPage = new SpuServiceImp().getMainPage(1, 3);
 		long total = mainPage.getTotal();
-		
+
 	}
 
-	
 	// 取得產品價格 數量
 	public SkuVO getStockAndPrice(List<String> key, Integer spuID) {
-		
+
 		try {
 			InputStream inputStream = Resources.getResourceAsStream("mybatis-config.xml");
 			SqlSessionFactoryBuilder sqlSessionFactoryBuilder = new SqlSessionFactoryBuilder();
@@ -42,20 +41,18 @@ public class SpuServiceImp implements SpuService {
 			SqlSession session = factory.openSession();
 
 			SpuDAO spuDAO = session.getMapper(SpuDAO.class);
-			
+
 			SkuVO skuVO = spuDAO.getPriceAndStock(key, spuID);
-		
 
 			session.commit();
 			return skuVO;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 		return null;
 	}
-	
-	
+
 	public int insertSPU(int ctgID, String spuName, String descript) {
 
 		SpuVO spuVO = new SpuVO();
@@ -178,7 +175,7 @@ public class SpuServiceImp implements SpuService {
 	}
 
 	// 取得產品細節
-	public List<SpuVO> getDetail(SpuVO spuVO) {
+	public SpuVO getDetail(SpuVO spuVO) {
 
 		try {
 			InputStream inputStream = Resources.getResourceAsStream("mybatis-config.xml");
@@ -188,11 +185,36 @@ public class SpuServiceImp implements SpuService {
 
 			SpuDAO spuDAO = session.getMapper(SpuDAO.class);
 
-			List<SpuVO> detail = spuDAO.getDetail(spuVO);
-			
+			SpuVO detail = spuDAO.getDetail(spuVO);
 
 			session.commit();
 			return detail;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return null;
+	}
+
+	// 根據skuID找skuVo
+	public SkuVO getSkuVO(Integer skuID) {
+		try {
+			InputStream inputStream = Resources.getResourceAsStream("mybatis-config.xml");
+			SqlSessionFactoryBuilder sqlSessionFactoryBuilder = new SqlSessionFactoryBuilder();
+			SqlSessionFactory factory = sqlSessionFactoryBuilder.build(inputStream);
+			SqlSession session = factory.openSession();
+
+			SpuDAO spuDAO = session.getMapper(SpuDAO.class);
+
+			SkuVO skuVO = spuDAO.getSkuVO(skuID);
+			// 懶得再轉 用之前寫的方法
+			List<SkuVO> list = new ArrayList<>();
+			list.add(skuVO);
+			
+			list = jsonPaser(list);
+			skuVO = list.get(0);
+			return skuVO;
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -229,7 +251,5 @@ public class SpuServiceImp implements SpuService {
 		private String attrV1;
 		private String attrV2;
 	}
-
-	
 
 }

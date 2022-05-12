@@ -76,13 +76,19 @@ public class SpuDAOJDBC implements SpuDAO {
 	}
 
 	@Override
-	public List<SpuVO> getDetail(SpuVO souSpuVO) {
+	public SpuVO getDetail(SpuVO souSpuVO) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public SkuVO getPriceAndStock(List<String> key,Integer spuID) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public SkuVO getSkuVO(Integer skuID) {
 		// TODO Auto-generated method stub
 		return null;
 	}

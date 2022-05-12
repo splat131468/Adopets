@@ -29,8 +29,12 @@ public interface SpuDAO {
 	List<SkuVO> selectedPage(ProdSelection prodSelection);
 	
 	// 取得商品細節
-	List<SpuVO> getDetail(SpuVO spuVO);
+	SpuVO getDetail(SpuVO spuVO);
 	
 	SkuVO getPriceAndStock( @Param("key") List<String> key,@Param("spuID")Integer spuID);
+	
+	
+	// 指定skuID找 規格
+	SkuVO getSkuVO(@Param("skuID") Integer skuID);
 	
 }

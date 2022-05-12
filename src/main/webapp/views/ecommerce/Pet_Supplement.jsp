@@ -315,7 +315,7 @@
                     <span class="visually-hidden">Favorites</span>
                   </a>
                   <!--購物車-->
-                  <a href="#" class="nav-favorites-btn nav-cart-btn">
+                  <a href="${pageContext.request.contextPath}/shCartAction?action=getCart" class="nav-favorites-btn nav-cart-btn">
                     <svg role="img" focusable="false">
                       <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-cart"></use>
                     </svg>

@@ -58,10 +58,23 @@
 		column="spuImg" property="pImgVO.spuImg" jdbcType="LONGVARBINARY" /> <result 
 		column="mainImg" property="pImgVO.mainImg" jdbcType="BIT" /> -->
 
+<!--  找指定sku -->
+	<select id="getSkuVO" resultMap="prodMap"  parameterType="java.lang.Integer">
+	select * from
+	SPU p join SKU k
+	on p.spuID = k.spuID
+	where k.skuID = #{skuID}
+	
+	
+	</select>
+
+
+
+
 	<!-- 商品價格 數量 -->
 	<select id="getPriceAndStock" resultMap="prodMap" parameterType="java.util.List">
 		select
-		stock, skuPrice
+		stock, skuPrice ,skuID
 		from SKU
 		where spuID = #{spuID}  and
 		<foreach item="item" collection="key" separator="and ">
