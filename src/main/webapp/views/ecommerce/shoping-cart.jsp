@@ -513,7 +513,7 @@
                                 <table>
                                     <thead>
                                         <tr>
-                                            <th></th>
+                                            <th>結帳</th>
                                             <th class="shoping__product">
                                                 <span style="margin-left: 10px;">商品</span>
                                             </th>

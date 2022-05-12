@@ -206,11 +206,6 @@ $(function () {
         }).then(function (res) {
             console.log("update!");
         })
-
-
-
-
-
     })
 
 
