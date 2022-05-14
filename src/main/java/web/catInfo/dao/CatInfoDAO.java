@@ -13,6 +13,7 @@ public interface CatInfoDAO {
 	public List<CatInfoVO> getAll();
 	public Integer getLastCatID();
 	public List<CatInfoVO> getMulti(CatInfoVO catInfoVO);
+
 	
 
 	

@@ -8,8 +8,11 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
+import redis.clients.jedis.Jedis;
+import redis.clients.jedis.JedisPool;
 import web.catInfo.dao.CatInfoDAO;
 import web.catInfo.entity.CatInfoVO;
+import web.catInfo.util.JedisUtil;
 
 public class CatInfoDAOimpl implements CatInfoDAO {
 	
@@ -193,5 +196,5 @@ public class CatInfoDAOimpl implements CatInfoDAO {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
+
 }

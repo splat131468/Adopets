@@ -854,15 +854,17 @@
                                                                         </div> -->
 
                                                                     </a>
-                                                                    <!--愛心-->
+                                                                    <!--我的最愛按鈕-->
                                                                     <div class="petCard-favoriteBtn">
-                                                                        <button class="favoriteBtn favoriteBtn_searchResult">
+                                                                        <button class="favoriteBtn favoriteBtn_searchResult" value="${catInfoVO.catID}">
                                                                             <svg role="img">
                                                                                 <use
                                                                                     xlink:href="#icon-favorite_outline">
                                                                                 </use>
                                                                             </svg>
+	                                                                       
                                                                         </button>
+                                                                        
                                                                     </div>
                                                                 </div>
                                                             </div>                      
@@ -1933,6 +1935,7 @@
 	let age;
 	let size;
 	
+	//側邊選單的selected效果
  	$(".dropdown-menu li").on("click", function(){
  		/* console.log("hello"); */
 		$(".dropdown-menu li").removeClass('selected');
@@ -2017,12 +2020,62 @@
 	 	 	$(".shelter > input").attr('value', diffday);
 	 	}
 	});
- 	//我的最愛效果
+ 	//貓咪按我的最愛加上效果並傳到redis
  	$(".petCard-favoriteBtn > button").on("click", function(){
  		/* console.log("favorite btn"); */
  		$(this).toggleClass("s-favoriteBtn_favorited s-favoriteBtn_sessionFavorited");
+		let catID = $(this).attr("value");
+		
+		  $.ajax({
+			     url: "${pageContext.request.contextPath}/Favorite",
+			     dataType: "json",
+			     data:{
+			    	 "action":"addRedis",
+			         "member:1:favorite":catID  
+		  		 },
+	              type: "POST",
+	              success: function (result) {
+	            	 console.log("send cat ok");
+	            	 console.log("cat list : " + result);
+	            	/* console.log($.isArray(result)); */ 
+  					/* console.log(JSON.stringify(result)); */
+ 	               }
+		  });
  		
- 	})
+ 	});
+ 	
+
+ 	//page load 進來時標上我的最愛
+ 	$(document).ready(function() {
+ 		
+		  $.ajax({
+			     url: "${pageContext.request.contextPath}/Favorite",
+			     dataType: "json",
+			     data:{
+			    	 "action":"getRedis",
+			    	 "key":"member:1:favorite"  
+		  		 },
+	              type: "POST",
+	              success: function (result) {  
+	            /* 	  $.each(result, function(index, item){
+	            		  console.log("索引值：" + index + "； 值：" + item)
+	            		});
+	            	 */
+			 		console.log("cat list : " + result);
+			 		$.each(result, function(index, catID){
+			 			$(".petCard-favoriteBtn > button[value='" + catID + "']").addClass("s-favoriteBtn_favorited s-favoriteBtn_sessionFavorited");
+			  		});
+	            	
+	            	/* console.log($.isArray(result)); */ 
+					/* console.log(JSON.stringify(result)); */
+	            	
+	               }
+		  });
+ 		
+ 		
+ 		
+	});
+ 	
 
 	
 	</script>

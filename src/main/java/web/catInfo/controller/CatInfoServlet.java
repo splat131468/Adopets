@@ -1,6 +1,8 @@
 package web.catInfo.controller;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
@@ -15,8 +17,11 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.io.IOUtils;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import com.mysql.cj.Session;
 
 import web.catInfo.entity.CatInfoVO;
@@ -40,16 +45,31 @@ public class CatInfoServlet extends HttpServlet {
 		req.setCharacterEncoding("UTF-8");
 		res.setContentType("text/html; charset=UTF-8");
 		PrintWriter out = res.getWriter();
-		String action = req.getParameter("action");
-//		String value = req.getParameter("value");
+		
+//		String pa = req.getParameter("member:1:favorite");
 //		String data = IOUtils.toString(req.getInputStream(), StandardCharsets.UTF_8);
-//		System.out.println(data);
+//		Gson gson=new Gson();
+//		String data = IOUtils.toString(req.getInputStream(), StandardCharsets.UTF_8);
+//		  JsonObject fromJson = gson.fromJson(data, JsonObject.class);
+//		BufferedReader br = 
+//				new BufferedReader(new InputStreamReader(req.getInputStream()));
+//		JSONObject jsonObj = new JSONObject(req.getInputStream());
+//		try {
+//			String favorite = fromJson.get("member:1:favorite").getAsString();
+//			System.out.println(favorite);
+//			System.out.println(jsonObj.getString("member:1:favorite"));
+// 		}catch (Exception e) {
+//			System.out.println("error");
+//		}
+		
+//		out.print(123);
+		String action = req.getParameter("action");
 //		System.out.println("Servlet get action = " + action);
 //		System.out.println("Servlet get value = ");
 		CatInfoService catInfoService = new CatInfoService();
 		
-		if("listEmps_ByCompositeQuery".equals(action)) {
 //			System.out.println(" CatInfoServlet ok 1");
+		if("listEmps_ByCompositeQuery".equals(action)) {
 //			System.out.println(action);
 			Map<String, String[]> mapa = req.getParameterMap();
 			Set<String> keys = mapa.keySet();
