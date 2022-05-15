@@ -152,7 +152,7 @@
                   <!--這裡是logo-->
                   <div iclass="logo">
                     <a href="#" rel="home" class="site-logo">
-                      <img src="./index_vector/img/Adopets.svg" alt="Home">
+                      <img src="${pageContext.request.contextPath}/views/ecommerce/index_vector/img/Adopets.svg" alt="Home">
                     </a>
                   </div>
                   <nav role="navigation" aria-labelledby="block-consumer-react-main-menu-menu"

@@ -319,5 +319,11 @@ public class OrdersJNDIDAO implements OrdersDAO_interface {
 		return set;
 	}
 
+	@Override
+	public int makeOrder(OrdersVO ordersVO) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 
 }

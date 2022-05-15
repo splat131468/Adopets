@@ -217,10 +217,13 @@
         let c = $(this).closest("div").find(".qt").attr("max");
         c = Number(c);
         var $button = $(this);
+        console.log(c)
         var oldValue = $button.parent().find('input').val();
+        console.log(oldValue)
         if ($button.hasClass('inc')) {
             if (oldValue < c) {
-                var newVal = parseFloat(oldValue) + 1;
+                console.log("old"+oldValue);
+                var newVal = Number(oldValue) + 1;
             } else {
                 newVal = c;
             }
@@ -229,7 +232,7 @@
         } else {
             // Don't allow decrementing below zero
             if (oldValue > 1) {
-                var newVal = parseFloat(oldValue) - 1;
+                var newVal = Number(oldValue) - 1;
             } else {
                 newVal = 1;
             }

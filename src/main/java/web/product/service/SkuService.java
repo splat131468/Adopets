@@ -17,5 +17,9 @@ public interface SkuService {
 
 	int updateProd(SkuVO skuVO);
 	
+	int takeOrder(List<SkuVO> checkOut);
+	
+
+	
 	
 }

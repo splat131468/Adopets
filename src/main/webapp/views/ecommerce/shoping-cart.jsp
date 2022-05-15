@@ -115,31 +115,7 @@
                     </c:forEach>
 
 
-                    // 產品總價 - 商品價格 數量改變事件
-
-                    $(document).on("change", ".qt", function () {
-                       
-                        let qty = $(this).closest("tr").find("input[name='qty']").val();
-                        
-                        let price = $(this).closest("tr").find(".eachPrice").text();
-                       
-                        qty = Number(qty);
-                        price = Number(price);
-                        $(this).closest("tr").find(".tt").text(qty * price);
-
-                    })
-                    // 升級 按鈕
-                    $(document).on("click", ".qtybtn", function () {
-
-                        let qty = $(this).closest("tr").find("input[name='qty']").val();
-                       
-                        let price = $(this).closest("tr").find(".eachPrice").text();
-                     
-                        qty = Number(qty);
-                        price = Number(price);
-                        $(this).closest("tr").find(".tt").text(qty * price);
-
-                    })
+                    
                     
 
 
@@ -174,7 +150,7 @@
                                     <!--這裡是logo-->
                                     <div iclass="logo">
                                         <a href="#" rel="home" class="site-logo">
-                                            <img src="./index_vector/img/Adopets.svg" alt="Home">
+                                            <img src="${pageContext.request.contextPath}/views/ecommerce/index_vector/img/Adopets.svg" alt="Home">
                                         </a>
                                     </div>
                                     <nav role="navigation" aria-labelledby="block-consumer-react-main-menu-menu"
@@ -529,7 +505,7 @@
                                         <c:forEach items="${cartList}" var="cart" varStatus="loop">
                                             <tr class="point">
                                                 <td>
-                                                    <input type="checkbox" style="width: 20px; height: 20px;">
+                                                    <input class="proSkuID" name="skuID" type="checkbox" style="width: 20px; height: 20px;">
                                                 </td>
                                                 <td class="shoping__cart__item">
                                                     <img style="width: 80px; height:80px; margin-left: 10px;"
@@ -606,8 +582,8 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="shoping__cart__btns">
-                                <a href="#" class="primary-btn cart-btn">繼續選購</a>
-                                <a href="#" class="primary-btn cart-btn cart-btn-right">
+                                <a class="primary-btn cart-btn">繼續選購</a>
+                                <a  class="primary-btn cart-btn cart-btn-right chkAll">
                                     全部選取</a>
                             </div>
                         </div>
@@ -626,10 +602,10 @@
                             <div class="shoping__checkout">
                                 <h5>Cart Total</h5>
                                 <ul>
-                                    <!-- <li>Subtotal <span>$454.98</span></li> -->
-                                    <li>Total <span>$寫價格</span></li>
+                                    <li>挑選商品種數 <span id="numOfProd"> 0 </span> </li> 
+                                    <li>Total <span id="amount">$</span></li>
                                 </ul>
-                                <a href="#" class="primary-btn">去結帳</a>
+                                <a id="checkout"  class="primary-btn">去結帳</a>
                             </div>
                         </div>
                     </div>

@@ -86,6 +86,7 @@ $(function () {
 
         let node = $(this);
 
+
         let num = node.closest("tr").prev().find(".qt").val();
         let skuPrice = node.closest("div").find(".price").text();
         let skuID = node.closest("div").find(".skuID").val();
@@ -125,9 +126,12 @@ $(function () {
             let curNum = node.closest("tr").prev().find(".qt").val();
             console.log("curNum =>" + curNum)
             console.log()
+            // 相乘
             node.closest("tr").prev().find(".tt").text(res.skuPrice * curNum);
             let tp = node.closest("tr").prev().find(".skuID").val();
             console.log("skuId =>" + tp)
+            // 避免更改後 購物車還有該id
+            countNumProd();
 
         })
 
@@ -152,6 +156,9 @@ $(function () {
                 let skuID = $(this).closest("tr").find(".skuID").val();
                 console.log(skuID);
 
+                // 避免刪除後 購物車還有該id
+                countNumProd();
+
                 let data = {
                     action: "deleteCart",
                     cartItem: {
@@ -171,6 +178,7 @@ $(function () {
                     return response.json();
                 }).then(function (res) {
                     console.log("delete!");
+
                 })
 
 
@@ -180,9 +188,9 @@ $(function () {
     })
     // 數量調整
     $(document).on("click", ".pro-qty", function () {
-       
+
         let skuID = $(this).closest("tr").find(".skuID").val();
-        let num=$(this).closest("tr").find(".qt").val();
+        let num = $(this).closest("tr").find(".qt").val();
 
         let data = {
             action: "updateNum",
@@ -207,6 +215,136 @@ $(function () {
             console.log("update!");
         })
     })
+
+
+
+    //  勾選商品
+    $(document).on("change", ".proSkuID", function () {
+
+        let skuIDArr = countNumProd();
+        // 商品數量
+        $("#numOfProd").text(skuIDArr.length)
+
+    })
+
+    // return 所有skuID
+    function countNumProd() {
+
+        let arrProd = [];
+        let total = 0;
+        // 只抓有checked 抓skuID
+        $("input[name='skuID']:checked").each(function (index, item) {
+            let skuID = $(this).closest("tr").find(".skuID").val();
+            skuID=Number(skuID);
+            arrProd.push(skuID);
+        })
+        // 抓價格
+        $("input[name='skuID']:checked").each(function (index, item) {
+            let price = $(this).closest("tr").find(".shoping__cart__total").text();
+            price=Number(price);
+            total+=price;
+        })
+
+        $("#amount").text("$"+total);
+        $("#numOfProd").text(arrProd.length)
+        return arrProd;
+    }
+
+    // 產品總價 - 商品價格 數量改變事件
+
+    $(document).on("change", ".qt", function () {
+                       
+        let qty = $(this).closest("tr").find("input[name='qty']").val();
+        
+        let price = $(this).closest("tr").find(".eachPrice").text();
+       
+        qty = Number(qty);
+        price = Number(price);
+        $(this).closest("tr").find(".tt").text(qty * price);
+        countNumProd()
+
+
+    })
+    // 升級 按鈕
+    $(document).on("click", ".qtybtn", function () {
+
+        let qty = $(this).closest("tr").find("input[name='qty']").val();
+       
+        let price = $(this).closest("tr").find(".eachPrice").text();
+     
+        qty = Number(qty);
+        price = Number(price);
+        $(this).closest("tr").find(".tt").text(qty * price);
+        countNumProd()
+  
+
+    })
+    // 勾選全部
+    $(document).on("click",".chkAll",function(){
+
+        $("input[name='skuID']").each(function() {
+            $(this).prop("checked", true);
+        });
+
+        console.log("ck all");
+        skuIDList=$("input[name='skuID']");
+            
+        // 更新
+        countNumProd();
+
+    })
+
+    // 去結帳
+    $(document).on("click","#checkout",function(){
+
+        let allgoods  = countNumProd();
+        console.log(allgoods);
+        // 將skuID[ ] 傳給checkout
+       if(allgoods.length==0){
+
+        swal({
+            title: "請選擇產品",
+            icon: "warning",
+            timer: 1000,
+            dangerMode: true,
+            
+          });
+        return;
+
+       }
+        let data = {
+            action:"cartCheckOut",
+            skuIDArr:allgoods
+        }
+        // 送出 就將所有勾勾拿掉
+       
+
+            $("input[name='skuID']").each(function() {
+                $(this).prop("checked", false);
+            });
+
+           
+          
+
+        fetch("http://localhost:8081/Adopets/shCartAction", {
+            method: 'POST',
+            body: JSON.stringify(data)
+        }).then(function (response) {
+
+
+
+            location.href = 'http://localhost:8081/Adopets/views/ecommerce/checkout.jsp';
+        })
+
+      
+        
+
+    })
+
+  
+
+
+
 
 
 

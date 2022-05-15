@@ -40,6 +40,12 @@ public class SkuServiceImp implements SkuService {
 		return skuDAO.updateProd(skuVO);
 	}
 
+	@Override
+	public int takeOrder(List<SkuVO> checkOut) {
+			
+		return skuDAO.updateProds(checkOut);
+	}
+
 	
 
 }
