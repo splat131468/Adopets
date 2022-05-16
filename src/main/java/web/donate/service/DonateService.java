@@ -18,7 +18,7 @@ public class DonateService {
 	
 	public DonateVO addDonate(Integer memID,Integer catID,String shelterName, 
 			String donateName,String donateEmail,String phone,String donateAddr,Integer donateAmo,
-			Integer donateStatus,String donateMes,java.sql.Date donateDate) {
+			Integer donateStatus,String donateMes) {
 
 		DonateVO donateVO = new DonateVO();
 	
@@ -32,7 +32,6 @@ public class DonateService {
 		donateVO.setDonateAmo(donateAmo);
 		donateVO.setDonateStatus(donateStatus);
 		donateVO.setDonateMes(donateMes);
-		donateVO.setDonateDate(donateDate);
 		dao.insert(donateVO);
 
 		return donateVO;

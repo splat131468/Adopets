@@ -2,7 +2,7 @@ package web.authconfigure.entity;
 
 import java.util.Arrays;
 
-public class AdminAllVO {
+public class AdminAllVO implements java.io.Serializable{
 	private Integer adminID;
 	private String account;
 	private String password;

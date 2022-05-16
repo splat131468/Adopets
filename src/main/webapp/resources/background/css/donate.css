@@ -40,7 +40,7 @@
     background-repeat: no-repeat;
     opacity: 0.95;
     padding-bottom: 1.5%;
-    /*¿ß¹Ï¤ù¤j¤p*/
+    /*ï¿½ß¹Ï¤ï¿½ï¿½jï¿½p*/
     margin-top: 55px;
 
 
@@ -147,7 +147,7 @@
 }
 
 
-.custom-other-amount {
+#custom-other-amount {
     margin-top: 13px;
     font-size: 1rem;
     border-radius: 20px;
@@ -783,7 +783,7 @@ input {
 .pure-control-group-checked span .btn_pure {
     float: left;
     text-decoration: none;
-    /*¥h°£¤U©³½u*/
+    /*ï¿½hï¿½ï¿½ï¿½Uï¿½ï¿½ï¿½u*/
     text-align: center;
 
     background-color: #aca9a9;
@@ -803,20 +803,18 @@ input {
 
 .pure-control-group-checked .pure-button {
     float: right;
-
     background-color: #6504B5;
     color: white;
     border-radius: 10px;
     width: 60%;
     height: 40px;
-
-    margin: 0;
+    margin-left: 20px;
 
 }
 
 
 
-/* <!--------------------------- ¬d¸ß¿ß«}--------------------------------> */
+/* <!--------------------------- ï¿½dï¿½ß¿ß«}--------------------------------> */
 
 .find_cat {
     margin-top: 10px;
@@ -861,5 +859,31 @@ input {
     font-size: 15px;
 }
 
+#errorM{
+    margin-top: 5px;
+    font-size: 16px;
+    margin-left: 5px;
+    font-weight: 900;
+}
 
 
+#errorP{
+    margin-top: 5px;
+    font-size: 14px;
+    margin-left: 5px;
+    font-weight: 900;
+}
+
+#errorN{
+    margin-top: 5px;
+    font-size: 14px;
+    margin-left: 5px;
+    font-weight: 900;
+}
+
+#errorE{
+    margin-top: 5px;
+    font-size: 14px;
+    margin-left: 5px;
+    font-weight: 900;
+}

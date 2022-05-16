@@ -8,10 +8,9 @@
 <%
 
 
-	AdminVO admVO = (AdminVO) request.getAttribute("admVO");
-// AdminAllVO adminAllVO = (AdminAllVO) request.getAttribute("adminAllVO");
-
-// 	AuthVO authVO = (AuthVO) request.getAttribute("authVO");
+AdminVO admVO = (AdminVO) request.getAttribute("admVO");
+session.getAttribute("adminVO");
+session.getAttribute("auth");
 	
 	
 %>
@@ -96,7 +95,7 @@ src="<%=request.getContextPath()%>/resources/background/js/system.js"></script>
           <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
         </li>
         <li class="nav-item d-none d-sm-inline-block">
-          <a href="starter.html" class="nav-link">Home</a>
+            <a href="<%=request.getContextPath()%>/views/background_login/background.jsp" class="nav-link">Home</a>
         </li>
         <li class="nav-item d-none d-sm-inline-block">
           <a href="#" class="nav-link">Contact</a>
@@ -220,33 +219,31 @@ src="<%=request.getContextPath()%>/resources/background/js/system.js"></script>
         </li>
 
       <!-- 右上角管理員資訊 -->
-      <li class="nav-item dropdown">
-        <a class="nav-link" data-toggle="dropdown" href="#">
-          <i class="fa-solid fa-circle-user"></i>
-        </a>
-        <div class="dropdown-menu dropdown-menu-sm dropdown-menu-right">
-          <a href="#" class="dropdown-item">
-            <i class="fas fa-key mr-2" style="margin-left: 2.5px;"></i>修改密碼
+        <li class="nav-item dropdown">
+          <a class="nav-link" data-toggle="dropdown" href="#">
+            <i class="fa-solid fa-circle-user"></i>
           </a>
-          <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item">
-            <i class="fas fa-sign-out mr-2"></i>登出
-          </a>
-        </div>
-      </li>
-
-
-
-
+          <div class="dropdown-menu dropdown-menu-sm dropdown-menu-right">
+            <a href="<%=request.getContextPath()%>/views/admin/system.jsp" class="dropdown-item">
+              <i class="fas fa-key mr-2" style="margin-left: 2.5px;"></i>修改密碼
+            </a>
+            <div class="dropdown-divider"></div>
+            
+            <a href="<%=request.getContextPath()%>/LogoutServlet" class="dropdown-item">
+              <i class="fas fa-sign-out mr-2"></i>登出
+            </a>
+      
+          </div>
+        </li>
       </ul>
     </nav>
     <!-- /.navbar -->
 
-    <!-- Main Sidebar Container -->
+   <!-- Main Sidebar Container -->
     <aside class="main-sidebar sidebar-dark-primary elevation-4">
       <!-- 首頁 Logo -->
       <a href="starter.html" class="brand-link">
-        <span class="brand-text font-weight-light"><img src="dist/img/Adopets.svg" width="55%"></span>
+        <span class="brand-text font-weight-light"><img src="<%=request.getContextPath()%>/resources/background/img/Adopets.svg" width="55%"></span>
       </a>
 
       <!-- Sidebar -->
@@ -254,10 +251,10 @@ src="<%=request.getContextPath()%>/resources/background/js/system.js"></script>
         <!-- Sidebar user panel (optional) -->
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
           <div class="image">
-            <img src="dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
+            <img src="${pageContext.request.contextPath}/UploadAdmImg?adminID=${adminVO.adminID}" class="img-circle elevation-2" alt="User Image">
           </div>
           <div class="info">
-            <a href="#" class="d-block">Alexander Pierce</a>
+            <a href="#" class="d-block">${adminVO.name}</a>
           </div>
         </div>
 
@@ -308,7 +305,7 @@ src="<%=request.getContextPath()%>/resources/background/js/system.js"></script>
             </li>
 
             <li class="nav-item">
-              <a href="money.html" class="nav-link">
+       		    <a href="<%=request.getContextPath()%>/views/donate/donateBackground.jsp" class="nav-link">
                 <i class="nav-icon fa-solid fa-sack-dollar"></i>
                 <p>捐款管理</p>
               </a>
@@ -326,14 +323,14 @@ src="<%=request.getContextPath()%>/resources/background/js/system.js"></script>
               </a>
               <ul class="nav nav-treeview">
                 <li class="nav-item">
-                  <a href="system.html" class="nav-link">
+                    <a href="<%=request.getContextPath()%>/views/admin/system.jsp" class="nav-link">
                     <i style="margin-left: 33px;"></i>
                     <p>使用者管理</p>
                   </a>
                 </li>
 
                 <li class="nav-item">
-                  <a href="systemAuth.html" class="nav-link">
+                    <a href="<%=request.getContextPath()%>/views/admin/systemAuth.jsp" class="nav-link">
                     <i style="margin-left: 33px;"></i>
                     <p>權限管理</p>
                   </a>
@@ -367,7 +364,7 @@ src="<%=request.getContextPath()%>/resources/background/js/system.js"></script>
             </div>
             <div class="col-sm-6">
               <ol class="breadcrumb float-sm-right">
-                <li class="breadcrumb-item"><a href="systemAuth.html">權限管理</a></li>
+                <li class="breadcrumb-item"><a href="<%=request.getContextPath()%>/views/admin/systemAuth.jsp">權限管理</a></li>
                 <li class="breadcrumb-item active">修改管理員</li>
               </ol>
             </div>
@@ -517,7 +514,7 @@ src="<%=request.getContextPath()%>/resources/background/js/system.js"></script>
         Anything you want
       </div>
       <!-- Default to the left -->
-      <strong style="color: #869099;">Copyright &copy; 2022 &nbsp <a href="#">Adopets.io</a>.</strong> All rights reserved.
+      <strong style="color: #869099;">Copyright &copy; 2022 &nbsp <a href="<%=request.getContextPath()%>/views/background_login/background.jsp">Adopets.io</a>.</strong> All rights reserved.
     </footer>
   </div>
 

@@ -1,6 +1,6 @@
 package web.authconfigure.entity;
 
-public class AuthConfigureVO {
+public class AuthConfigureVO implements java.io.Serializable{
 	private Integer adminID;
 	private Integer authID;
 	

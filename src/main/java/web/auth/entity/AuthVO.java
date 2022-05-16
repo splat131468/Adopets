@@ -1,6 +1,6 @@
 package web.auth.entity;
 
-public class AuthVO {
+public class AuthVO implements java.io.Serializable{
 	private Integer authID;
 	private String authName;
 	

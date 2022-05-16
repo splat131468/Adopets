@@ -75,25 +75,35 @@ mycanvas.onclick = function (e) {
     clickChange();
 }
 
-/*輸入驗證碼與核對*/
-var myform = document.getElementById('myform');
-myform.addEventListener("submit", function (e) {
-    var vad = myform.vad.value;
+$( "#donatebtn" ).click(function() {
+	/*輸入驗證碼與核對*/
+	
+
+	var vad = $("#myvad").val();
     //alert("myform "+vad.toUpperCase());
     //alert("myform "+validate.toUpperCase());
     //將字串利用toUpperCase()將小寫英文轉成大寫英文 進行比較
     if (vad.toUpperCase() === validate.toUpperCase()) {
-        alert("通過");
-        myform.vad.value = "";
+    	
+       
+          
+                
+        $("#myvad").val("");
         clickChange();
-        location.href = "./donate.html";  //把網頁導向另一個html頁面-----------------------------------
+        
+     	onEditButtonClick();
+        // location.href = "./donate.html";  //把網頁導向另一個html頁面-----------------------------------
     }
     else {
-        alert("請確認")
-        myform.vad.value="";
+        Swal.fire(
+            '請輸入正確驗證碼!',
+            'You have wrong format!',
+            'error'
+          )
+        $("#myvad").val("");
     }
-    e.preventDefault();
-
+    
+	 
 });
 
 /*輸入文字框清空*/ //改用placeholder設定預設內容

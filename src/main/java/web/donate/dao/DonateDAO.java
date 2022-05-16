@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,7 +30,7 @@ public class DonateDAO implements DonateDAO_interface {
 	}
 
 	private static final String INSERT_DONATE = "INSERT INTO DONATE (memID,catID,shelterName,donateName,donateEmail,phone,"
-			+ "donateAddr,donateAmo,donateStatus,donateMes,donateDate) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+			+ "donateAddr,donateAmo,donateStatus,donateMes) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
 	private static final String GET_ALL_DONATE = "SELECT donateID,memID,catID,shelterName,donateName,donateEmail,phone,donateAddr,donateAmo,donateStatus,donateMes,donateDate FROM DONATE order by donateID";
 
@@ -57,7 +58,7 @@ public class DonateDAO implements DonateDAO_interface {
 			pstmt.setInt(8, donateVO.getDonateAmo());
 			pstmt.setInt(9, donateVO.getDonateStatus());
 			pstmt.setString(10, donateVO.getDonateMes());
-			pstmt.setDate(11, donateVO.getDonateDate());
+			
 
 			pstmt.executeUpdate();
 
@@ -185,7 +186,7 @@ public class DonateDAO implements DonateDAO_interface {
 				donateVO.setDonateAmo(rs.getInt("donateAmo"));
 				donateVO.setDonateStatus(rs.getInt("donateStatus"));
 				donateVO.setDonateMes(rs.getString("donateMes"));
-				donateVO.setDonateDate(rs.getDate("donateDate"));
+				donateVO.setDonateDate(rs.getTimestamp("donateDate"));
 
 			}
 		} catch (SQLException se) {
@@ -246,7 +247,7 @@ public class DonateDAO implements DonateDAO_interface {
 				donateVO.setDonateAmo(rs.getInt("donateAmo"));
 				donateVO.setDonateStatus(rs.getInt("donateStatus"));
 				donateVO.setDonateMes(rs.getString("donateMes"));
-				donateVO.setDonateDate(rs.getDate("donateDate"));
+				donateVO.setDonateDate(rs.getTimestamp("donateDate"));
 				list.add(donateVO); // Store the row in the list
 			}
 		} catch (SQLException se) {
