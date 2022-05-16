@@ -74,4 +74,26 @@ private AdminDAO_interface dao;
 	public List<AdminVO> getAll() {
 		return dao.getAll();
 	}
+	
+	
+	public AdminVO checkLoginUser(String account,String password) {
+
+		return dao.checkLogin(account,password);
+	}
+	
+	public AdminVO findPassword(String account,String password) {
+
+		AdminVO adminVO = new AdminVO();
+		adminVO.setAccount(account);
+		adminVO.setPassword(password);
+		dao.findPassword(adminVO);
+		
+		return adminVO;
+	}
+	
+	public AdminVO selectAccount(String account) {
+		
+		return dao.selectAccount(account);
+	}
+		
 }

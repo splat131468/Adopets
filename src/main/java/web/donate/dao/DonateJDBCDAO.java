@@ -18,7 +18,7 @@ public class DonateJDBCDAO implements DonateDAO_interface {
 	String password = "password";
 
 	private static final String INSERT_DONATE = "INSERT INTO DONATE (memID,catID,shelterName,donateName,donateEmail,phone,"
-			+ "donateAddr,donateAmo,donateStatus,donateMes,donateDate) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+			+ "donateAddr,donateAmo,donateStatus,donateMes) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
 	private static final String GET_ALL_DONATE = "SELECT donateID,memID,catID,shelterName,donateName,donateEmail,phone,donateAddr,donateAmo,donateStatus,donateMes,donateDate FROM DONATE order by donateID";
 
@@ -47,7 +47,7 @@ public class DonateJDBCDAO implements DonateDAO_interface {
 			pstmt.setInt(8, donateVO.getDonateAmo());
 			pstmt.setInt(9, donateVO.getDonateStatus());
 			pstmt.setString(10, donateVO.getDonateMes());
-			pstmt.setDate(11, donateVO.getDonateDate());
+			
 
 			pstmt.executeUpdate();
 		} catch (ClassNotFoundException e) {
@@ -182,7 +182,7 @@ public class DonateJDBCDAO implements DonateDAO_interface {
 				donateVO.setDonateAmo(rs.getInt("donateAmo"));
 				donateVO.setDonateStatus(rs.getInt("donateStatus"));
 				donateVO.setDonateMes(rs.getString("donateMes"));
-				donateVO.setDonateDate(rs.getDate("donateDate"));
+				donateVO.setDonateDate(rs.getTimestamp("donateDate"));
 
 			}
 		} catch (ClassNotFoundException e) {
@@ -246,7 +246,7 @@ public class DonateJDBCDAO implements DonateDAO_interface {
 				donateVO.setDonateAmo(rs.getInt("donateAmo"));
 				donateVO.setDonateStatus(rs.getInt("donateStatus"));
 				donateVO.setDonateMes(rs.getString("donateMes"));
-				donateVO.setDonateDate(rs.getDate("donateDate"));
+				donateVO.setDonateDate(rs.getTimestamp("donateDate"));
 				list.add(donateVO); // Store the row in the list
 			}
 		} catch (ClassNotFoundException e) {
@@ -285,25 +285,24 @@ public class DonateJDBCDAO implements DonateDAO_interface {
 		DonateJDBCDAO dao = new DonateJDBCDAO();
 
 		// 新增
-//		DonateVO donateVO1 = new DonateVO();
-//		donateVO1.setMemID(null);
-//		donateVO1.setCatID(null);
-//		donateVO1.setShelterName(null);
-//		donateVO1.setDonateName("POJO");
-//		donateVO1.setDonateEmail("POJO@gmail.com");
-//		donateVO1.setPhone("0909897281");
-//		donateVO1.setDonateAddr("新北勢三重");
-//		donateVO1.setDonateAmo(5000);
-//		donateVO1.setDonateStatus(1);
-//		donateVO1.setDonateMes("好好生活");
-//		donateVO1.setDonateDate(java.sql.Date.valueOf("2022-04-21"));
-//		dao.insert(donateVO1);
+		DonateVO donateVO1 = new DonateVO();
+		donateVO1.setMemID(1);
+		donateVO1.setCatID(1);
+		donateVO1.setShelterName("1");
+		donateVO1.setDonateName("POJO");
+		donateVO1.setDonateEmail("POJO@gmail.com");
+		donateVO1.setPhone("0909897281");
+		donateVO1.setDonateAddr("新北勢三重");
+		donateVO1.setDonateAmo(5000);
+		donateVO1.setDonateStatus(1);
+		donateVO1.setDonateMes("好好生活");
+		dao.insert(donateVO1);
 
 		// 修改
-		DonateVO donateVO2 = new DonateVO();
-		donateVO2.setDonateID(1);
-		donateVO2.setDonateStatus(0);
-		dao.update(donateVO2);
+//		DonateVO donateVO2 = new DonateVO();
+//		donateVO2.setDonateID(1);
+//		donateVO2.setDonateStatus(0);
+//		dao.update(donateVO2);
 //
 		// 刪除
 //		dao.delete(1);

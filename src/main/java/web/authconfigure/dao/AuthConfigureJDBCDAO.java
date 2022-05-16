@@ -461,28 +461,30 @@ public class AuthConfigureJDBCDAO implements AuthConfigureDAO_interface {
 	public static void main(String[] args) {
 		AuthConfigureJDBCDAO dao = new AuthConfigureJDBCDAO();
 
-		// 新增
-		AuthConfigureVO authConfigureVO01 = new AuthConfigureVO();
-		authConfigureVO01.setAdminID(44);
-		authConfigureVO01.setAuthID(1);
-		dao.insert(authConfigureVO01);
-		
-		// 修改
-		AuthConfigureVO authConfigureVO02 = new AuthConfigureVO();
-		authConfigureVO02.setAdminID(35);
-		authConfigureVO02.setAuthID(2);
-		dao.update(authConfigureVO02);
+//		// 新增
+//		AuthConfigureVO authConfigureVO01 = new AuthConfigureVO();
+//		authConfigureVO01.setAdminID(44);
+//		authConfigureVO01.setAuthID(1);
+//		dao.insert(authConfigureVO01);
+//		
+//		// 修改
+//		AuthConfigureVO authConfigureVO02 = new AuthConfigureVO();
+//		authConfigureVO02.setAdminID(35);
+//		authConfigureVO02.setAuthID(2);
+//		dao.update(authConfigureVO02);
 		
 		// 刪除
 //		dao.delete(2);
 		
 //		// 查詢
-//		AuthConfigureVO authConfigureVO03 = dao.findByAdminID(2);
-//		System.out.print(authConfigureVO03.getAdminID() + ",");
-//		System.out.println(authConfigureVO03.getAuthID());
-//		System.out.println("---------------------");
-//
-		// 查詢
+		List<Integer> list = dao.findByAdminID(2);
+		for (Integer authConfigure04 : list) {
+			System.out.print(authConfigure04 + ",");
+			
+
+		}
+
+//		 查詢
 //		List<AuthConfigureVO> list = dao.getAll();
 //		for (AuthConfigureVO authConfigure04 : list) {
 //			System.out.print(authConfigure04.getAdminID() + ",");

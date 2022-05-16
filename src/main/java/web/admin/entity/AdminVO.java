@@ -3,7 +3,7 @@ package web.admin.entity;
 import java.sql.Date;
 import java.util.Arrays;
 
-public class AdminVO {
+public class AdminVO implements java.io.Serializable{
 	private Integer adminID;
 	private String account;
 	private String password;

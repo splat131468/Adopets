@@ -1,6 +1,7 @@
 package web.donate.entity;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 
 public class DonateVO implements java.io.Serializable{
 	private Integer donateID;
@@ -14,7 +15,7 @@ public class DonateVO implements java.io.Serializable{
 	private Integer donateAmo;
 	private Integer donateStatus;
 	private String donateMes;
-	private Date donateDate;
+	private Timestamp donateDate;
 	
 	public DonateVO() {
 		super();
@@ -22,7 +23,7 @@ public class DonateVO implements java.io.Serializable{
 	}
 	public DonateVO(Integer donateID, Integer memID, Integer catID, String shelterName, String donateName,
 			String donateEmail, String phone, String donateAddr, Integer donateAmo, Integer donateStatus,
-			String donateMes, Date donateDate) {
+			String donateMes, Timestamp donateDate) {
 		super();
 		this.donateID = donateID;
 		this.memID = memID;
@@ -112,10 +113,10 @@ public class DonateVO implements java.io.Serializable{
 	public void setDonateMes(String donateMes) {
 		this.donateMes = donateMes;
 	}
-	public Date getDonateDate() {
+	public Timestamp getDonateDate() {
 		return donateDate;
 	}
-	public void setDonateDate(Date donateDate) {
+	public void setDonateDate(Timestamp donateDate) {
 		this.donateDate = donateDate;
 	}
 }
