@@ -167,7 +167,8 @@ $("#updateProd").on("click", function () {
         $(`#${skuID}`).closest("tr").find(".price").text(skuPrice);
         $(`#${skuID}`).closest("tr").find(".stock").text(stock);
         $(`#${skuID}`).closest("tr").find(".status").text(status);
-        // $("body").load("http://localhost:8081/Adopets/views/ecommerce/goods.jsp", "#tb");
+        // console.log(status);
+        $("body").load("http://localhost:8081/Adopets/views/ecommerce/goods.jsp", "#tb");
         $("div.overlay").fadeOut();
       },
       error:function(){

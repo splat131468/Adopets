@@ -28,7 +28,11 @@ public interface SpuService {
 	PageInfo<SkuVO> selectedPage(ProdSelection prodSelection,Integer curPage,Integer pageSize);
 	
 	// 多對一關係 
-	List<SpuVO>  getDetail(SpuVO spuVO);
+	SpuVO  getDetail(SpuVO spuVO);
+	
+	SkuVO getStockAndPrice(List<String> key , Integer spuID);
+	
+	SkuVO getSkuVO(Integer skuID);
 
 
 
