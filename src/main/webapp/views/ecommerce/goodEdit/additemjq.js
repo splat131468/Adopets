@@ -577,7 +577,7 @@ $(function () {
 
 
     // 點擊完成 建立table  不知道為什麼一直綁不到checked...
-    $(document).on("click", "#confirmAttr", function () {
+    $(document).on("change", "input[name='collect']", function () {
 
         // 先刪除過去已建立的table
         $('#itemList').remove();
@@ -706,7 +706,7 @@ $(function () {
                             </tbody>
                         </table>
                        <div id="addtg">
-                        <h6>批次處理</h6>
+                        <h6>統一定價</h6>
         <a style="display:inline;margin:5px 5px; border-radius:5px"> 數量 :<input class="tnum"  type="text" style="width:70px;padding:1px 2px;margin:5px 5px "></a>
         <a  style="display:inline;margin:5px 5px; border-radius:5px"> 價格 :<input class="tprice" type="text" style="width:70px;padding:1px 2px ;margin:5px 5px"></a>
         <a href='#' class="tconfirm" style="display:inline;margin:5px 5px; border-radius:5px">確認</a>
@@ -897,11 +897,18 @@ $(function () {
         })
         $('.lnum').each(function (index) {
             console.log(index + '個lum' + $(this).val());
+            if($(this).val()==""||$(this).val().length==0){
+            alert("價格不得為空")
+            }
             products_stock.push($(this).val());
         })
         $('.lprice').each(function (index) {
             console.log(index + '個lprice' + $(this).val());
+            if($(this).val()==""||$(this).val().length==0){
+                alert("商品數量不得為空")
+            }
             products_price.push($(this).val());
+           
         })
 
         // 記得改路徑

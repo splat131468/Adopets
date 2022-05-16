@@ -54,11 +54,12 @@ public class ShCartAction extends HttpServlet {
 
 		if ("getCart".equals(action)) {
 
+			try {
 			// 判斷登入
-
 			// 假定memID = 1
-
-			List<CartItem> cart = cartService.getCart(1);
+			Integer memID = new Integer(1);
+			
+			List<CartItem> cart = cartService.getCart(memID);
 
 			// 建立一個List做畫面呈現
 			List<SkuVO> skuVO = new ArrayList<SkuVO>();
@@ -73,6 +74,9 @@ public class ShCartAction extends HttpServlet {
 			req.setAttribute("cartList", skuVO);
 			req.getRequestDispatcher("/views/ecommerce/shoping-cart.jsp").forward(req, resp);
 			return;
+			}catch (Exception e) {
+				System.out.println("取得購物車有誤");
+			}
 		}
 
 		doPost(req, resp);
@@ -93,7 +97,7 @@ public class ShCartAction extends HttpServlet {
 
 		// 商品新增
 		if ("addItem".equals(action)) {
-
+			try {
 			// 判斷是否登入 取得用戶id
 //			req.getSession().getAttribute("memID")
 			// 先假設memID = 1
@@ -102,9 +106,14 @@ public class ShCartAction extends HttpServlet {
 			CartItem cartItem = gson.fromJson(jsonElement, CartItem.class);
 			String res = cartService.addItem(memID, cartItem);
 			resp.getWriter().append(gson.toJson(res));
+			}catch (Exception e) {
+				System.out.println("商品新增有誤");
+			}
 			return;
+			// 修改購物車
 		} else if ("updateCart".equals(action)) {
 
+			try {
 			// 判斷登入
 
 			// 假定memID = 1
@@ -113,15 +122,19 @@ public class ShCartAction extends HttpServlet {
 
 			CartItem cartItem = gson.fromJson(jsonElement, CartItem.class);
 
-			String res = cartService.updateItem(memID, cartItem);
-			int skuID = Integer.parseInt(res);
-			// 用skuID去找 規格
-			SkuVO skuVO = spuService.getSkuVO(skuID);
-
+			// 新增並取得新的skuVO
+			SkuVO skuVO = cartService.updateCartItem(memID, cartItem);
+		
 			resp.getWriter().append(gson.toJson(skuVO));
+			}catch (Exception e) {
+				System.out.println("更改有誤");
+			}
+			
 			return;
+			
 		} else if ("deleteCart".equals(action)) {
 
+			try {
 			// 判斷登入
 
 			// 假定memID = 1
@@ -132,10 +145,14 @@ public class ShCartAction extends HttpServlet {
 			String res = cartService.delSingleItem(memID, cartItem);
 
 			resp.getWriter().append(gson.toJson(res));
+			}catch (Exception e) {
+				System.out.println("刪除有誤");
+			}
 
 			return;
 		} else if ("updateNum".equals(action)) {
 
+			try {
 			// 判斷登入
 
 			// 假定memID = 1
@@ -147,125 +164,62 @@ public class ShCartAction extends HttpServlet {
 			Integer updateNum = cartService.updateNum(memID, cartItem);
 
 			resp.getWriter().append(gson.toJson(updateNum));
+			}catch (Exception e) {
+				System.out.println("修正購物車商品數量有誤");
+			}
 			return;
+			// 前往訂單頁面
 		} else if ("cartCheckOut".equals(action)) {
-
+			
+			try {
+				
 			JsonElement jsonElement = fromJson.get("skuIDArr");
 			// 轉成List 取得帶結帳的skuID
 			List<Integer> skuIDArr = gson.fromJson(jsonElement, new TypeToken<List<Integer>>() {
 			}.getType());
 
-			// 建立新的List 來接skuID
-			List<SkuVO> skuVO = new ArrayList<SkuVO>();
-
-			// 建立新的List 來接checkout cart
-			List<CartItem> cart = new ArrayList<CartItem>();
-
-			// mysql 查詢價格
-			skuIDArr.forEach(e -> {
-				// 循環加入
-				skuVO.add(spuService.getSkuVO(e));
-			});
-			// 到redis 查購買數量
-			// 模擬memID = 1
-			List<CartItem> allCart = cartService.getCart(new Integer(1));
-			// 過濾 只有checkOut的 Num
-			for (int j = 0; j < skuVO.size(); j++) {
-				for (int i = 0; i < allCart.size(); i++) {
-					// 從redis找購物車有的skuID
-					if (allCart.get(i).getSkuID() == skuVO.get(j).getSkuID()) {
-						cart.add(allCart.get(i));
-					}
-				}
-			}
-
-			List<OrderDetailVO> detail = new ArrayList<OrderDetailVO>();
-			for (int i = 0; i < skuVO.size(); i++) {
-				detail.add(new OrderDetailVO(null, null, skuVO.get(i).getSkuID(), skuVO.get(i).getSpuVO().getSpuName(),
-						cart.get(i).getNum(), skuVO.get(i).getSkuPrice()));
-			}
+			// 提供商品規格list 取得訂單明細物件
+			List<OrderDetailVO> detail = cartService.cartCheckOut(skuIDArr);
+			
 
 			HttpSession session = req.getSession();
 			session.setAttribute("checkout", detail);
-//			session.setAttribute("itemNum", cart);
+
 
 			req.getRequestDispatcher("/views/ecommerce/checkout.jsp").forward(req, resp);
+			
+			}catch (Exception e) {
+				System.out.println("勾選的商品有錯誤");
+			}
 			return;
 
 		} else if ("takeOrder".equals(action)) {
-			System.out.println("takeOrder");
+			
+		try {
+			
+		
 			JsonElement jsonElement = fromJson.get("skuIDArr");
 			// 轉成List 取得帶結帳的skuID
 			List<Integer> skuIDArr = gson.fromJson(jsonElement, new TypeToken<List<Integer>>() {
 			}.getType());
 			// 會員驗證
 			Integer memID = new Integer(1);
-			// 到redis取出所有購物車商品
-			List<CartItem> allCart = cartService.getCart(memID);
-			// 要結帳的商品 到找購買數量
-
-			// 建立新的List 來接被勾選 待結帳的商品(取得選購數量)
-			List<CartItem> cart = new ArrayList<CartItem>();
-
-			for (int j = 0; j < skuIDArr.size(); j++) {
-				for (int i = 0; i < allCart.size(); i++) {
-					// 從redis找購物車有的skuID
-					if (allCart.get(i).getSkuID() == skuIDArr.get(j)) {
-						cart.add(allCart.get(i));
-					}
-				}
-			}
-			// 取出代結帳商品 準備做訂單 結帳
-
-			// 先取出mysql 對應的skuVO 準備做數量修改
-			// 建立新的List 來接
-			List<SkuVO> readyCheck = new ArrayList<SkuVO>();
-			// skuID list取出對應的商品
-			skuIDArr.forEach(e -> {
-				// 循環加入 取出所有商品
-				readyCheck.add(spuService.getSkuVO(e));
-			});
-			// 該list只裝修改的商品
-			List<SkuVO> sellList = new ArrayList<SkuVO>();
-			// 數量修改 實際數量 - 購物車商品數
-			for (int j = 0; j < cart.size(); j++) {
-				for (int i = 0; i < readyCheck.size(); i++) {
-					// 從redis找購物車有的skuID
-					if (cart.get(j).getSkuID() == readyCheck.get(i).getSkuID()) {
-						Integer curstock = readyCheck.get(i).getStock();
-						// 數量相減
-						Integer cartNum = cart.get(j).getNum();
-						curstock = curstock - cartNum;
-						readyCheck.get(i).setStock(curstock);
-						sellList.add(readyCheck.get(i));
-					}
-				}
-			}
-
-
-			// 建立訂單
+			
+		// 建立訂單
 			jsonElement = fromJson.get("ordersVO");
 			
-			OrdersVO ordersVO = gson.fromJson(jsonElement, OrdersVO.class);
-			// 會員id
-			ordersVO.setMemID(memID);
-	
-			int gk = orderService.insertOrderGk(ordersVO);
 		
-			// 建立明細
-			int addOrderDetails = orderDetailService.addDetails(sellList, memID, gk,cart);
-
-
-			// 移除庫存
-			// 要新增updateList method
-			int takeOrder = skuService.takeOrder(sellList);
-
-
-			// 移除購物車
-			String delMulItem = cartService.delMulItem(memID, cart);
+			
+			OrdersVO ordersVO = gson.fromJson(jsonElement, OrdersVO.class);
+			
+			System.out.println(skuIDArr+"===="+ordersVO+"====="+memID);
+			cartService.takeOrder(skuIDArr, ordersVO, memID);
 
 			// 清除session
 			req.getSession().setAttribute("checkout", "");
+		}catch (Exception e) {
+			System.out.println("結帳有誤");
+		}
 
 		}
 
