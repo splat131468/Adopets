@@ -21,7 +21,6 @@ public class MemberJDBCDAO implements MemberDAO_interface {
 	 String password = "password";
 	 
 	private static final String INSERT_STMT = 
-//		"INSERT INTO MEMBER (account,password,name,age,phone,address,personImg) VALUES (?,?,?,?,?,?,?)";
 		"INSERT INTO MEMBER (account,password,name) VALUES (? ,? ,? )";
 	private static final String GET_ALL_STMT = 
 		"SELECT memID,account,password,name,age,phone,address,personImg FROM MEMBER order by memID";
@@ -53,7 +52,6 @@ public class MemberJDBCDAO implements MemberDAO_interface {
 					+ se.getMessage());
 			// Clean up resources
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
 			if (pstmt != null) {
@@ -105,7 +103,6 @@ public class MemberJDBCDAO implements MemberDAO_interface {
 			se.printStackTrace();
 			// Clean up resources
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
 			if (pstmt != null) {
@@ -147,7 +144,6 @@ public class MemberJDBCDAO implements MemberDAO_interface {
 					+ se.getMessage());
 			// Clean up JDBC resources
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
 			if (pstmt != null) {

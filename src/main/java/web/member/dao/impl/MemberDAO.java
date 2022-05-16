@@ -29,7 +29,6 @@ public class MemberDAO implements MemberDAO_interface {
 	}
 	
 	private static final String INSERT_STMT = 
-//		"INSERT INTO MEMBER (account,password,name,age,phone,address,personImg) VALUES (?,?,?,?,?,?,?)";
 		"INSERT INTO MEMBER (account,password,name) VALUES (? ,? ,? )";
 	private static final String GET_ALL_STMT = 
 		"SELECT memID,account,password,name,age,phone,address,personImg FROM MEMBER order by memID";
@@ -40,7 +39,68 @@ public class MemberDAO implements MemberDAO_interface {
 	private static final String UPDATE = 
 		"UPDATE MEMBER set password=?, name=?, age=?, phone=?, address=?, personImg=?, changeDate=? where memID = ?";
 
-	
+	// 新增SQL 指令字串
+	private static final String GET_ONE_ACCOUNT = 
+		"SELECT memID FROM MEMBER where account = ?";
+				
+	// 新增查詢方法
+		public MemberVO checkAccount(String account) {
+			MemberVO memberVO = null;
+			Connection con = null;
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			
+			try {
+
+				con = ds.getConnection();
+				pstmt = con.prepareStatement(GET_ONE_ACCOUNT);
+				pstmt.setString(1, account);
+				rs = pstmt.executeQuery();
+				
+				while (rs.next()) {				
+					if(rs.getRow() != 0) {
+						throw new Exception();
+					}
+				}
+				
+
+				// Handle any driver errors
+			} catch (SQLException se) {
+				throw new RuntimeException("A database error occured. "
+						+ se.getMessage());
+				
+				
+				// 自訂錯誤訊息
+			} catch (Exception e) {
+				throw new RuntimeException("此帳號已有人使用"
+						+ e.getMessage());
+										
+			} finally {
+				if (rs != null) {
+					try {
+						rs.close();
+					} catch (SQLException se) {
+						se.printStackTrace(System.err);
+					}
+				}
+				if (pstmt != null) {
+					try {
+						pstmt.close();
+					} catch (SQLException se) {
+						se.printStackTrace(System.err);
+					}
+				}
+				if (con != null) {
+					try {
+						con.close();
+					} catch (Exception e) {
+						e.printStackTrace(System.err);
+					}
+				}
+			}
+			return memberVO;
+		}
+		
 	@Override
 	public void insert(MemberVO memberVO) {
 
@@ -49,7 +109,9 @@ public class MemberDAO implements MemberDAO_interface {
 
 		try {
 			con = ds.getConnection();
-			pstmt = con.prepareStatement(INSERT_STMT);			
+			pstmt = con.prepareStatement(INSERT_STMT);
+			
+			checkAccount(memberVO.getAccount());
 			pstmt.setString(1,memberVO.getAccount());
 			pstmt.setString(2,memberVO.getPassword());
 			pstmt.setString(3,memberVO.getName());
