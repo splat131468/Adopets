@@ -6,14 +6,11 @@ import java.util.List;
 
 import com.google.gson.JsonElement;
 
+import web.product.entity.ImgTFVO;
 import web.product.entity.SkuVO;
-import web.product.service.SkuService;
-;
+import web.product.service.SkuService;;
 
 public class SkuServiceImp implements SkuService {
-	
-	
-
 
 	@Override
 	public int insertSKU(int spuID, List<Integer> prices, List<Integer> stocks, List<JsonElement> attrList) {
@@ -36,10 +33,28 @@ public class SkuServiceImp implements SkuService {
 
 	@Override
 	public int updateProd(SkuVO skuVO) {
-		
+
 		return skuDAO.updateProd(skuVO);
 	}
 
-	
+	@Override
+	public int takeOrder(List<SkuVO> checkOut) {
+
+		return skuDAO.updateProds(checkOut);
+	}
+
+	@Override
+	public void insertProd(String ctgName, String spuName, String descript, List<Integer> prices, List<Integer> stocks,
+			List<JsonElement> attrList, ImgTFVO imgs) {
+
+		int ctgID = categoryService.queryCtgID(ctgName);
+
+		int spuID = spuService.insertSPU(ctgID, spuName, descript);
+
+		skuService.insertSKU(spuID, prices, stocks, attrList);
+		// 照片上傳
+		pImgService.addPics(spuID, imgs);
+
+	}
 
 }

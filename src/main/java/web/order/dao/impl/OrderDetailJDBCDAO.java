@@ -10,6 +10,7 @@ import java.util.List;
 
 import web.order.dao.OrderDetailDAO_interface;
 import web.order.entity.OrderDetailVO;
+import web.product.entity.PImgVO;
 
 
 
@@ -297,6 +298,38 @@ public class OrderDetailJDBCDAO implements OrderDetailDAO_interface {
 //			System.out.print(OrderDetail.getProdPrice() + ",");
 //			System.out.println();
 //		}
+	}
+
+	private static final String INSERT_ORDERDETAILS = "insert into ORDERDETAIL (orderID,skuID,prodName,"
+			+ "prodNum,prodPrice) values (?,?,?,?,?)";	
+	
+	@Override
+	public int addDetails(List<OrderDetailVO> orderDetailVO) {
+		int res = -1;
+		try (Connection connection = DriverManager.getConnection(url, userid, password);
+				PreparedStatement ps = connection.prepareStatement(INSERT_ORDERDETAILS);) {
+			for (OrderDetailVO vo : orderDetailVO) {
+			
+			ps.setInt(1, vo.getOrderID());
+			ps.setInt(2, vo.getSkuID());
+			ps.setString(3, vo.getProdName());
+			ps.setInt(4, vo.getProdNum());
+			ps.setInt(5, vo.getProdPrice());		
+
+				ps.addBatch();
+			}
+			ps.executeBatch();
+			res=1;
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return res;
+	
+		
+		
+		
 	}
 
 }

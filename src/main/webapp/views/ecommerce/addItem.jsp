@@ -124,11 +124,12 @@
 
                     <fieldset>
                         <div class="form-card" style="position:relative; min-height: 800px;">
-                            <h5 class="sub-heading mb-4" style="display: inline;">商品規格</h5>
+                            <h5 class="sub-heading mb-4" style="display: inline;">商品規格 :</h5>
                             <button id="addattr2" style="width: 60px; display: inline-block; margin-left: 10px;"
-                                class="button-12" role="button">新增</button>
+                                class="button-12" role="button">新增</button><br><br>
+                                <!-- <h5 class="sub-heading mb-4" style="display: inline;">進行組合 ：</h5>
                             <button id="confirmAttr" style="width: 60px; display: inline-block; margin-left: 10px;"
-                                class="button-12" role="button">完成</button>
+                                class="button-12" role="button">go !</button> -->
                             <label class="text-danger mb-3"></label>
 
 
@@ -197,6 +198,7 @@
 
 
                                 </div>
+                                
                             </div>
                             <div  style="height: 200px;">
 

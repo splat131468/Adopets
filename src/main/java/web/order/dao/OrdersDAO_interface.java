@@ -17,6 +17,8 @@ public interface OrdersDAO_interface {
 	public OrdersVO findParmaryKey(Integer orderID);
 	public List<OrdersVO> getAll();
 	public Set<OrderDetailVO> getDetailByOrder(Integer orderID);
+	// 建立訂單
+	public int makeOrder(OrdersVO ordersVO);
 	  
 
 }

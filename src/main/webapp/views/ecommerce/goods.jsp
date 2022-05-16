@@ -510,7 +510,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             </c:forEach>
                             <td class="price">${allProds.skuPrice}</td>
                             <td class="stock">${allProds.stock}</td>
-                            <td><span class="tag tag-success">${allProds.status==1?"上架":"下架"}</span></td>
+                            <td><span class="tag tag-success">${allProds.status==1?"上架":"<span style='color: red;'>下架</span>"}</span></td>
                             <!-- 用hidden傳該skuID -->
                             <input class="status" type="hidden" value=${allProds.status}>
                             <input id="${allProds.skuID}" class="skuID" type="hidden" value=${allProds.skuID}>

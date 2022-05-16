@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
     <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
         <!DOCTYPE html>
         <html lang="zxx">
 
@@ -9,7 +10,7 @@
             <meta name="keywords" content="Ogani, unica, creative, html">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <meta http-equiv="X-UA-Compatible" content="ie=edge">
-            <title>商品詳情</title>
+            <title>結帳</title>
 
             <!-- Google Font -->
             <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap"
@@ -40,8 +41,11 @@
                 type="text/css">
             <script src="${pageContext.request.contextPath}/views/ecommerce/js_ecommerce/jquery-3.6.0.min.js"></script>
 
+            <script src="${pageContext.request.contextPath}/views/ecommerce/goodEdit/check.js"></script>
+
             <!-- 彈窗 -->
             <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
 
             <!-- 首頁 -->
 
@@ -56,249 +60,30 @@
 
 
             <script>
+
                 $(function () {
 
-                    //彈窗
-                    // document.getElementById("aCart").addEventListener("click", function () {
-                    //     swal("成功加入", "已加入購物車!", "success", {
-                    //         timer: 700
-                    //     });
-                    // });
-
-                    // 將商品送進購物車
-                    $(document).on("click", "#aCart", function () {
-
-                        let limit = $("#limit").val();
-
-                        let num = $("#pnum").text();
-                        // 該產品所有屬性 json 打包
-                        let allAttr =JSON.stringify({
-                            attrN1:attrN1,
-                            attrN2:attrN2,
-                            attrV1:attrV1,
-                            attrV2:attrV2
-                        });
-                       
-
-                        // 
-                        let skuPrice = $("#price").text();
-                        let spuID = $("#spuID").val();
-                        let descript = $("#ist").text();
-                        let skuID = $("#skuID").val();
-
-                        num = parseInt(num);
-                        skuPrice = parseInt(skuPrice);
-
-                        if (limit <= 0 || limit > num) {
-                            swal("數量有誤", "無法執行!", "error", {
-                                timer: 700
-                            });
-                            return;
-                        }
-                        console.log(limit)
-
-                        let data = {
-                            action: "addItem",
-                            cartItem: {
-                                num: limit,
-                                skuPrice: skuPrice,
-                                spuID: spuID,
-                                descript: descript,
-                                skuID, skuID,
-                                allAttr:allAttr
-                            },
-                           
-                        }
-
-                        if (!isNaN(num) && !isNaN(skuPrice)) {
-                            console.log("都是數字");
-
-                            fetch("${pageContext.request.contextPath}/shCartAction", {
-                                method: 'POST',
-                                body: JSON.stringify(data)
-                            }).then(function (response) {
-                                return response.json();
-                            }).then(function (res) {
-                                swal("成功加入", res, "success", {
-                                    timer: 1000
-                                });
-
-                            })
-
-                            return;
-                        }
-
-                        console.log("不是數字");
-                        return;
-                    });
-
-
-
-                    // 迴圈綁定事件 點選回顯
-                    $("img .tag").on("click", function () {
-                        console.log("hi");
-                    });
-
-
-
-                    // 規格排版
-                    let attr = [];
-                    <c:forEach items="${skuVO}" var="skuVO">
-                        attr.push(JSON.parse(${skuVO}));
+                    let totalAmount = 0;
+                    // 取得總價
+                    <c:forEach items="${checkout}" var="item" varStatus="loop">
+                        totalAmount+= ${item.prodPrice * item.prodNum};
                     </c:forEach>
-                    // 先列出屬性
-                    let attrN1 = null;
-                    let attrN2 = null;
-                    let attrV1 = [];
-                    let attrV2 = [];
-
-                    for (let i = 0; i < attr.length; i++) {
-
-                        let n1 = attr[i].attrN1.trim();
-                        let n2 = attr[i].attrN2.trim();
-                        if (n1.length != 0) {
-                            attrN1 = n1;
-                        }
-                        if (n2.length != 0) {
-
-
-                            attrN2 = n2;
-
-
-
-                            console.log("84" + attrN1);
-                        }
-                        let v1 = attr[i].attrV1.trim();
-                        let v2 = attr[i].attrV2.trim();
-                        if (v1.length != 0) {
-                            //若該陣列沒有重複元素 就加入
-                            if (!attrV1.includes(v1)) {
-                                attrV1.push(v1);
-                            }
-                        }
-
-                        if (v2.length != 0) {
-                            //若該陣列沒有重複元素 就加入
-                            if (!attrV2.includes(v2)) {
-                                attrV2.push(v2);
-                            }
-                        }
-                    }
-                    // 檢查specAttr
-
-
-                    let row = '';
-                    // 嵌入 ist
-                    if (attrN1.length != null) {
-                        // 先加入元素
-                        row += attrN1 + " : ";
-                        // v1元素
-                        for (let i = 0; i < attrV1.length; i++) {
-                            row += '<span style="margin:0px 3px">' + attrV1[i] + '</span>';
-                            row += '<input id="ck" type="radio" name="spec1" value="' + attrV1[i] + '" >'
-                        }
-                        row += "<br><br>"
-                        console.log(row);
-                    }
-                    $("#ist").after(row);
-                    row = "";
-
-                    if (attrN2 != null) {
-
-                        // 先加入元素
-                        row += attrN2 + " : ";
-                        // v1元素
-                        for (let i = 0; i < attrV2.length; i++) {
-                            row += '<span style="margin:0px 3px">' + attrV2[i] + '</span>';
-                            row += '<input id="ck" type="radio" name="spec2" value="' + attrV2[i] + '"  style="margin:0px 3px" >'
-                        }
-                        row += "<br><br>"
-                    }
-
-                    $("#ist").after(row);
-
-                    console.log(attrN1)
-                    console.log(attrN2)
-                    console.log(attrV1)
-                    console.log(attrV2)
-
-
-
-                    // 選擇屬性後尋找對應的數量以及價格
-                    $(document).on("change", "#ck", function () {
-
-
-
-                        let spuID = $("#spuID").val();
-                        let key1 = null;
-                        key1 = $("input[name='spec1']:checked").val();
-
-
-
-                        let key2 = null;
-                        // 如果attrN2 == null 就不取
-                        if (attrN2 != null) {
-                            key2 = $("input[name='spec2']:checked").val();
-                        }
-
-
-                        // 若n2不為null 代表有兩個屬性，需點選兩個才傳請求
-                        if (attrN2 != null && key1 != null && key2 != null) {
-                            let arr = [key1, key2];
-                            let data = { arr: arr, action: "getPrcSk", spuID, spuID };
-
-
-                            fetch("${pageContext.request.contextPath}/cartAction", {
-                                method: 'POST',
-                                body: JSON.stringify(data)
-                            }).then(function (response) {
-                                return response.json();
-                            }).then(function (res) {
-                                $("#pnum").text(res.stock);
-                                $("#price").text(res.skuPrice);
-                                $("#skuID").val(res.skuID);
-                                $("#restNum").text(res.stock)
-                                // 數量規範 購物車增減
-                                $("#limit").attr("max",res.stock);
-
-                            })
-
-                        } else if (attrN1 != null && key1 != null) {
-                            let arr = [key1];
-                            let data = { arr: arr, action: "getPrcSk", spuID, spuID };
-
-
-                            fetch("${pageContext.request.contextPath}/cartAction", {
-                                method: 'POST',
-                                body: JSON.stringify(data)
-                            }).then(function (response) {
-                                return response.json();
-                            }).then(function (res) {
-
-                                $("#pnum").text(res.stock);
-                                $("#price").text(res.skuPrice);
-                                $("#skuID").val(res.skuID);
-                                $("#restNum").text(res.stock);
-                                $("#limit").attr("max",res.stock);
-
-                            })
-
-
-
-                        }
-
-                    });
+                    $(".checkout__order__total span").text(totalAmount)
 
 
 
 
+                })
 
 
 
 
-                });
             </script>
+
         </head>
+
+
+
 
         <body>
             <!-- Page Preloder -->
@@ -306,12 +91,11 @@
                 <div class="loader"></div>
             </div>
 
-
-
             <!-- Header Section Begin -->
             <header class="header">
                 <div class="header__top">
                     <div class="container">
+
 
                         <!-- 阿德 -->
 
@@ -510,7 +294,8 @@
                                         <span class="visually-hidden">Favorites</span>
                                     </a>
                                     <!--購物車-->
-                                    <a href="${pageContext.request.contextPath}/shCartAction?action=getCart" class="nav-favorites-btn nav-cart-btn">
+                                    <a href="${pageContext.request.contextPath}/shCartAction?action=getCart"
+                                        class="nav-favorites-btn nav-cart-btn">
                                         <svg role="img" focusable="false">
                                             <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-cart">
                                             </use>
@@ -557,35 +342,38 @@
                             </svg>
                         </div>
 
-                        <!-- 阿德 -->
+
+
+
+                        <!-- 結束 -->
+
                         <!-- <div class="row">
-                    <div class="col-lg-6 col-md-6">
+                            <div class="col-lg-6 col-md-6"> -->
 
-                    </div>
-                    <div class="col-lg-6 col-md-6">
-                        <div class="header__top__right">
-                            <div class="header__top__right__social">
-                                <a href="#"><i class="fa fa-facebook"></i></a>
-                                <a href="#"><i class="fa fa-twitter"></i></a>
-                                <a href="#"><i class="fa fa-linkedin"></i></a>
-                                <a href="#"><i class="fa fa-pinterest-p"></i></a>
+                        <!-- </div>
+                            <div class="col-lg-6 col-md-6">
+                                <div class="header__top__right">
+                                    <div class="header__top__right__social">
+                                        <a href="#"><i class="fa fa-facebook"></i></a>
+                                        <a href="#"><i class="fa fa-twitter"></i></a>
+                                        <a href="#"><i class="fa fa-linkedin"></i></a>
+                                        <a href="#"><i class="fa fa-pinterest-p"></i></a>
+                                    </div>
+                                    <div class="header__top__right__language">
+                                        <img src="img_ecommerce/language.png" alt="">
+                                        <div>English</div>
+                                        <span class="arrow_carrot-down"></span>
+                                        <ul>
+                                            <li><a href="#">中文</a></li>
+                                            <li><a href="#">English</a></li>
+                                        </ul>
+                                    </div>
+                                    <div class="header__top__right__auth">
+                                        <a href="#"><i class="fa fa-user"></i> Login</a>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="header__top__right__language">
-                                <img src="img_ecommerce/language.png" alt="">
-                                <div>English</div>
-                                <span class="arrow_carrot-down"></span>
-                                <ul>
-                                    <li><a href="#">中文</a></li>
-                                    <li><a href="#">English</a></li>
-                                </ul>
-                            </div>
-                            <div class="header__top__right__auth">
-                                <a href="#"><i class="fa fa-user"></i> Login</a>
-                            </div>
-                        </div>
-                    </div>
-                </div> -->
-
+                        </div> -->
 
 
                     </div>
@@ -623,20 +411,19 @@
             </header>
             <!-- Header Section End -->
 
-
+          
 
             <!-- Breadcrumb Section Begin -->
-            <section class="breadcrumb-section set-bg"
-                data-setbg="${pageContext.request.contextPath}/views/ecommerce/img_ecommerce/bgp3.jpg">
+            <section class="breadcrumb-section set-bg" 
+            data-setbg="${pageContext.request.contextPath}/views/ecommerce/img_ecommerce/bgp3.jpg">
                 <div class="container">
                     <div class="row">
                         <div class="col-lg-12 text-center">
                             <div class="breadcrumb__text">
-                                <h2>產品名稱</h2>
+                                <h2>Checkout</h2>
                                 <div class="breadcrumb__option">
-                                    <a href="/index.html">商城</a>
-                                    <a href="./index.html">產品類別</a>
-                                    <span>產品名稱</span>
+                                    <a href="./index.html">Home</a>
+                                    <span>Checkout</span>
                                 </div>
                             </div>
                         </div>
@@ -645,83 +432,149 @@
             </section>
             <!-- Breadcrumb Section End -->
 
-            <!-- Product Details Section Begin -->
-            <section class="product-details spad">
+            <!-- Checkout Section Begin -->
+            <section class="checkout spad">
                 <div class="container">
-                    <div class="row">
-                        <div class="col-lg-6 col-md-6">
-                            <div class="product__details__pic">
-                                <div id="showOff" class="product__details__pic__item">
-                                    <img class="product__details__pic__item--large"
-                                        src="${pageContext.request.contextPath}/cartAction?action=getSpuPic&pnum=0&spuID=${spuID}"
-                                        alt="">
-                                </div>
+                    <!-- <div class="row">
+                <div class="col-lg-12">
+                    <h6><span class="icon_tag_alt"></span> Have a coupon? <a href="#">Click here</a> to enter your code
+                    </h6>
+                </div>
+            </div> -->
+                    <div class="checkout__form">
+                        <h4>訂單結帳</h4>
+                        <form action="#">
+                            <div class="row">
+                                <div class="col-lg-8 col-md-6">
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="checkout__input">
+                                                <p>付款方式
+                                                    <span>*
 
-                                <style>
+                                                    </span>
+                                                </p>
+                                                <select id="payWay">
+                                                    <option value="1">貨到付款</option>
+                                                    <option value="2">信用卡</option>
 
+                                                </select>
 
-
-
-
-
-                                </style>
-
-                                <div class="product__details__pic__slider owl-carousel">
-
-                                    <img data-imgbigurl="${pageContext.request.contextPath}/cartAction?action=getSpuPic&pnum=0&spuID=${spuID}"
-                                        src="${pageContext.request.contextPath}/cartAction?action=getSpuPic&pnum=0&spuID=${spuID}"
-                                        alt="">
-                                    <img data-imgbigurl="${pageContext.request.contextPath}/cartAction?action=getSpuPic&pnum=1&spuID=${spuID}"
-                                        src="${pageContext.request.contextPath}/cartAction?action=getSpuPic&pnum=1&spuID=${spuID}"
-                                        alt="">
-                                    <img data-imgbigurl="${pageContext.request.contextPath}/cartAction?action=getSpuPic&pnum=2&spuID=${spuID}"
-                                        src="${pageContext.request.contextPath}/cartAction?action=getSpuPic&pnum=2&spuID=${spuID}"
-                                        alt="">
-                                    <img data-imgbigurl="${pageContext.request.contextPath}/cartAction?action=getSpuPic&pnum=3&spuID=${spuID}"
-                                        src="${pageContext.request.contextPath}/cartAction?action=getSpuPic&pnum=3&spuID=${spuID}"
-                                        alt="">
-                                </div>
-
-                            </div>
-                        </div>
-                        <div class="col-lg-6 col-md-6">
-                            <!-- 存spuID skuID -->
-                            <input id="spuID" type="hidden" value="${spuID}">
-                            <input id="skuID" type="hidden">
-                            <div class="product__details__text">
-                                <h3>${prodName}</h3><br><br><br>
-                                <!-- <div class="product__details__price">$價格</div> -->
-                                <h6><strong>商品詳情</strong></h6><br>
-                                <p id="ist">${descript}</p>
-
-
-                                <div class="product__details__quantity">
-                                    <div class="quantity">
-                                        <div class="pro-qty">
-                                            <input id="limit" min="1" type="number" class="qt" value="1">
+                                            </div>
                                         </div>
+
+
+
+                                        <div class="col-lg-6">
+                                            <div class="checkout__input">
+
+                                            </div>
+                                        </div>
+                                        <!--  -->
+
+
+                                        <div id="creditPk" style="margin:30px 10px; display: none; " class="card px-4">
+                                            <p class="h8 py-3">信用卡資訊</p>
+                                            <div class="row gx-3">
+                                                <div class="col-12">
+                                                    <div class="d-flex flex-column">
+                                                        <p class="text mb-1">姓名</p>
+                                                        <input class="form-control mb-3" type="text" placeholder="Name"
+                                                            value="">
+                                                    </div>
+                                                </div>
+                                                <div class="col-12">
+                                                    <div class="d-flex flex-column">
+                                                        <p class="text mb-1">Card Number</p>
+                                                        <input class="form-control mb-3" type="tel" inputmode="numeric"
+                                                            pattern="[0-9\s]{13,19}" autocomplete="cc-number"
+                                                            maxlength="19" placeholder="xxxx xxxx xxxx xxxx">
+                                                    </div>
+                                                </div>
+                                                <div class="col-6">
+                                                    <div class="d-flex flex-column">
+                                                        <p class="text mb-1">Expiry</p>
+
+                                                        <input type="date" name="begin" placeholder="dd-mm-yyyy"
+                                                            value="" max="2030-12-31">
+
+                                                    </div>
+                                                </div>
+                                                <div class="col-6">
+                                                    <div class="d-flex flex-column">
+                                                        <p class="text mb-1">CVV/CVC</p>
+
+
+
+                                                        <input class="form-control mb-3 pt-2 " type="number"
+                                                            maxlength="3"
+                                                            onKeyDown="if(this.value.length==3 && event.keyCode!=8  ) return false;">
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+
+                                        <!--  -->
+                                    </div>
+
+                                    <div class="checkout__input" style="margin-top: 10px;">
+                                        <p>地址<span>*</span></p>
+                                        <input id="address" type="text" placeholder="地址" class="checkout__input__add">
+                                        <!-- <input type="text" placeholder="Apartment, suite, unite ect (optinal)"> -->
+                                    </div>
+
+
+                                    <!-- <div class="checkout__input">
+                                        <p>Postcode / ZIP<span></span></p>
+                                        <input type="text">
+                                    </div> -->
+                                    <!-- <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="checkout__input">
+                                        <p>Phone<span>*</span></p>
+                                        <input type="text">
                                     </div>
                                 </div>
-                                <a id="aCart" style="color: white;" class="primary-btn">加入購物車</a>
-                     
-                               
+                                <div class="col-lg-6">
+                                    <div class="checkout__input">
+                                        <p>Email<span>*</span></p>
+                                        <input type="text">
+                                    </div>
+                                </div>
+                            </div> -->
 
 
-                                <ul>
-                                    <li><b>剩餘數量</b> <span style="font-size: 25px; color:red" id="pnum"></span></li>
-                                    <li><b>價格</b> <span style="font-size: 25px; color:red" id="price"></span></li>
+                                    <div class="checkout__input">
+                                        <p>備註 :<span></span></p>
+                                        <input type="text"
+                                            placeholder="Notes about your order, e.g. special notes for delivery.">
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-6">
+                                    <div class="checkout__order">
+                                        <h4>訂單 :</h4>
+                                        <div class="checkout__order__products">商品 <span>總額</span></div>
+                                        <ul>
+                                            <c:forEach items="${checkout}" var="item" varStatus="loop">
+                                                <li style="font-size: 12px;">
+                                                    ${item.prodName}<span>${item.prodPrice*item.prodNum}</span></li>
+                                                <input type="hidden" class="skuID" value="${item.skuID}">
+                                            </c:forEach>
+                                        </ul>
+                                        <!-- <div class="checkout__order__subtotal">Subtotal <span>$750.99</span></div> -->
+                                        <div class="checkout__order__total">Total <span class="total"></span></div>
 
-                                </ul>
-
+                                        <p id="takeOrder" class="site-btn">結帳</p>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-
+                        </form>
                     </div>
                 </div>
             </section>
-            <!-- Product Details Section End -->
-
-
+            <!-- Checkout Section End -->
 
             <!-- Footer Section Begin -->
             <footer class="footer spad">
@@ -733,36 +586,47 @@
                                     <a href="./index.html"><img src="img_ecommerce/logo.png" alt=""></a>
                                 </div>
                                 <ul>
-                                    <li>gitHub: </li>
-                                    <li>Phone: 09</li>
-                                    <li>Email: zack871025@gmail.com</li>
+                                    <li>Address: 60-49 Road 11378 New York</li>
+                                    <li>Phone: +65 11.188.888</li>
+                                    <li>Email: hello@colorlib.com</li>
                                 </ul>
                             </div>
                         </div>
                         <div class="col-lg-4 col-md-6 col-sm-6 offset-lg-1">
                             <div class="footer__widget">
-                                <h6>相關連結</h6>
+                                <h6>Useful Links</h6>
                                 <ul>
-                                    <li><a href="#">動物中心</a></li>
-                                    <li><a href="#">動物中心</a></li>
-                                    <li><a href="#">動物中心</a></li>
-                                    <li><a href="#">動物中心</a></li>
-                                    <li><a href="#">動物中心</a></li>
-                                    <li><a href="#">動物中心</a></li>
+                                    <li><a href="#">About Us</a></li>
+                                    <li><a href="#">About Our Shop</a></li>
+                                    <li><a href="#">Secure Shopping</a></li>
+                                    <li><a href="#">Delivery infomation</a></li>
+                                    <li><a href="#">Privacy Policy</a></li>
+                                    <li><a href="#">Our Sitemap</a></li>
                                 </ul>
                                 <ul>
-                                    <li><a href="#">關於我們</a></li>
-                                    <li><a href="#">我們的服務</a></li>
-                                    <li><a href="#">專案</a></li>
+                                    <li><a href="#">Who We Are</a></li>
+                                    <li><a href="#">Our Services</a></li>
+                                    <li><a href="#">Projects</a></li>
                                     <li><a href="#">Contact</a></li>
-                                    <li><a href="#">ER mode;</a></li>
-                                    <li><a href="#">聯絡方式</a></li>
+                                    <li><a href="#">Innovation</a></li>
+                                    <li><a href="#">Testimonials</a></li>
                                 </ul>
                             </div>
                         </div>
                         <div class="col-lg-4 col-md-12">
                             <div class="footer__widget">
-
+                                <h6>Join Our Newsletter Now</h6>
+                                <p>Get E-mail updates about our latest shop and special offers.</p>
+                                <form action="#">
+                                    <input type="text" placeholder="Enter your mail">
+                                    <button type="submit" class="site-btn">Subscribe</button>
+                                </form>
+                                <div class="footer__widget__social">
+                                    <a href="#"><i class="fa fa-facebook"></i></a>
+                                    <a href="#"><i class="fa fa-instagram"></i></a>
+                                    <a href="#"><i class="fa fa-twitter"></i></a>
+                                    <a href="#"><i class="fa fa-pinterest"></i></a>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -771,7 +635,13 @@
                             <div class="footer__copyright">
                                 <div class="footer__copyright__text">
                                     <p>
-
+                                        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                                        Copyright &copy;
+                                        <script>document.write(new Date().getFullYear());</script> All rights reserved |
+                                        This
+                                        template is made with <i class="fa fa-heart" aria-hidden="true"></i> by <a
+                                            href="https://colorlib.com" target="_blank">Colorlib</a>
+                                        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
                                     </p>
                                 </div>
                                 <div class="footer__copyright__payment"><img src="img_ecommerce/payment-item.png"
@@ -793,7 +663,8 @@
             <script src="${pageContext.request.contextPath}/views/ecommerce/js_ecommerce/mixitup.min.js"></script>
             <script src="${pageContext.request.contextPath}/views/ecommerce/js_ecommerce/owl.carousel.min.js"></script>
             <script src="${pageContext.request.contextPath}/views/ecommerce/js_ecommerce/main.js"></script>
-            <script src="${pageContext.request.contextPath}/views/ecommerce/index_vector/js/homepage.js"></script>
+
+
 
         </body>
 

@@ -72,70 +72,67 @@ public class ProductAction extends HttpServlet {
 		response.setContentType("text/html; charset=UTF-8");
 
 		
-		// 產品新增 之後補controller
-		request.setCharacterEncoding("UTF-8");
-
-//		String parameter = request.getParameter("action");
-//		System.out.println(parameter);
-		
 		
 		String data = IOUtils.toString(request.getInputStream(), StandardCharsets.UTF_8);
 		
 		JsonObject fromJson = gson.fromJson(data, JsonObject.class);
 		
-		
-
-		
+			
 		String action = fromJson.get("action").getAsString();
 		
 		
 		
 	
 		
-		// 上架商品 controller
+		// 上架商品  
 		if("launchProd".equals(action)) {
+			try {
 		// 類型名稱
 		String ctgName = fromJson.get("ctgName").getAsString();
 		// 商品名稱
 		String spuName = fromJson.get("spuName").getAsString();
 		// 商品描述
 		String descript = fromJson.get("descript").getAsString();
-		// 商品圖片
+		// 商品圖片 base64
 		JsonObject jObjectImg = fromJson.get("spuImgs").getAsJsonObject();
 		ImgTFVO imgs = gson.fromJson(jObjectImg, ImgTFVO.class);
 		// 規格
-		// List接
+		// List接 所有選擇規格
 		List<JsonElement> attrList = new ArrayList<>();
 		JsonArray attrArr = fromJson.get("specAttrs").getAsJsonArray();
 		attrArr.forEach(item -> {
 			attrList.add(item);
 		});
-		// 庫存
+		// 接產品所有庫存
 		JsonArray jstocks = fromJson.get("stocks").getAsJsonArray();
 		List<Integer> stocks = new ArrayList<>();
 		for (JsonElement element : jstocks) {
 			stocks.add(gson.fromJson(element, Integer.class));
 		}
-		// 價格
+		// 接產品所有價格
 		JsonArray skuPrices = fromJson.get("skuPrices").getAsJsonArray();
 		List<Integer> prices = new ArrayList<>();
 		for (JsonElement element : skuPrices) {
 			prices.add(gson.fromJson(element, Integer.class));
 		}
+		// 進行商品新增
+		skuService.insertProd(ctgName, spuName, descript, prices, stocks, attrList, imgs);
+			}catch (Exception e) {
+				System.out.println("商品新增失敗");
+			}
 		
-		int ctgID = categoryService.queryCtgID(ctgName);
 		
-		int spuID = spuService.insertSPU(ctgID, spuName, descript);
-
-		skuService.insertSKU(spuID, prices, stocks, attrList);
-		// 照片上傳
-		pImgService.addPics(spuID, imgs);
 		// 上架商品 取得類型名稱
 		}else if("getCatgName".equals(action)){
+			try {	
 			List<CategoryVO> allCategory = categoryService.getAllCategory();
 			response.getWriter().append(gson.toJson(allCategory));
+			} catch (Exception e) {
+				System.out.println("取得所有商品類型有誤！");
+			}
 		// 取得類型規格模板
 		}else if("getAttrList".equals(action)) {
+			try {	
 			String ctgName = fromJson.get("ctgName").getAsString();
 			// 查詢該類型的id
 			int ctgID = categoryService.queryCtgID(ctgName);
@@ -143,6 +140,9 @@ public class ProductAction extends HttpServlet {
 			 List<AttrWithValue> attrWithValue = attributesService.getAll(ctgID);
 		
 			response.getWriter().append(gson.toJson(attrWithValue));
+			} catch (Exception e) {
+				System.out.println("取得規格模板有誤！");
+			}
 		}
 
 	}

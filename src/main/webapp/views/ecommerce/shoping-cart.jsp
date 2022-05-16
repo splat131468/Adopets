@@ -9,12 +9,13 @@
             <meta name="keywords" content="Ogani, unica, creative, html">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <meta http-equiv="X-UA-Compatible" content="ie=edge">
-            <title>商品詳情</title>
+            <title>購物車</title>
 
             <!-- Google Font -->
             <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap"
                 rel="stylesheet">
-
+            <link rel="stylesheet"
+                href="${pageContext.request.contextPath}/views/ecommerce/css_ecommerce/font-awesome.min.css">
             <!-- Css Styles -->
             <link rel="stylesheet"
                 href="${pageContext.request.contextPath}/views/ecommerce/css_ecommerce/bootstrap.min.css"
@@ -40,11 +41,9 @@
                 type="text/css">
             <script src="${pageContext.request.contextPath}/views/ecommerce/js_ecommerce/jquery-3.6.0.min.js"></script>
 
-            <!-- 彈窗 -->
+
             <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-
             <!-- 首頁 -->
-
 
             <link rel="stylesheet"
                 href="${pageContext.request.contextPath}/views/ecommerce/index_vector/css/homepage.css">
@@ -54,245 +53,70 @@
                 href="${pageContext.request.contextPath}/views/ecommerce/index_vector/css/homepage3.css">
 
 
+                <script src="${pageContext.request.contextPath}/views/ecommerce/goodEdit/shoppingCart.js"></script>
+
 
             <script>
                 $(function () {
-
-                    //彈窗
-                    // document.getElementById("aCart").addEventListener("click", function () {
-                    //     swal("成功加入", "已加入購物車!", "success", {
-                    //         timer: 700
-                    //     });
-                    // });
-
-                    // 將商品送進購物車
-                    $(document).on("click", "#aCart", function () {
-
-                        let limit = $("#limit").val();
-
-                        let num = $("#pnum").text();
-                        // 該產品所有屬性 json 打包
-                        let allAttr =JSON.stringify({
-                            attrN1:attrN1,
-                            attrN2:attrN2,
-                            attrV1:attrV1,
-                            attrV2:attrV2
-                        });
-                       
-
-                        // 
-                        let skuPrice = $("#price").text();
-                        let spuID = $("#spuID").val();
-                        let descript = $("#ist").text();
-                        let skuID = $("#skuID").val();
-
-                        num = parseInt(num);
-                        skuPrice = parseInt(skuPrice);
-
-                        if (limit <= 0 || limit > num) {
-                            swal("數量有誤", "無法執行!", "error", {
-                                timer: 700
-                            });
-                            return;
-                        }
-                        console.log(limit)
-
-                        let data = {
-                            action: "addItem",
-                            cartItem: {
-                                num: limit,
-                                skuPrice: skuPrice,
-                                spuID: spuID,
-                                descript: descript,
-                                skuID, skuID,
-                                allAttr:allAttr
-                            },
-                           
-                        }
-
-                        if (!isNaN(num) && !isNaN(skuPrice)) {
-                            console.log("都是數字");
-
-                            fetch("${pageContext.request.contextPath}/shCartAction", {
-                                method: 'POST',
-                                body: JSON.stringify(data)
-                            }).then(function (response) {
-                                return response.json();
-                            }).then(function (res) {
-                                swal("成功加入", res, "success", {
-                                    timer: 1000
-                                });
-
-                            })
-
-                            return;
-                        }
-
-                        console.log("不是數字");
-                        return;
-                    });
-
-
-
-                    // 迴圈綁定事件 點選回顯
-                    $("img .tag").on("click", function () {
-                        console.log("hi");
-                    });
-
-
-
-                    // 規格排版
-                    let attr = [];
-                    <c:forEach items="${skuVO}" var="skuVO">
-                        attr.push(JSON.parse(${skuVO}));
-                    </c:forEach>
-                    // 先列出屬性
+                    let tempTotal;
+                    // 配合 cartList c:forEach 的index 取出商品數量
+                    // 購物車商品數量
+                    // 數量 ＊ 取出價格轉成int
+                    // 賦值
+                    // 下半部 屬性規格 req 關係 已經是物件
+                    let allAttr;
                     let attrN1 = null;
                     let attrN2 = null;
                     let attrV1 = [];
                     let attrV2 = [];
+                    <c:forEach items="${cart}" var="cart" varStatus="loop" >
+                        $("#qt${loop.index}").val(${cart.num});
+                        tempTotal=${cart.num}*Number($("#pc${loop.index}").text())
+                        $("#tt${loop.index}").text(tempTotal);
+                        allAttr = ${cart.allAttr};
 
-                    for (let i = 0; i < attr.length; i++) {
+                        attrN1 = allAttr.attrN1;
+                        attrN2 = allAttr.attrN2;
+                        attrV1 = allAttr.attrV1;
+                        attrV2 = allAttr.attrV2;
+                    
 
-                        let n1 = attr[i].attrN1.trim();
-                        let n2 = attr[i].attrN2.trim();
-                        if (n1.length != 0) {
-                            attrN1 = n1;
-                        }
-                        if (n2.length != 0) {
-
-
-                            attrN2 = n2;
-
-
-
-                            console.log("84" + attrN1);
-                        }
-                        let v1 = attr[i].attrV1.trim();
-                        let v2 = attr[i].attrV2.trim();
-                        if (v1.length != 0) {
-                            //若該陣列沒有重複元素 就加入
-                            if (!attrV1.includes(v1)) {
-                                attrV1.push(v1);
-                            }
-                        }
-
-                        if (v2.length != 0) {
-                            //若該陣列沒有重複元素 就加入
-                            if (!attrV2.includes(v2)) {
-                                attrV2.push(v2);
-                            }
-                        }
-                    }
-                    // 檢查specAttr
-
-
-                    let row = '';
-                    // 嵌入 ist
+                         row = '';
+                   
                     if (attrN1.length != null) {
                         // 先加入元素
                         row += attrN1 + " : ";
                         // v1元素
                         for (let i = 0; i < attrV1.length; i++) {
                             row += '<span style="margin:0px 3px">' + attrV1[i] + '</span>';
-                            row += '<input id="ck" type="radio" name="spec1" value="' + attrV1[i] + '" >'
+                            row += '<input  class="s1" id="ck" type="radio" name="spec1" value="' + attrV1[i] + '" >'
                         }
-                        row += "<br><br>"
-                        console.log(row);
-                    }
-                    $("#ist").after(row);
-                    row = "";
+                        row += "<br><br>";
+                       
+                        $("#collapseExample${loop.index}").find("div").append(row);
+                        row = "";
 
                     if (attrN2 != null) {
 
                         // 先加入元素
-                        row += attrN2 + " : ";
+                        row += '<p class="n2">' + attrN2 + " : </p> ";
                         // v1元素
                         for (let i = 0; i < attrV2.length; i++) {
                             row += '<span style="margin:0px 3px">' + attrV2[i] + '</span>';
-                            row += '<input id="ck" type="radio" name="spec2" value="' + attrV2[i] + '"  style="margin:0px 3px" >'
+                            row += '<input class="s2" id="ck" type="radio" name="spec2" value="' + attrV2[i] + '"  style="margin:0px 3px" >'
                         }
                         row += "<br><br>"
+                        $("#collapseExample${loop.index}").find("div").append(row);
+                        row="";
+                    }
                     }
 
-                    $("#ist").after(row);
-
-                    console.log(attrN1)
-                    console.log(attrN2)
-                    console.log(attrV1)
-                    console.log(attrV2)
+                        
+                    </c:forEach>
 
 
-
-                    // 選擇屬性後尋找對應的數量以及價格
-                    $(document).on("change", "#ck", function () {
-
-
-
-                        let spuID = $("#spuID").val();
-                        let key1 = null;
-                        key1 = $("input[name='spec1']:checked").val();
-
-
-
-                        let key2 = null;
-                        // 如果attrN2 == null 就不取
-                        if (attrN2 != null) {
-                            key2 = $("input[name='spec2']:checked").val();
-                        }
-
-
-                        // 若n2不為null 代表有兩個屬性，需點選兩個才傳請求
-                        if (attrN2 != null && key1 != null && key2 != null) {
-                            let arr = [key1, key2];
-                            let data = { arr: arr, action: "getPrcSk", spuID, spuID };
-
-
-                            fetch("${pageContext.request.contextPath}/cartAction", {
-                                method: 'POST',
-                                body: JSON.stringify(data)
-                            }).then(function (response) {
-                                return response.json();
-                            }).then(function (res) {
-                                $("#pnum").text(res.stock);
-                                $("#price").text(res.skuPrice);
-                                $("#skuID").val(res.skuID);
-                                $("#restNum").text(res.stock)
-                                // 數量規範 購物車增減
-                                $("#limit").attr("max",res.stock);
-
-                            })
-
-                        } else if (attrN1 != null && key1 != null) {
-                            let arr = [key1];
-                            let data = { arr: arr, action: "getPrcSk", spuID, spuID };
-
-
-                            fetch("${pageContext.request.contextPath}/cartAction", {
-                                method: 'POST',
-                                body: JSON.stringify(data)
-                            }).then(function (response) {
-                                return response.json();
-                            }).then(function (res) {
-
-                                $("#pnum").text(res.stock);
-                                $("#price").text(res.skuPrice);
-                                $("#skuID").val(res.skuID);
-                                $("#restNum").text(res.stock);
-                                $("#limit").attr("max",res.stock);
-
-                            })
-
-
-
-                        }
-
-                    });
-
-
-
-
-
+                    
+                    
 
 
 
@@ -306,12 +130,12 @@
                 <div class="loader"></div>
             </div>
 
-
-
             <!-- Header Section Begin -->
             <header class="header">
                 <div class="header__top">
                     <div class="container">
+
+
 
                         <!-- 阿德 -->
 
@@ -510,7 +334,8 @@
                                         <span class="visually-hidden">Favorites</span>
                                     </a>
                                     <!--購物車-->
-                                    <a href="${pageContext.request.contextPath}/shCartAction?action=getCart" class="nav-favorites-btn nav-cart-btn">
+                                    <a href="${pageContext.request.contextPath}/shCartAction?action=getCart"
+                                        class="nav-favorites-btn nav-cart-btn">
                                         <svg role="img" focusable="false">
                                             <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-cart">
                                             </use>
@@ -558,6 +383,18 @@
                         </div>
 
                         <!-- 阿德 -->
+
+
+
+
+
+
+
+
+
+
+
+
                         <!-- <div class="row">
                     <div class="col-lg-6 col-md-6">
 
@@ -576,7 +413,7 @@
                                 <span class="arrow_carrot-down"></span>
                                 <ul>
                                     <li><a href="#">中文</a></li>
-                                    <li><a href="#">English</a></li>
+                                    <li><a id="ss" href="#">English</a></li>
                                 </ul>
                             </div>
                             <div class="header__top__right__auth">
@@ -585,7 +422,6 @@
                         </div>
                     </div>
                 </div> -->
-
 
 
                     </div>
@@ -625,18 +461,17 @@
 
 
 
+
             <!-- Breadcrumb Section Begin -->
-            <section class="breadcrumb-section set-bg"
-                data-setbg="${pageContext.request.contextPath}/views/ecommerce/img_ecommerce/bgp3.jpg">
+            <section class="breadcrumb-section set-bg" data-setbg="${pageContext.request.contextPath}/views/ecommerce/img_ecommerce/bgp3.jpg">
                 <div class="container">
                     <div class="row">
                         <div class="col-lg-12 text-center">
                             <div class="breadcrumb__text">
-                                <h2>產品名稱</h2>
+                                <h2>Shopping Cart</h2>
                                 <div class="breadcrumb__option">
-                                    <a href="/index.html">商城</a>
-                                    <a href="./index.html">產品類別</a>
-                                    <span>產品名稱</span>
+                                    <a href="./index.html">Home</a>
+                                    <span>Shopping Cart</span>
                                 </div>
                             </div>
                         </div>
@@ -645,83 +480,138 @@
             </section>
             <!-- Breadcrumb Section End -->
 
-            <!-- Product Details Section Begin -->
-            <section class="product-details spad">
+            <!-- Shoping Cart Section Begin -->
+            <section id="shopSc" class="shoping-cart spad">
                 <div class="container">
                     <div class="row">
-                        <div class="col-lg-6 col-md-6">
-                            <div class="product__details__pic">
-                                <div id="showOff" class="product__details__pic__item">
-                                    <img class="product__details__pic__item--large"
-                                        src="${pageContext.request.contextPath}/cartAction?action=getSpuPic&pnum=0&spuID=${spuID}"
-                                        alt="">
-                                </div>
+                        <div class="col-lg-12">
+                            <div class="shoping__cart__table">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>結帳</th>
+                                            <th class="shoping__product">
+                                                <span style="margin-left: 10px;">商品</span>
+                                            </th>
+                                            <th>規格</th>
+                                            <th>價格</th>
+                                            <th>數量</th>
+                                            <th>Total</th>
+                                            <th>移除</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <!--                                     迴圈   -->
+                                        <c:forEach items="${cartList}" var="cart" varStatus="loop">
+                                            <tr class="point">
+                                                <td>
+                                                    <input class="proSkuID" name="skuID" type="checkbox" style="width: 20px; height: 20px;">
+                                                </td>
+                                                <td class="shoping__cart__item">
+                                                    <img style="width: 80px; height:80px; margin-left: 10px;"
+                                                        src="${pageContext.request.contextPath}/cartAction?action=getSpuPic&pnum=0&spuID=${cart.spuVO.spuID}"
+                                                        alt="">
+                                                    <h5>產品名稱 : ${cart.spuVO.spuName}<br>
+                                                        <span class="atrText" style="font-size: 16px; color:purple">${cart.specAttr}</span>
+                                                    </h5>
 
-                                <style>
+                                                </td>
+                                                <td>
+                                                    <a class="btn btn-primary " data-toggle="collapse"
+                                                        href="#collapseExample${loop.index}" role="button"
+                                                        aria-expanded="false"
+                                                        aria-controls="collapseExample${loop.index}">
+                                                        其他規格
+                                                    </a>
+                                                </td>
+
+                                                <td id="pc${loop.index}" class="shoping__cart__price eachPrice">
+                                                    ${cart.skuPrice}
+                                                </td>
+                                                <td class="shoping__cart__quantity">
+                                                    <div class="quantity">
+                                                        <div class="pro-qty">
+                                                            <input id="qt${loop.index}" name="qty" class="qt"
+                                                                type="number" value="1" min="1" max="${cart.stock}">    
+                                                        </div>
+                                                        <P class="rsNum" style="color:#6f6f6f;font-size:10px">剩餘：${cart.stock}</P>
+                                                        <input class="skuID" type="hidden" value="${cart.skuID}">
+                                                    </div>
+                                                </td>
+                                                <td id="tt${loop.index}" class="shoping__cart__total tt">
+
+                                                </td>
+                                                <td class="shoping__cart__item__close">
+                                                    <span class="icon_close"
+                                                        style="color: #6f6f6f; font-size: 14px; text-align: left; ">
+                                                        移除
+                                                    </span>
+                                                </td>
+                                            </tr>
+
+                                            <tr>
+                                                <td colspan="7">
+                                                    <div class="collapse" id="collapseExample${loop.index}">
+                                                        <ul>
+                                                        <div>
+                                                            <input type="hidden" class="spuID" value="${cart.spuVO.spuID}">
+                                                            <input type="hidden" class="skuID" value="">
+                                                            <span style="font-size: 16px; color: brown;">選擇：</span><br><br>
+                                                        </div>
+                                                        
+                                                <li><b>剩餘數量</b> <span style="font-size: 25px; color:red" id="pnum" class="pnum"></span></li>
+                                                <li><b>價格</b> <span style="font-size: 25px; color:red" id="price" class="price"></span></li>
+
+                                                         </ul>
+                                                        <button id="updateItem" class="btn btn-primary " data-toggle="collapse"
+                                                        href="#collapseExample${loop.index}" role="button"
+                                                        aria-expanded="false"
+                                                        aria-controls="collapseExample${loop.index}">更改</button>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </c:forEach>
 
 
+                                    </tbody>
 
-
-
-
-                                </style>
-
-                                <div class="product__details__pic__slider owl-carousel">
-
-                                    <img data-imgbigurl="${pageContext.request.contextPath}/cartAction?action=getSpuPic&pnum=0&spuID=${spuID}"
-                                        src="${pageContext.request.contextPath}/cartAction?action=getSpuPic&pnum=0&spuID=${spuID}"
-                                        alt="">
-                                    <img data-imgbigurl="${pageContext.request.contextPath}/cartAction?action=getSpuPic&pnum=1&spuID=${spuID}"
-                                        src="${pageContext.request.contextPath}/cartAction?action=getSpuPic&pnum=1&spuID=${spuID}"
-                                        alt="">
-                                    <img data-imgbigurl="${pageContext.request.contextPath}/cartAction?action=getSpuPic&pnum=2&spuID=${spuID}"
-                                        src="${pageContext.request.contextPath}/cartAction?action=getSpuPic&pnum=2&spuID=${spuID}"
-                                        alt="">
-                                    <img data-imgbigurl="${pageContext.request.contextPath}/cartAction?action=getSpuPic&pnum=3&spuID=${spuID}"
-                                        src="${pageContext.request.contextPath}/cartAction?action=getSpuPic&pnum=3&spuID=${spuID}"
-                                        alt="">
-                                </div>
-
+                                </table>
                             </div>
                         </div>
-                        <div class="col-lg-6 col-md-6">
-                            <!-- 存spuID skuID -->
-                            <input id="spuID" type="hidden" value="${spuID}">
-                            <input id="skuID" type="hidden">
-                            <div class="product__details__text">
-                                <h3>${prodName}</h3><br><br><br>
-                                <!-- <div class="product__details__price">$價格</div> -->
-                                <h6><strong>商品詳情</strong></h6><br>
-                                <p id="ist">${descript}</p>
-
-
-                                <div class="product__details__quantity">
-                                    <div class="quantity">
-                                        <div class="pro-qty">
-                                            <input id="limit" min="1" type="number" class="qt" value="1">
-                                        </div>
-                                    </div>
-                                </div>
-                                <a id="aCart" style="color: white;" class="primary-btn">加入購物車</a>
-                     
-                               
-
-
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="shoping__cart__btns">
+                                <a class="primary-btn cart-btn">繼續選購</a>
+                                <a  class="primary-btn cart-btn cart-btn-right chkAll">
+                                    全部選取</a>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <!-- <div class="shoping__continue">
+                        <div class="shoping__discount">
+                            <h5>Discount Codes</h5>
+                            <form action="#">
+                                <input type="text" placeholder="Enter your coupon code">
+                                <button type="submit" class="site-btn">APPLY COUPON</button>
+                            </form>
+                        </div>
+                    </div> -->
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="shoping__checkout">
+                                <h5>Cart Total</h5>
                                 <ul>
-                                    <li><b>剩餘數量</b> <span style="font-size: 25px; color:red" id="pnum"></span></li>
-                                    <li><b>價格</b> <span style="font-size: 25px; color:red" id="price"></span></li>
-
+                                    <li>挑選商品種數 <span id="numOfProd"> 0 </span> </li> 
+                                    <li>Total <span id="amount">$</span></li>
                                 </ul>
-
+                                <a id="checkout"  class="primary-btn">去結帳</a>
                             </div>
                         </div>
-
                     </div>
                 </div>
             </section>
-            <!-- Product Details Section End -->
-
-
+            <!-- Shoping Cart Section End -->
 
             <!-- Footer Section Begin -->
             <footer class="footer spad">
@@ -733,36 +623,47 @@
                                     <a href="./index.html"><img src="img_ecommerce/logo.png" alt=""></a>
                                 </div>
                                 <ul>
-                                    <li>gitHub: </li>
-                                    <li>Phone: 09</li>
-                                    <li>Email: zack871025@gmail.com</li>
+                                    <li>Address: 60-49 Road 11378 New York</li>
+                                    <li>Phone: +65 11.188.888</li>
+                                    <li>Email: hello@colorlib.com</li>
                                 </ul>
                             </div>
                         </div>
                         <div class="col-lg-4 col-md-6 col-sm-6 offset-lg-1">
                             <div class="footer__widget">
-                                <h6>相關連結</h6>
+                                <h6>Useful Links</h6>
                                 <ul>
-                                    <li><a href="#">動物中心</a></li>
-                                    <li><a href="#">動物中心</a></li>
-                                    <li><a href="#">動物中心</a></li>
-                                    <li><a href="#">動物中心</a></li>
-                                    <li><a href="#">動物中心</a></li>
-                                    <li><a href="#">動物中心</a></li>
+                                    <li><a href="#">About Us</a></li>
+                                    <li><a href="#">About Our Shop</a></li>
+                                    <li><a href="#">Secure Shopping</a></li>
+                                    <li><a href="#">Delivery infomation</a></li>
+                                    <li><a href="#">Privacy Policy</a></li>
+                                    <li><a href="#">Our Sitemap</a></li>
                                 </ul>
                                 <ul>
-                                    <li><a href="#">關於我們</a></li>
-                                    <li><a href="#">我們的服務</a></li>
-                                    <li><a href="#">專案</a></li>
+                                    <li><a href="#">Who We Are</a></li>
+                                    <li><a href="#">Our Services</a></li>
+                                    <li><a href="#">Projects</a></li>
                                     <li><a href="#">Contact</a></li>
-                                    <li><a href="#">ER mode;</a></li>
-                                    <li><a href="#">聯絡方式</a></li>
+                                    <li><a href="#">Innovation</a></li>
+                                    <li><a href="#">Testimonials</a></li>
                                 </ul>
                             </div>
                         </div>
                         <div class="col-lg-4 col-md-12">
                             <div class="footer__widget">
-
+                                <h6>Join Our Newsletter Now</h6>
+                                <p>Get E-mail updates about our latest shop and special offers.</p>
+                                <form action="#">
+                                    <input type="text" placeholder="Enter your mail">
+                                    <button type="submit" class="site-btn">Subscribe</button>
+                                </form>
+                                <div class="footer__widget__social">
+                                    <a href="#"><i class="fa fa-facebook"></i></a>
+                                    <a href="#"><i class="fa fa-instagram"></i></a>
+                                    <a href="#"><i class="fa fa-twitter"></i></a>
+                                    <a href="#"><i class="fa fa-pinterest"></i></a>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -771,7 +672,13 @@
                             <div class="footer__copyright">
                                 <div class="footer__copyright__text">
                                     <p>
-
+                                        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                                        Copyright &copy;
+                                        <script>document.write(new Date().getFullYear());</script> All rights reserved |
+                                        This
+                                        template is made with <i class="fa fa-heart" aria-hidden="true"></i> by <a
+                                            href="https://colorlib.com" target="_blank">Colorlib</a>
+                                        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
                                     </p>
                                 </div>
                                 <div class="footer__copyright__payment"><img src="img_ecommerce/payment-item.png"
@@ -784,7 +691,7 @@
             <!-- Footer Section End -->
 
             <!-- Js Plugins -->
-            <script src="${pageContext.request.contextPath}/views/ecommerce/js_ecommerce/jquery-3.3.1.min.js"></script>
+
             <script src="${pageContext.request.contextPath}/views/ecommerce/js_ecommerce/bootstrap.min.js"></script>
             <script
                 src="${pageContext.request.contextPath}/views/ecommerce/js_ecommerce/jquery.nice-select.min.js"></script>
@@ -793,7 +700,8 @@
             <script src="${pageContext.request.contextPath}/views/ecommerce/js_ecommerce/mixitup.min.js"></script>
             <script src="${pageContext.request.contextPath}/views/ecommerce/js_ecommerce/owl.carousel.min.js"></script>
             <script src="${pageContext.request.contextPath}/views/ecommerce/js_ecommerce/main.js"></script>
-            <script src="${pageContext.request.contextPath}/views/ecommerce/index_vector/js/homepage.js"></script>
+
+
 
         </body>
 
