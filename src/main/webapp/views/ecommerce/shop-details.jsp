@@ -40,6 +40,9 @@
                 type="text/css">
             <script src="${pageContext.request.contextPath}/views/ecommerce/js_ecommerce/jquery-3.6.0.min.js"></script>
 
+            <!-- 彈窗 -->
+            <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
             <!-- 首頁 -->
 
 
@@ -54,10 +57,88 @@
 
             <script>
                 $(function () {
+
+                    //彈窗
+                    // document.getElementById("aCart").addEventListener("click", function () {
+                    //     swal("成功加入", "已加入購物車!", "success", {
+                    //         timer: 700
+                    //     });
+                    // });
+
+                    // 將商品送進購物車
+                    $(document).on("click", "#aCart", function () {
+
+                        let limit = $("#limit").val();
+
+                        let num = $("#pnum").text();
+                        // 該產品所有屬性 json 打包
+                        let allAttr =JSON.stringify({
+                            attrN1:attrN1,
+                            attrN2:attrN2,
+                            attrV1:attrV1,
+                            attrV2:attrV2
+                        });
+                       
+
+                        // 
+                        let skuPrice = $("#price").text();
+                        let spuID = $("#spuID").val();
+                        let descript = $("#ist").text();
+                        let skuID = $("#skuID").val();
+
+                        num = parseInt(num);
+                        skuPrice = parseInt(skuPrice);
+
+                        if (limit <= 0 || limit > num) {
+                            swal("數量有誤", "無法執行!", "error", {
+                                timer: 700
+                            });
+                            return;
+                        }
+                        console.log(limit)
+
+                        let data = {
+                            action: "addItem",
+                            cartItem: {
+                                num: limit,
+                                skuPrice: skuPrice,
+                                spuID: spuID,
+                                descript: descript,
+                                skuID, skuID,
+                                allAttr:allAttr
+                            },
+                           
+                        }
+
+                        if (!isNaN(num) && !isNaN(skuPrice)) {
+                            console.log("都是數字");
+
+                            fetch("${pageContext.request.contextPath}/shCartAction", {
+                                method: 'POST',
+                                body: JSON.stringify(data)
+                            }).then(function (response) {
+                                return response.json();
+                            }).then(function (res) {
+                                swal("成功加入", res, "success", {
+                                    timer: 1000
+                                });
+
+                            })
+
+                            return;
+                        }
+
+                        console.log("不是數字");
+                        return;
+                    });
+
+
+
                     // 迴圈綁定事件 點選回顯
                     $("img .tag").on("click", function () {
                         console.log("hi");
                     });
+
 
 
                     // 規格排版
@@ -79,7 +160,13 @@
                             attrN1 = n1;
                         }
                         if (n2.length != 0) {
+
+
                             attrN2 = n2;
+
+
+
+                            console.log("84" + attrN1);
                         }
                         let v1 = attr[i].attrV1.trim();
                         let v2 = attr[i].attrV2.trim();
@@ -104,28 +191,110 @@
                     // 嵌入 ist
                     if (attrN1.length != null) {
                         // 先加入元素
-                        row += attrN1+" : ";
+                        row += attrN1 + " : ";
                         // v1元素
-                        for(let i = 0 ; i<attrV1.length; i++){
-                           row += '<span style="margin:0px 3px">'+attrV1[i]+'</span>';
-                           row+='<input type="radio" name="spec1" >'
+                        for (let i = 0; i < attrV1.length; i++) {
+                            row += '<span style="margin:0px 3px">' + attrV1[i] + '</span>';
+                            row += '<input id="ck" type="radio" name="spec1" value="' + attrV1[i] + '" >'
                         }
-                        row+="<br><br>"
-                    } 
-                    
-                    if (attrN2.length != null) {
-                        
-                        // 先加入元素
-                        row += attrN2+" : ";
-                        // v1元素
-                        for(let i = 0 ; i<attrV2.length; i++){
-                            row += '<span style="margin:0px 3px">'+attrV2[i]+'</span>';
-                           row+='<input type="radio" name="spec2" style="margin:0px 3px" >'
-                        }
-                        row+="<br><br>"
+                        row += "<br><br>"
+                        console.log(row);
                     }
-                    console.log(row);
                     $("#ist").after(row);
+                    row = "";
+
+                    if (attrN2 != null) {
+
+                        // 先加入元素
+                        row += attrN2 + " : ";
+                        // v1元素
+                        for (let i = 0; i < attrV2.length; i++) {
+                            row += '<span style="margin:0px 3px">' + attrV2[i] + '</span>';
+                            row += '<input id="ck" type="radio" name="spec2" value="' + attrV2[i] + '"  style="margin:0px 3px" >'
+                        }
+                        row += "<br><br>"
+                    }
+
+                    $("#ist").after(row);
+
+                    console.log(attrN1)
+                    console.log(attrN2)
+                    console.log(attrV1)
+                    console.log(attrV2)
+
+
+
+                    // 選擇屬性後尋找對應的數量以及價格
+                    $(document).on("change", "#ck", function () {
+
+
+
+                        let spuID = $("#spuID").val();
+                        let key1 = null;
+                        key1 = $("input[name='spec1']:checked").val();
+
+
+
+                        let key2 = null;
+                        // 如果attrN2 == null 就不取
+                        if (attrN2 != null) {
+                            key2 = $("input[name='spec2']:checked").val();
+                        }
+
+
+                        // 若n2不為null 代表有兩個屬性，需點選兩個才傳請求
+                        if (attrN2 != null && key1 != null && key2 != null) {
+                            let arr = [key1, key2];
+                            let data = { arr: arr, action: "getPrcSk", spuID, spuID };
+
+
+                            fetch("${pageContext.request.contextPath}/cartAction", {
+                                method: 'POST',
+                                body: JSON.stringify(data)
+                            }).then(function (response) {
+                                return response.json();
+                            }).then(function (res) {
+                                $("#pnum").text(res.stock);
+                                $("#price").text(res.skuPrice);
+                                $("#skuID").val(res.skuID);
+                                $("#restNum").text(res.stock)
+                                // 數量規範 購物車增減
+                                $("#limit").attr("max",res.stock);
+
+                            })
+
+                        } else if (attrN1 != null && key1 != null) {
+                            let arr = [key1];
+                            let data = { arr: arr, action: "getPrcSk", spuID, spuID };
+
+
+                            fetch("${pageContext.request.contextPath}/cartAction", {
+                                method: 'POST',
+                                body: JSON.stringify(data)
+                            }).then(function (response) {
+                                return response.json();
+                            }).then(function (res) {
+
+                                $("#pnum").text(res.stock);
+                                $("#price").text(res.skuPrice);
+                                $("#skuID").val(res.skuID);
+                                $("#restNum").text(res.stock);
+                                $("#limit").attr("max",res.stock);
+
+                            })
+
+
+
+                        }
+
+                    });
+
+
+
+
+
+
+
 
                 });
             </script>
@@ -157,7 +326,7 @@
                                     <!--這裡是logo-->
                                     <div iclass="logo">
                                         <a href="#" rel="home" class="site-logo">
-                                            <img src="./index_vector/img/Adopets.svg" alt="Home">
+                                            <img src="${pageContext.request.contextPath}/views/ecommerce/index_vector/img/Adopets.svg" alt="Home">
                                         </a>
                                     </div>
                                     <nav role="navigation" aria-labelledby="block-consumer-react-main-menu-menu"
@@ -341,7 +510,7 @@
                                         <span class="visually-hidden">Favorites</span>
                                     </a>
                                     <!--購物車-->
-                                    <a href="#" class="nav-favorites-btn nav-cart-btn">
+                                    <a href="${pageContext.request.contextPath}/shCartAction?action=getCart" class="nav-favorites-btn nav-cart-btn">
                                         <svg role="img" focusable="false">
                                             <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-cart">
                                             </use>
@@ -516,32 +685,34 @@
                             </div>
                         </div>
                         <div class="col-lg-6 col-md-6">
+                            <!-- 存spuID skuID -->
+                            <input id="spuID" type="hidden" value="${spuID}">
+                            <input id="skuID" type="hidden">
                             <div class="product__details__text">
-                                <h3>${prodName}</h3>
+                                <h3>${prodName}</h3><br><br><br>
                                 <!-- <div class="product__details__price">$價格</div> -->
-                                <h6><strong>商品詳情</strong></h6>
+                                <h6><strong>商品詳情</strong></h6><br>
                                 <p id="ist">${descript}</p>
+
 
                                 <div class="product__details__quantity">
                                     <div class="quantity">
                                         <div class="pro-qty">
-                                            <input type="text" value="1">
+                                            <input id="limit" min="1" type="number" class="qt" value="1">
                                         </div>
                                     </div>
                                 </div>
-                                <a href="#" class="primary-btn">加入購物車</a>
-                                <a href="#" class="primary-btn">立刻購買</a>
+                                <a id="aCart" style="color: white;" class="primary-btn">加入購物車</a>
+                     
+                               
+
+
                                 <ul>
-                                    <li><b>剩餘數量</b> <span>寫數量</span></li>
-                                    <li><b>分享</b>
-                                        <div class="share">
-                                            <a href="#"><i class="fa fa-facebook"></i></a>
-                                            <a href="#"><i class="fa fa-twitter"></i></a>
-                                            <a href="#"><i class="fa fa-instagram"></i></a>
-                                            <a href="#"><i class="fa fa-pinterest"></i></a>
-                                        </div>
-                                    </li>
+                                    <li><b>剩餘數量</b> <span style="font-size: 25px; color:red" id="pnum"></span></li>
+                                    <li><b>價格</b> <span style="font-size: 25px; color:red" id="price"></span></li>
+
                                 </ul>
+
                             </div>
                         </div>
 
@@ -550,37 +721,7 @@
             </section>
             <!-- Product Details Section End -->
 
-            <!-- Related Product Section Begin -->
-            <section class="related-product">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="section-title related__product__title">
-                                <h2>相似的產品</h2>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-3 col-md-4 col-sm-6">
-                            <div class="product__item">
-                                <div class="product__item__pic set-bg" data-setbg="img_ecommerce/product/product-1.jpg">
-                                    <ul class="product__item__pic__hover">
 
-                                        <li><a href="#"><i class="fa fa-retweet"></i></a></li>
-                                        <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
-                                    </ul>
-                                </div>
-                                <div class="product__item__text">
-                                    <h6><a href="#">產品名稱</a></h6>
-                                    <h5>$產品價格</h5>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-            </section>
-            <!-- Related Product Section End -->
 
             <!-- Footer Section Begin -->
             <footer class="footer spad">
@@ -592,47 +733,36 @@
                                     <a href="./index.html"><img src="img_ecommerce/logo.png" alt=""></a>
                                 </div>
                                 <ul>
-                                    <li>Address: 60-49 Road 11378 New York</li>
-                                    <li>Phone: +65 11.188.888</li>
-                                    <li>Email: hello@colorlib.com</li>
+                                    <li>gitHub: </li>
+                                    <li>Phone: 09</li>
+                                    <li>Email: zack871025@gmail.com</li>
                                 </ul>
                             </div>
                         </div>
                         <div class="col-lg-4 col-md-6 col-sm-6 offset-lg-1">
                             <div class="footer__widget">
-                                <h6>Useful Links</h6>
+                                <h6>相關連結</h6>
                                 <ul>
-                                    <li><a href="#">About Us</a></li>
-                                    <li><a href="#">About Our Shop</a></li>
-                                    <li><a href="#">Secure Shopping</a></li>
-                                    <li><a href="#">Delivery infomation</a></li>
-                                    <li><a href="#">Privacy Policy</a></li>
-                                    <li><a href="#">Our Sitemap</a></li>
+                                    <li><a href="#">動物中心</a></li>
+                                    <li><a href="#">動物中心</a></li>
+                                    <li><a href="#">動物中心</a></li>
+                                    <li><a href="#">動物中心</a></li>
+                                    <li><a href="#">動物中心</a></li>
+                                    <li><a href="#">動物中心</a></li>
                                 </ul>
                                 <ul>
-                                    <li><a href="#">Who We Are</a></li>
-                                    <li><a href="#">Our Services</a></li>
-                                    <li><a href="#">Projects</a></li>
+                                    <li><a href="#">關於我們</a></li>
+                                    <li><a href="#">我們的服務</a></li>
+                                    <li><a href="#">專案</a></li>
                                     <li><a href="#">Contact</a></li>
-                                    <li><a href="#">Innovation</a></li>
-                                    <li><a href="#">Testimonials</a></li>
+                                    <li><a href="#">ER mode;</a></li>
+                                    <li><a href="#">聯絡方式</a></li>
                                 </ul>
                             </div>
                         </div>
                         <div class="col-lg-4 col-md-12">
                             <div class="footer__widget">
-                                <h6>Join Our Newsletter Now</h6>
-                                <p>Get E-mail updates about our latest shop and special offers.</p>
-                                <form action="#">
-                                    <input type="text" placeholder="Enter your mail">
-                                    <button type="submit" class="site-btn">Subscribe</button>
-                                </form>
-                                <div class="footer__widget__social">
-                                    <a href="#"><i class="fa fa-facebook"></i></a>
-                                    <a href="#"><i class="fa fa-instagram"></i></a>
-                                    <a href="#"><i class="fa fa-twitter"></i></a>
-                                    <a href="#"><i class="fa fa-pinterest"></i></a>
-                                </div>
+
                             </div>
                         </div>
                     </div>
@@ -641,13 +771,7 @@
                             <div class="footer__copyright">
                                 <div class="footer__copyright__text">
                                     <p>
-                                        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                                        Copyright &copy;
-                                        <script>document.write(new Date().getFullYear());</script> All rights reserved |
-                                        This
-                                        template is made with <i class="fa fa-heart" aria-hidden="true"></i> by <a
-                                            href="https://colorlib.com" target="_blank">Colorlib</a>
-                                        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+
                                     </p>
                                 </div>
                                 <div class="footer__copyright__payment"><img src="img_ecommerce/payment-item.png"

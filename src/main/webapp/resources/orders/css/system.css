@@ -1,0 +1,219 @@
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 24px;
+  }
+  
+  .switch input { 
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgb(79, 216, 79);
+    -webkit-transition: .4s;
+    transition: .4s;
+    border-radius: 34px;
+  }
+  
+  .slider:before {
+    position: absolute;
+    content: "";
+    height: 20px;
+    width: 20px;
+    left: 2px;
+    top: 2px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+    border-radius: 50%;
+  }
+  
+  input:checked + .slider {
+    background-color: rgb(218, 91, 91);
+  }
+  
+  input:checked + .slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+  }
+
+  .py-3 {
+      position: relative;
+      width: 70px;
+      margin-right: 70px;
+  }
+
+
+  .switch-div{
+      position: absolute;
+      left: 0;
+      top: 0;
+     font-family: Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  .new_user{
+    margin-right: 20px;
+    width: 90px;
+  }
+
+  .new_user button{
+    border-radius: 8px;
+    border: #007bff;
+    background-color: #007bff;
+    color: #fff;
+    font-family: "Helvetica", "Arial","LiHei Pro","黑體-繁","微軟正黑體", sans-serif;
+    font-size: 14px;
+  }
+
+  .bd-example p input{
+    border: 1px solid rgb(151, 151, 151);
+  }
+
+
+
+.btn_sub{
+  color: #fff;
+  background-color: #007bff;
+  border-color: #007bff;
+  /* box-shadow: none; */
+  height: 40px;
+  font-size: 16px;
+  border-radius: 8px;
+  width: 120px;
+  border: none;
+}
+
+
+.btn_modal_close{
+  color: #fff;
+  background-color: rgb(184, 182, 182);
+  border-color: rgb(151, 151, 151);
+  box-shadow: none;
+  height: 40px;
+  font-size: 16px;
+  margin-left: 50px;
+  border-radius: 8px;
+  width: 100px; 
+  border: none;
+}
+
+
+.bd-example p{
+  margin-top: 20px;
+}
+
+
+div.overlay1{
+  position: fixed;  
+  top: 0;
+  left: 0;
+  width: 100%;
+
+  background-color: hsla(0, 0%, 0%, .5);
+  overflow-y: auto;
+  height: 772px;
+  display: none;
+}
+
+/* 元素 article 置中及基本樣式 */
+div.overlay1 > article{
+  background-color: white;
+  width: 90%;
+  max-width: 800px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px #ddd;
+  padding-top: 18px;
+  padding-left: 40px;
+  padding-bottom: 30px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  overflow-y:scroll; /*拉條*/
+  height: 620px;
+}
+
+
+
+.checkbox_sys input{
+  zoom: 180%;
+  margin-top: 5px;
+}
+
+.checkbox_sys label{
+  vertical-align:top;
+  position: relative;
+  bottom: 1px;
+  font-size: 17px;
+  margin-top: 8px;
+}
+
+
+.status-1>input{
+  zoom: 145%;
+  margin-top: 1px;
+ 
+}
+
+.status-1 label{
+  font-size: 17px;
+  font-weight:700;  
+  vertical-align:top;
+  position: relative;
+  bottom: 1px;
+ 
+}
+
+div.overlay2{
+  position: fixed;  
+  top: 0;
+  left: 0;
+  width: 100%;
+
+  background-color: hsla(0, 0%, 0%, .5);
+  overflow-y: auto;
+  height: 772px;
+  display: none;
+}
+
+div.overlay2 > article{
+  background-color: white;
+  width: 90%;
+  max-width: 800px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px #ddd;
+  padding-top: 18px;
+  padding-left: 40px;
+  padding-bottom: 30px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  overflow-y:scroll; /*拉條*/
+  height: 620px;
+}
+
+.btn_modal_close1{
+  color: #fff;
+  background-color: rgb(184, 182, 182);
+  border-color: rgb(151, 151, 151);
+  box-shadow: none;
+  height: 40px;
+  font-size: 16px;
+  margin-left: 50px;
+  border-radius: 8px;
+  width: 100px; 
+  border: none;
+}
+
+

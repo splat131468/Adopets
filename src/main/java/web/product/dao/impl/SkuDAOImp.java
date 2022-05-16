@@ -43,6 +43,12 @@ public class SkuDAOImp implements SkuDAO {
 		return 0;
 	}
 
+	@Override
+	public int updateProds(List<SkuVO> skus) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 	
 
 }

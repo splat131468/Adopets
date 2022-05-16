@@ -12,7 +12,7 @@
 (function ($) {
 
 
- 
+
 
 
 
@@ -60,8 +60,8 @@
     });
 
     /*------------------
-		Navigation
-	--------------------*/
+        Navigation
+    --------------------*/
     $(".mobile-menu").slicknav({
         prependTo: '#mobile-menu-wrap',
         allowParentLinks: true
@@ -103,7 +103,7 @@
     });
 
 
-    $('.hero__categories__all').on('click', function(){
+    $('.hero__categories__all').on('click', function () {
         $('.hero__categories ul').slideToggle(400);
     });
 
@@ -167,8 +167,8 @@
     });
 
     /*-----------------------
-		Price Range Slider
-	------------------------ */
+        Price Range Slider
+    ------------------------ */
     var rangeSlider = $(".price-range"),
         minamount = $("#minamount"),
         maxamount = $("#maxamount"),
@@ -193,8 +193,8 @@
     $("select").niceSelect();
 
     /*------------------
-		Single Product
-	--------------------*/
+        Single Product
+    --------------------*/
     $('.product__details__pic__slider img').on('click', function () {
 
         var imgurl = $(this).data('imgbigurl');
@@ -207,31 +207,73 @@
     });
 
     /*-------------------
-		Quantity change
-	--------------------- */
+        Quantity change
+    --------------------- */
     var proQty = $('.pro-qty');
     proQty.prepend('<span class="dec qtybtn">-</span>');
     proQty.append('<span class="inc qtybtn">+</span>');
     proQty.on('click', '.qtybtn', function () {
+        // test
+        let c = $(this).closest("div").find(".qt").attr("max");
+        c = Number(c);
         var $button = $(this);
+        console.log(c)
         var oldValue = $button.parent().find('input').val();
+        console.log(oldValue)
         if ($button.hasClass('inc')) {
-            var newVal = parseFloat(oldValue) + 1;
+            if (oldValue < c) {
+                console.log("old"+oldValue);
+                var newVal = Number(oldValue) + 1;
+            } else {
+                newVal = c;
+            }
+
+
         } else {
             // Don't allow decrementing below zero
-            if (oldValue > 0) {
-                var newVal = parseFloat(oldValue) - 1;
+            if (oldValue > 1) {
+                var newVal = Number(oldValue) - 1;
             } else {
-                newVal = 0;
+                newVal = 1;
             }
         }
         $button.parent().find('input').val(newVal);
+        // 送出請求 修改數量
+            // 先抓spuID
+            let skuID = $(this).closest("td").find(".skuID").val();
+            // 數量
+            console.log(newVal);
+            let data = {
+                action:"shCartAction",
+                cartItem:{
+                    num:newVal,
+                    skuPrice:null,
+                    skuID:skuID,
+                    spuID:null,
+                    allAttr:null,
+                    descript: null 
+                    }
+            }
+
+        fetch("http://localhost:8081/Adopets/shCartAction", {
+            method: 'POST',
+            body: JSON.stringify(data)
+        }).then(function (response) {
+            return response.json();
+        }).then(function (res) {
+            
+
+        })
+
+
+
+
     });
 
 
-                                        
 
-  
+
+
 
 
 

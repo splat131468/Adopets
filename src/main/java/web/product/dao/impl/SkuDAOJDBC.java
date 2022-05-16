@@ -52,7 +52,7 @@ public class SkuDAOJDBC implements SkuDAO {
 	}
 
 	
-	String updateSku = "update SKU set skuPrice = ? , stock = ? , status = ? where skuId = ?";  ; 
+	String updateSku = "update SKU set skuPrice = ? , stock = ? , status = ? where skuId = ?";  
 	@Override
 	public int updateProd(SkuVO skuVO) {
 		int index = -1;
@@ -69,6 +69,32 @@ public class SkuDAOJDBC implements SkuDAO {
 		}
 		
 		return index;
+	}
+	String updateSkus = "update SKU set  stock = ?  where skuId = ?";   
+	@Override
+	public int updateProds(List<SkuVO> skus) {
+		
+		
+		int index = -1;
+		try (Connection connection = DriverManager.getConnection(url, user, password);
+				PreparedStatement ps = connection.prepareStatement(updateSkus);) {
+			
+
+			for(SkuVO sku:skus) {
+				
+				ps.setInt(1, sku.getStock());
+				ps.setInt(2, sku.getSkuID());
+				
+				ps.addBatch();
+			}	
+			 ps.executeBatch();
+			return 1;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return index;
+		
 	}
 	
 	
