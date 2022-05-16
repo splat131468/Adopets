@@ -212,11 +212,12 @@ public class ShCartAction extends HttpServlet {
 			
 			OrdersVO ordersVO = gson.fromJson(jsonElement, OrdersVO.class);
 			
-			System.out.println(skuIDArr+"===="+ordersVO+"====="+memID);
-			cartService.takeOrder(skuIDArr, ordersVO, memID);
+	
+			String takeOrder = cartService.takeOrder(skuIDArr, ordersVO, memID);
 
 			// 清除session
-			req.getSession().setAttribute("checkout", "");
+			req.getSession().removeAttribute("checkout");
+			resp.getWriter().append(takeOrder);
 		}catch (Exception e) {
 			System.out.println("結帳有誤");
 		}

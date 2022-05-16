@@ -1,8 +1,15 @@
 package web.product.service.impl;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
+import org.apache.ibatis.javassist.expr.NewArray;
+
+import ecpay.payment.integration.AllInOne;
+import ecpay.payment.integration.domain.AioCheckOutALL;
 import web.order.entity.OrderDetailVO;
 import web.order.entity.OrdersVO;
 import web.product.entity.CartItem;
@@ -10,6 +17,8 @@ import web.product.entity.SkuVO;
 import web.product.service.CartService;
 
 public class CartServiceImp implements CartService {
+
+	public static AllInOne allInOne;
 
 	@Override
 	public String addItem(Integer memID, CartItem cartItem) {
@@ -98,7 +107,7 @@ public class CartServiceImp implements CartService {
 		return detail;
 	}
 
-	public void takeOrder(List<Integer> skuIDArr, OrdersVO ordersVO, Integer memID) {
+	public String takeOrder(List<Integer> skuIDArr, OrdersVO ordersVO, Integer memID) {
 
 		// List 來接checkout cart
 		List<CartItem> cart = new ArrayList<CartItem>();
@@ -116,7 +125,7 @@ public class CartServiceImp implements CartService {
 				}
 			}
 		}
-		System.out.println(cart+"=========119");
+
 		// 取出待結帳商品 準備做訂單 結帳
 
 		// 先取出mysql 對應的skuVO 準備做數量修改
@@ -127,7 +136,7 @@ public class CartServiceImp implements CartService {
 			// 循環加入 取出所有商品
 			readyCheck.add(spuService.getSkuVO(e));
 		});
-		System.out.println(readyCheck+"=========130");
+
 		// 該list只裝修改的商品
 		List<SkuVO> sellList = new ArrayList<SkuVO>();
 		// 數量修改 實際數量 - 購物車商品數
@@ -148,18 +157,65 @@ public class CartServiceImp implements CartService {
 				}
 			}
 		}
+		// 裝所有商品名稱
+		List<String> prodName = new ArrayList<String>();
+		// 取得所有商品名抽
+		for (int i = 0; i < sellList.size(); i++) {
+
+			SkuVO skuVO = sellList.get(i);
+			prodName.add(skuVO.getSpuVO().getSpuName());
+
+		}
+
+		// 為了配合綠界
+		Optional<String> reduce = prodName.stream().reduce((String acc, String curr) -> {
+			return acc + "#" + curr;
+		});
+
+		String itemName = reduce.get();
+
 		// 會員
 		ordersVO.setMemID(memID);
+
 		// 新增訂單
 		int gk = orderService.insertOrderGk(ordersVO);
+		//
+		Integer orderPrice = ordersVO.getOrderPrice();
+
 		// 建立明細
 		orderDetailService.addDetails(sellList, memID, gk, cart);
 
+		// 綠界
+		// 時間
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+		String orderDate = sdf.format(new Date());
+
+		allInOne = new AllInOne("");
+
+		System.out.println();
+
+		AioCheckOutALL aCheckOut = new AioCheckOutALL();
+		aCheckOut.setMerchantTradeNo(gk + "tga101");
+		aCheckOut.setMerchantTradeDate(orderDate);
+		aCheckOut.setTotalAmount(orderPrice + "");
+		aCheckOut.setTradeDesc("test");
+		aCheckOut.setItemName(itemName);
+		aCheckOut.setClientBackURL("http://localhost:8081/Adopets/comAction?action=ecoMainP");
+
+		aCheckOut.setReturnURL("http://localhost:8081/Adopets//epayCheckOrder");
+
+//		aCheckOut.setReturnURL("http://211.23.128.214:5000/");
+		aCheckOut.setNeedExtraPaidInfo("N");
+//		System.out.println(allInOne.aioCheckOut(aCheckOut, null));
+
+		return allInOne.aioCheckOut(aCheckOut, null);
+
+		// 這個部分要等有domain才能夠做下去
 		// 移除庫存
-		skuService.takeOrder(sellList);
+//		skuService.takeOrder(sellList);
 
 		// 移除購物車
-		cartService.delMulItem(memID, cart);
+//		cartService.delMulItem(memID, cart);
 
 	}
 
