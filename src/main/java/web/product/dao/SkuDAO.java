@@ -12,5 +12,7 @@ public interface SkuDAO {
 	
 	int updateProd(SkuVO skuVO);
 	
+	int updateProds(List<SkuVO> skus);
+	
 
 }

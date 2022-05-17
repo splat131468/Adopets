@@ -395,4 +395,58 @@ public class OrdersJDBCDAO implements OrdersDAO_interface {
 		System.out.println();
 	}
 	}
+
+	// gk 
+	
+	private static final String INSERT_GK = "insert into ORDERS (memID,orderPrice,"
+			+ "orderStatus,paymentType,address) values (?,?,?,?,?)";
+	@Override
+	public int makeOrder(OrdersVO ordersVO) {
+		
+		String columns[] = { "orderID" };
+		
+		Connection con = null;
+		PreparedStatement ppst = null;
+
+		try {
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, password);
+			ppst = con.prepareStatement(INSERT_ORDERS,columns);
+
+			ppst.setInt(1, ordersVO.getMemID());
+			ppst.setInt(2, ordersVO.getOrderPrice());
+			ppst.setInt(3, ordersVO.getOrderStatus());
+			ppst.setInt(4, ordersVO.getPaymentType());
+			ppst.setString(5, ordersVO.getAddress());
+
+			ppst.executeUpdate();
+			
+			ResultSet rs = ppst.getGeneratedKeys();
+            if (rs.next()) {
+                int id = rs.getInt(1);
+               return id;
+            }
+
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+		} finally {
+			if (ppst != null) {
+				try {
+					ppst.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}		
+		return -1;
+	}
 }

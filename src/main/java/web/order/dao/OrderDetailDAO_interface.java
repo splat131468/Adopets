@@ -12,5 +12,6 @@ public interface OrderDetailDAO_interface {
 	public void delete(Integer orderDetailID);
 	public OrderDetailVO findParmaryKey(Integer orderDetailID);
 	public List<OrderDetailVO> getAll();
+	public  int addDetails(List<OrderDetailVO> orderDetailVO);
 
 }

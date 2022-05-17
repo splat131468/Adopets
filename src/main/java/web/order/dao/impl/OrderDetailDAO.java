@@ -239,4 +239,10 @@ public class OrderDetailDAO implements OrderDetailDAO_interface {
 		return list;
 	}
 
+	@Override
+	public int addDetails(List<OrderDetailVO> orderDetailVO) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 }

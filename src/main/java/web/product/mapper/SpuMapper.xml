@@ -11,14 +11,10 @@
 			jdbcType="VARCHAR" />
 
 
-		<!-- <result column="imgID" property="pImgVO.imgID"
-			jdbcType="INTEGER" />
-		<result column="spuID" property="pImgVO.spuID"
-			jdbcType="INTEGER" />
-		<result column="spuImg" property="pImgVO.spuImg"
-			jdbcType="LONGVARBINARY" />
-		<result column="mainImg" property="pImgVO.mainImg"
-			jdbcType="BIT" /> -->
+		<!-- <result column="imgID" property="pImgVO.imgID" jdbcType="INTEGER" 
+			/> <result column="spuID" property="pImgVO.spuID" jdbcType="INTEGER" /> <result 
+			column="spuImg" property="pImgVO.spuImg" jdbcType="LONGVARBINARY" /> <result 
+			column="mainImg" property="pImgVO.mainImg" jdbcType="BIT" /> -->
 
 
 		<collection property="skuVO"
@@ -55,24 +51,53 @@
 			jdbcType="VARCHAR" />
 		<result column="descript" property="spuVO.descript"
 			jdbcType="VARCHAR" />
-</resultMap>
+	</resultMap>
 
-		<!-- <result column="imgID" property="pImgVO.imgID" jdbcType="INTEGER" 
-			/> <result column="spuID" property="pImgVO.spuID" jdbcType="INTEGER" /> <result 
-			column="spuImg" property="pImgVO.spuImg" jdbcType="LONGVARBINARY" /> <result 
-			column="mainImg" property="pImgVO.mainImg" jdbcType="BIT" /> -->
+	<!-- <result column="imgID" property="pImgVO.imgID" jdbcType="INTEGER" /> 
+		<result column="spuID" property="pImgVO.spuID" jdbcType="INTEGER" /> <result 
+		column="spuImg" property="pImgVO.spuImg" jdbcType="LONGVARBINARY" /> <result 
+		column="mainImg" property="pImgVO.mainImg" jdbcType="BIT" /> -->
 
+<!--  找指定sku -->
+	<select id="getSkuVO" resultMap="prodMap"  parameterType="java.lang.Integer">
+	select * from
+	SPU p join SKU k
+	on p.spuID = k.spuID
+	where k.skuID = #{skuID}
 	
+	
+	</select>
+
+
+
+
+	<!-- 商品價格 數量 -->
+	<select id="getPriceAndStock" resultMap="prodMap" parameterType="java.util.List">
+		select
+		stock, skuPrice ,skuID
+		from SKU
+		where spuID = #{spuID}  and
+		<foreach item="item" collection="key" separator="and ">
+		specAttr like CONCAT('%',#{item},'%')	
+		</foreach>
+
+
+	</select>
+
+
+
 
 	<!-- 取得商品細節 -->
 	<select id="getDetail" resultMap="product">
 
 		select
-		spuName, p.spuID, descript, specAttr
+		spuName, p.spuID,
+		descript, specAttr
 		from spu p
 		join sku k
 		on p.spuID = k.spuID
-		where k.spuID = #{spuID}
+		where
+		k.spuID = #{spuID}
 
 	</select>
 

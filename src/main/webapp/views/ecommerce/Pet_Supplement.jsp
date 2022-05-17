@@ -89,8 +89,6 @@
             if (typeof (curPage) == "undefined") {
               curPage = 0;
             }
-
-         
             $.ajax({
               url: "${pageContext.request.contextPath}/comAction",
               data: JSON.stringify({
@@ -113,10 +111,10 @@
 
           })
           ///// 滑鼠移入 移出 顯示
-          $(".mos").mouseenter( function() {
-            $(this).css("border-bottom","5px solid purple");
+          $(".mos").mouseenter(function () {
+            $(this).css("border-bottom", "5px solid purple");
           }).mouseleave(function () {
-            $(this).css("border-bottom","none");
+            $(this).css("border-bottom", "none");
           });
 
         })
@@ -154,7 +152,8 @@
                   <!--這裡是logo-->
                   <div iclass="logo">
                     <a href="#" rel="home" class="site-logo">
-                      <img src="./index_vector/img/Adopets.svg" alt="Home">
+                      <img src="${pageContext.request.contextPath}/views/ecommerce/index_vector/img/Adopets.svg"
+                        alt="Home">
                     </a>
                   </div>
                   <nav role="navigation" aria-labelledby="block-consumer-react-main-menu-menu"
@@ -317,7 +316,8 @@
                     <span class="visually-hidden">Favorites</span>
                   </a>
                   <!--購物車-->
-                  <a href="#" class="nav-favorites-btn nav-cart-btn">
+                  <a href="${pageContext.request.contextPath}/shCartAction?action=getCart"
+                    class="nav-favorites-btn nav-cart-btn">
                     <svg role="img" focusable="false">
                       <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-cart"></use>
                     </svg>
@@ -611,27 +611,32 @@
               <div class="row">
                 <%-- 應該是多對一--%>
                   <c:forEach items="${skuPage.list}" var="skuPage">
-                    <div class="col-lg-3 col-md-4 col-sm-6">
-                      <div id="mos" class="product__item mos">
-                        <div class="product__item__pic ">
-                          <!-- 路徑 -->
-                          <img src="${pageContext.request.contextPath}/comAction?action=getPic&skuID=${skuPage.skuID}"
-                            width="150px" height="150px" />
-                          <ul class="product__item__pic__hover">
+                   
+                      <div class="col-lg-3 col-md-4 col-sm-6">
 
-                            <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
-                          </ul>
+                        <div id="mos" class="product__item mos">
+                          <div class="product__item__pic ">
+                            <!-- 路徑 -->
+                            <img src="${pageContext.request.contextPath}/comAction?action=getPic&skuID=${skuPage.skuID}"
+                              width="150px" height="150px" />
+                            <ul class="product__item__pic__hover">
+
+                              <li><a href="${pageContext.request.contextPath}/cartAction?action=getDetail&spuID=${skuPage.spuVO.spuID}"><i class="fa fa-shopping-cart"></i></a></li>
+                            </ul>
+                          </div>
+                          <div class="product__item__text">
+
+                            <h6><b><a
+                                  href="${pageContext.request.contextPath}/cartAction?action=getDetail&spuID=${skuPage.spuVO.spuID}">${skuPage.spuVO.spuName}</a></b>
+                            </h6>
+
+                            <p style="margin-bottom:5px;">${skuPage.specAttr}</p>
+                            <h5 style="color:purple">${skuPage.skuPrice}</h5>
+                          </div>
                         </div>
-                        <div class="product__item__text">
 
-                          <h6><b><a href="${pageContext.request.contextPath}/cartAction?action=getDetail&spuID=${skuPage.spuVO.spuID}">${skuPage.spuVO.spuName}</a></b></h6>
-
-                          <p style="margin-bottom:5px;">${skuPage.specAttr}</p>
-                          <h5 style="color:purple">${skuPage.skuPrice}</h5>
-                        </div>
                       </div>
-                    </div>
-
+                    
 
                   </c:forEach>
 

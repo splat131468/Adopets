@@ -89,4 +89,8 @@ public class OrdersService {
 	public Set<OrderDetailVO> getDetailByOrder(Integer orderID) {
 		return dao.getDetailByOrder(orderID);
 	}
+	
+	public int insertOrderGk(OrdersVO ordersVO) {
+		return dao.makeOrder(ordersVO);
+	}
 }

@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -36,7 +37,7 @@ import web.product.service.impl.SpuServiceImp;
 public class EcomAction extends HttpServlet {
 
 	// 每頁想要呈現的比數
-	public static final int PAGE_SIZE = 12;
+	public static final int PAGE_SIZE = 8;
 
 	SpuService spuService = new SpuServiceImp();
 	PImgService pImgService = new PImgServiceImp();
@@ -54,11 +55,10 @@ public class EcomAction extends HttpServlet {
 
 		String action = req.getParameter("action");
 
-		// 進入商城頁面 分頁處理
+		// 進入商城頁面 分頁處理 做了分頁處理後用不到
 		if ("ecoMainP".equals(action)) {
 
-			// 取得目前頁數
-
+			// 從第一頁開始找
 			skuPage = spuService.getMainPage(1, PAGE_SIZE);
 
 			req.getSession().setAttribute("skuPage", skuPage);
@@ -70,21 +70,35 @@ public class EcomAction extends HttpServlet {
 
 		// 請求照片
 		if ("getPic".equals(action)) {
-			String spuID = req.getParameter("skuID");
-			PImgVO pic = pImgService.getPic(Integer.parseInt(spuID));
-			byte[] spuImg = pic.getSpuImg();
+			// 錯誤驗證
+			LinkedList<String> errorMsgs = new LinkedList<String>();
+			try {
 
-			resp.setCharacterEncoding("UTF-8");
-			OutputStream outputSream = resp.getOutputStream();
-			InputStream in = new ByteArrayInputStream(spuImg);
-			int len = 0;
-			byte[] buf = new byte[1024];
-			while ((len = in.read(buf, 0, 1024)) != -1) {
-				outputSream.write(buf, 0, len);
+				req.setAttribute("errorMsgs", errorMsgs);
+
+				String skuID = req.getParameter("skuID");
+
+				if (skuID == null || (skuID.trim().length()) == 0) {
+					errorMsgs.add("照片請求有誤");
+				} else {
+
+					PImgVO pic = pImgService.getPic(Integer.parseInt(skuID));
+					byte[] spuImg = pic.getSpuImg();
+
+					OutputStream outputSream = resp.getOutputStream();
+					InputStream in = new ByteArrayInputStream(spuImg);
+					int len = 0;
+					byte[] buf = new byte[1024];
+					while ((len = in.read(buf, 0, 1024)) != -1) {
+						outputSream.write(buf, 0, len);
+					}
+					outputSream.close();
+					return;
+				}
+			} catch (Exception e) {
+				errorMsgs.add("照片上傳有誤" + e.getMessage());
+				return;
 			}
-			outputSream.close();
-			return;
-			// 分頁處理
 		}
 
 		doPost(req, resp);
@@ -96,39 +110,48 @@ public class EcomAction extends HttpServlet {
 		req.setCharacterEncoding("UTF-8");
 		resp.setContentType("text/html; charset=UTF-8");
 
-		
 		// 處理json
 		String data = IOUtils.toString(req.getInputStream(), StandardCharsets.UTF_8);
 
 		JsonObject fromJson = gson.fromJson(data, JsonObject.class);
 		String action = fromJson.get("action").getAsString();
 
+		// 錯誤驗證
+		LinkedList<String> errorMsgs = new LinkedList<String>();
+
 		// 進入商城頁面 分頁處理
 		if ("ecoMainP".equals(action)) {
 
-			// 取得目前頁數
-			Integer curPage = fromJson.get("curPage").getAsInt();
+			try {
 
-			// 不為null 則選擇指定
-			if (curPage != null) {
-				// 判斷是否有page已存在session
-			Object attribute = req.getSession().getAttribute("skuPage");
-				if(attribute!=null) {
-					// 繼續查詢
+				// 取得目前頁數
+				Integer curPage = fromJson.get("curPage").getAsInt();
+
+				// 不為null 則選擇指定
+				if (curPage != null) {
+					// 判斷是否有page已存在session
+					Object attribute = req.getSession().getAttribute("skuPage");
+					if (attribute != null) {
+						// 繼續查詢
+					}
+
+					skuPage = spuService.getMainPage(curPage, PAGE_SIZE);
+					// 點選指定頁碼
+				} else {
+					skuPage = spuService.getMainPage(1, PAGE_SIZE);
 				}
-				
-				skuPage = spuService.getMainPage(curPage, PAGE_SIZE);
-				// 點選指定頁碼
-			} else {
-				skuPage = spuService.getMainPage(1, PAGE_SIZE);
+				req.getSession().setAttribute("skuPage", skuPage);
+				// 路徑
+				req.getRequestDispatcher("/views/ecommerce/Pet_Supplement.jsp").forward(req, resp);
+				return;
+			} catch (Exception e) {
+				errorMsgs.add("分頁處理有誤" + e.getMessage());
+				System.out.println(errorMsgs);
+				return;
 			}
-			req.getSession().setAttribute("skuPage", skuPage);
-			// 路徑
-			req.getRequestDispatcher("/views/ecommerce/Pet_Supplement.jsp").forward(req, resp);
-			return;
 			// 動態查詢
 		} else if ("requirement".equals(action)) {
-			ProdSelection prodSelection ;
+			ProdSelection prodSelection;
 
 			Integer lowC = null;
 			Integer highC = null;
@@ -143,48 +166,41 @@ public class EcomAction extends HttpServlet {
 			if (jsonLowC != null && !"".equals(jsonLowC)) {
 				lowC = Integer.parseInt(jsonLowC);
 			}
-			
-			String jsonHighC  = fromJson.get("highC").getAsString();
-			if (jsonHighC != null&&!"".equals(jsonHighC)) {
-				highC= Integer.parseInt(jsonHighC);
+
+			String jsonHighC = fromJson.get("highC").getAsString();
+			if (jsonHighC != null && !"".equals(jsonHighC)) {
+				highC = Integer.parseInt(jsonHighC);
 			}
-			
+
 			String jsonCtgID = fromJson.get("ctgID").getAsString();
 			if (jsonCtgID != null) {
-				ctgID= Integer.parseInt(jsonCtgID);
+				ctgID = Integer.parseInt(jsonCtgID);
 				// 前端預設值ctgID = -1;
-				if(ctgID==-1) {
-					ctgID=null;
-				}	
-			}
-			
-			String jsonCurPage = fromJson.get("curPage").getAsString();
-			if (jsonCurPage != null&&!"".equals(jsonCurPage)) {
-				curPage= Integer.parseInt(jsonCurPage);
-				
-			}
-			
-		
-			 String jsonprodName = fromJson.get("prodName").getAsString();
-			 if (jsonprodName != null&&!"".equals(jsonprodName)) {
-				 prodName = jsonprodName;		
-				}else {
-					prodName=null;
+				if (ctgID == -1) {
+					ctgID = null;
 				}
-			 
-			
-			 prodSelection = new ProdSelection(lowC, highC, ctgID, prodName);
-			 System.out.println("============================");
-			 System.out.print(prodSelection);
-			 System.out.print(prodName);
-			 System.out.println("============================");
+			}
+
+			String jsonCurPage = fromJson.get("curPage").getAsString();
+			if (jsonCurPage != null && !"".equals(jsonCurPage)) {
+				curPage = Integer.parseInt(jsonCurPage);
+
+			}
+
+			String jsonprodName = fromJson.get("prodName").getAsString();
+			if (jsonprodName != null && !"".equals(jsonprodName)) {
+				prodName = jsonprodName;
+			} else {
+				prodName = null;
+			}
+
+			prodSelection = new ProdSelection(lowC, highC, ctgID, prodName);
 			// 查詢處理 放入session
-			skuPage = spuService.selectedPage(prodSelection,curPage, PAGE_SIZE);
+			skuPage = spuService.selectedPage(prodSelection, curPage, PAGE_SIZE);
 			req.getSession().setAttribute("skuPage", skuPage);
 			req.getRequestDispatcher("/views/ecommerce/Pet_Supplement.jsp").forward(req, resp);
 			return;
 
-			
 		}
 
 		return;
