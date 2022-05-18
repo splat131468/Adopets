@@ -138,6 +138,7 @@
 								<div class="creditCardList">
 									<input type="text" disabled class="form-control-plaintext"
 										id="" value="**** **** **** 1234">
+										<span class="form-control-plaintext">${param.creditCard}</span>
 <!-- 									<button -->
 <!-- 										class="btn btn-outline-primary btn-sm btnPurple-outline">刪除信用卡</button> -->
 									<!--to do list 範例修改  -->

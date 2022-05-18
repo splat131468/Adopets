@@ -11,8 +11,8 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>註冊會員</title>
-<link rel="stylesheet" href="<%=request.getContextPath()%>/views/member/css/bootstrap.css">
-<link rel="stylesheet" href="<%=request.getContextPath()%>/views/member/css/register.css">
+<link rel="stylesheet" href="<%=request.getContextPath()%>views/member/css/bootstrap.css">
+<link rel="stylesheet" href="<%=request.getContextPath()%>views/member/css/register.css">
 </head>
 
 <body>

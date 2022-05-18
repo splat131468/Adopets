@@ -36,7 +36,7 @@ public class LoginServlet extends HttpServlet {
 		List<String> errorMsgs = new LinkedList<String>();
 		req.setAttribute("errorMsgs", errorMsgs);
 		
-		//如果點登出鍵進來這
+		//如果點登出進來這
 		if("signOut".equals(action)) {
 			req.getSession().invalidate();
 			String url = "/signIn.jsp";
@@ -47,6 +47,7 @@ public class LoginServlet extends HttpServlet {
 
 		try {
 			/*********************** 1.接收請求參數 - 輸入格式的錯誤處理 *************************/
+			// 【取得使用者 帳號(account) 密碼(password)】
 			String account = req.getParameter("account");
 			String password = req.getParameter("password");
 			/*************************** 2.開始新增資料 ***************************************/
@@ -63,7 +64,7 @@ public class LoginServlet extends HttpServlet {
 	            return;
 	        }else {
 	            session.removeAttribute("preURL");   
-	            res.sendRedirect("/Adopets/index.jsp");      //想導入位置尚未確定      
+	            123123res.sendRedirect("/Adopets/index.jsp");      //想導入位置尚未確定，需驗證      
 	            return;
 	        }
 			/*************************** 其他可能的錯誤處理 **********************************/

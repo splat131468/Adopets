@@ -2,8 +2,9 @@ package web.member.service.impl;
 
 import java.util.List;
 
+import web.admin.entity.AdminVO;
 import web.member.dao.MemberDAO_interface;
-import web.member.dao.impl.MemberJDBCDAO;
+import web.member.dao.impl.MemberDAO;
 import web.member.entity.MemberVO;
 
 public class MemberService {
@@ -11,7 +12,8 @@ public class MemberService {
 	private MemberDAO_interface dao;
 
 	public MemberService() {
-		dao = new MemberJDBCDAO();
+//		dao = new MemberJDBCDAO();
+		dao = new MemberDAO();
 	}
 
 	public MemberVO addMember(String account, String password, String name) {
@@ -41,6 +43,13 @@ public class MemberService {
 
 		return memberVO;
 	}
+	
+	public MemberVO updateCreditcard(String creditCard) {
+		
+		MemberVO memberVO = new MemberVO();
+		memberVO.setCreditCard(creditCard);
+		return memberVO;
+	}
 
 	public void deleteMember(Integer memID) {
 		dao.delete(memID);
@@ -53,4 +62,18 @@ public class MemberService {
 	public List<MemberVO> getAll() {
 		return dao.getAll();
 	}
+	
+	public MemberVO selectAccount(String account) {
+		return dao.selectAccount(account);
+	}
+	public MemberVO findPassword(String account,String password) {
+
+		MemberVO memberVO = new MemberVO();
+		memberVO.setAccount(account);
+		memberVO.setPassword(password);
+		dao.findPassword(memberVO);
+		
+		return memberVO;
+	}
+	
 }

@@ -98,8 +98,8 @@ public class MemberServlet extends HttpServlet {
 				session.setAttribute("memberVO", memberVO);
 				/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
 				String url = "/views/member/member.jsp";
-				RequestDispatcher successView = request.getRequestDispatcher(url); // 新增成功後轉交.jsp
-				successView.forward(request, response);
+				RequestDispatcher failureView = request.getRequestDispatcher(url);
+				failureView.forward(request, response);
 
 				/*************************** 其他可能的錯誤處理 **********************************/
 			} catch (Exception e) {
@@ -122,7 +122,7 @@ public class MemberServlet extends HttpServlet {
 				
 //				String inputEmail=  request.getParameter("inputEmail");
 				HttpSession session = request.getSession();
-				String inputEmail = ((MemberVO)session.getAttribute("memberVO")).getAccount();
+				String inputEmail = ((MemberVO)session.getAttribute("MemberVO")).getAccount();
 				
 				System.out.println(inputEmail);
 				

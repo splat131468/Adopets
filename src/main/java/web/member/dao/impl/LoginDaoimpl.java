@@ -7,16 +7,26 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
+
 import web.member.dao.LoginDao;
 import web.member.entity.MemberVO;
 
 
-public class LoginDaoimplJDBC implements LoginDao{
-	
-	 String driver = "com.mysql.cj.jdbc.Driver";
-	 String url = "jdbc:mysql://localhost:3306/ADOPETS?serverTimezone=Asia/Taipei";
-	 String userid = "root";
-	 String password = "password";
+public class LoginDaoimpl implements LoginDao{
+	 
+		private static DataSource ds = null;
+		static {
+			try {
+				Context ctx = new InitialContext();
+				ds = (DataSource) ctx.lookup("java:comp/env/jdbc/jndi");
+			} catch (NamingException e) {
+				e.printStackTrace();
+			}
+		}
 	
 
 	private static final String FIND_MEMBER = 
@@ -28,8 +38,7 @@ public class LoginDaoimplJDBC implements LoginDao{
 		ResultSet rs = null;
 		MemberVO memberVO = null;
 		try {
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, password);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(FIND_MEMBER);
 			pstmt.setString(1, account);
 			pstmt.setString(2, password);
@@ -45,6 +54,7 @@ public class LoginDaoimplJDBC implements LoginDao{
 				memberVO.setPhone(rs.getString("phone"));
 				memberVO.setAddress(rs.getString("address"));
 				memberVO.setPersonImg(rs.getBytes("personImg"));
+				memberVO.setCreditCard(rs.getString("creditCard"));
 			}
 		} catch (Exception se) {
 			throw new RuntimeException("A database error occured. "
