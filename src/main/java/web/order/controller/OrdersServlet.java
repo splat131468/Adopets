@@ -12,6 +12,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.json.JSONArray;
 
@@ -93,6 +94,50 @@ public class OrdersServlet extends HttpServlet {
 			} catch (Exception e) {
 				errorMsgs.add("無法取得資料:" + e.getMessage());
 				RequestDispatcher failureView = req.getRequestDispatcher("/views/order/Orders.jsp");
+				failureView.forward(req, res);
+			}
+		}
+		
+		if ("get_Member_Order".equals(action)) { 
+			System.out.println("11111111111111");
+			List<String> errorMsgs = new LinkedList<String>();
+			// Store this set in the request scope, in case we need to
+			// send the ErrorPage view.
+			req.setAttribute("errorMsgs", errorMsgs);
+
+			try {
+				/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
+//				HttpSession session = req.getSession();
+//				Integer memID=(Integer) session.getAttribute("memID");
+
+				
+				
+				
+
+				/*************************** 2.開始查詢資料 *****************************************/
+				OrdersService odrSvc = new OrdersService();
+//				List<OrdersVO> ordersVO = odrSvc.findMemberOrder(memID);
+				List<OrdersVO> ordersVO = odrSvc.findMemberOrder(5);
+				System.out.println(ordersVO);
+			
+				// Send the use back to the form, if there were errors
+				if (!errorMsgs.isEmpty()) {
+					RequestDispatcher failureView = req.getRequestDispatcher("/views/member/member.jsp");
+					failureView.forward(req, res);
+					return;// 程式中斷
+				}
+
+				/*************************** 3.查詢完成,準備轉交(Send the Success view) *************/
+				req.setAttribute("list", ordersVO); // 資料庫取出的OrdersVO物件,存入req
+				String url = "/views/member/orderListMember.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url); 
+				System.out.println("2222222222222");
+				successView.forward(req, res);
+				System.out.println("33333333333333");
+				/*************************** 其他可能的錯誤處理 *************************************/
+			} catch (Exception e) {
+				errorMsgs.add("無法取得資料:" + e.getMessage());
+				RequestDispatcher failureView = req.getRequestDispatcher("/views/member/orderListLog.jsp");
 				failureView.forward(req, res);
 			}
 		}

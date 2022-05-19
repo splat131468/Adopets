@@ -10,6 +10,7 @@
  <body onload="connect();" onunload="disconnect();"> 
  	<h1>Chat Room</h1> 
  	<h3 id="statusOutput" class="statusOutput"></h3> 
+ 	<div id="row"></div>
  	<textarea id="messagesArea" class="panel message-area" readonly></textarea> 
  	<div class="panel input-area"> 
  		<input id="userName" class="text-field" type="hidden" value="jack"  /> 
@@ -28,6 +29,7 @@
  	var endPointURL = "ws://" + window.location.host + webCtx + MyPoint;
 							
  	var statusOutput = document.getElementById("statusOutput");
+ 	var username = Membervo.memName;
  	var webSocket;
 
  	function connect() {
@@ -39,22 +41,65 @@
  			document.getElementById('sendMessage').disabled = false;
  			document.getElementById('connect').disabled = true;
  			document.getElementById('disconnect').disabled = false;
+ 			
+ 			
+ 			var container = document.getElementById("row");
+ 					var jsonObj = {
+ 							"type" : "history",
+ 							"username" : username,
+ 							"message" : ""
+ 						};
+ 					webSocket.send(JSON.stringify(jsonObj));
+ 				};
+ 			
  		};
 
  		webSocket.onmessage = function(event) {
- 			
- 			var messagesArea = document.getElementById("messagesArea");
  			var jsonObj = JSON.parse(event.data);
- 			var message = jsonObj.userName + ": " + jsonObj.message + "\r\n";
- 			messagesArea.value = messagesArea.value + message;
- 			messagesArea.scrollTop = messagesArea.scrollHeight;  
+ 		 if ("history" === jsonObj.type) {
+			messagesArea.innerHTML = '';
+			var ul = document.createElement('ul');
+			ul.id = "area";
+			messagesArea.appendChild(ul);
+			// 這行的jsonObj.message是從redis撈出跟好友的歷史訊息，再parse成JSON格式處理
+			var messages = JSON.parse(jsonObj.message);
+			for (var i = 0; i < messages.length; i++) {
+				var historyData = JSON.parse(messages[i]);
+				var showMsg = historyData.message;
+				var li = document.createElement('li');
+		
+				
+				li.innerHTML = showMsg;
+				ul.appendChild(li);
+			}
+			messagesArea.scrollTop = messagesArea.scrollHeight;
+		} else if ("chat" === jsonObj.type) {
+			var li = document.createElement('li');
+		
+			li.innerHTML = jsonObj.message;
+		
+			document.getElementById("area").appendChild(li);
+			messagesArea.scrollTop = messagesArea.scrollHeight;
+		} 
+		}
+ 			
+ 			
+ 			
+ 			
+//  			var messagesArea = document.getElementById("messagesArea");
+//  			var jsonObj = JSON.parse(event.data);
+//  			var message = jsonObj.userName + ": " + jsonObj.message + "\r\n";
+//  			messagesArea.value = messagesArea.value + message;
+//  			messagesArea.scrollTop = messagesArea.scrollHeight;  
  		};
 
  		webSocket.onclose = function(event) {
  			updateStatus("WebSocket Disconnected");
  		};
  	}
+ 	
  	var inputUserName = document.getElementById("userName").value;
+ 	
  	function sendMessage() {
  			
  		
@@ -66,6 +111,7 @@
  			inputMessage.focus();
  		} else {
  			var jsonObj = {
+ 				"type" : chat,
  				"userName" : inputUserName,
  				"message" : message
  			};
@@ -85,6 +131,9 @@
  	function updateStatus(newStatus) {
  		statusOutput.innerHTML = newStatus;
  	}
+ 	
+ 
+ 	
  </script> 
  </html> 
     
