@@ -24,6 +24,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.mysql.cj.Session;
 
+import web.catInfo.entity.CatAndShelVO;
 import web.catInfo.entity.CatInfoVO;
 import web.catInfo.service.CatInfoService;
 
@@ -45,7 +46,6 @@ public class CatInfoServlet extends HttpServlet {
 		req.setCharacterEncoding("UTF-8");
 		res.setContentType("text/html; charset=UTF-8");
 		PrintWriter out = res.getWriter();
-		
 //		String pa = req.getParameter("member:1:favorite");
 //		String data = IOUtils.toString(req.getInputStream(), StandardCharsets.UTF_8);
 //		Gson gson=new Gson();
@@ -68,13 +68,25 @@ public class CatInfoServlet extends HttpServlet {
 //		System.out.println("Servlet get value = ");
 		CatInfoService catInfoService = new CatInfoService();
 		
-//			System.out.println(" CatInfoServlet ok 1");
+		//從FoviriteServlet過來的,來找出對應的cat
+		if("getRedisListFav".equals(action)) {
+			List<String> catList = (ArrayList) req.getAttribute("catList");
+//			catList = req.getAttribute("catList");
+			System.out.println(catList);
+			System.out.println(catInfoService.getFavList(catList));
+			List<CatInfoVO> lists = catInfoService.getFavList(catList);
+			req.getSession().setAttribute("lists", lists);
+			req.getRequestDispatcher("/views/catInfo/My_favorite.jsp").forward(req, res);
+//			req.getSession().setAttribute("catInfoVO", catInfoVO);
+		}
+		
+		//多條件查詢(首頁找全部+個別多條件)
 		if("listEmps_ByCompositeQuery".equals(action)) {
 //			System.out.println(action);
 			Map<String, String[]> mapa = req.getParameterMap();
 			Set<String> keys = mapa.keySet();
 //			System.out.println(keys);
-			CatInfoVO catInfoVO = new CatInfoVO();			
+			CatInfoVO catInfoVO = new CatInfoVO();	//把搜尋條件存在catInfoVO		
 			for(String key : keys) {
 				String value = mapa.get(key)[0];
 				if(value != null && value.trim().length() != 0 && !"action".equals(key)) {
@@ -148,7 +160,7 @@ public class CatInfoServlet extends HttpServlet {
 //			System.out.println(lists.size());
 //			req.setAttribute("lists", lists);
 			req.getSession().setAttribute("lists", lists);
-			req.getSession().setAttribute("catInfoVO", catInfoVO);
+			req.getSession().setAttribute("catInfoVO", catInfoVO); //這個是給留給分頁存放多值條件
 //			req.setAttribute("size", lists.size());
 //			req.getSession().getAttribute("lists");
 //			int n = (int) req.getSession().getAttribute("size");
@@ -169,7 +181,7 @@ public class CatInfoServlet extends HttpServlet {
 //			System.out.println(" CatInfoServlet ok2");
 		}
 
-		//新增新增新增新增新增新增新增新增
+//新增新增新增新增新增新增新增新增
 	    if ("insert".equals(action)) { 
 				List<String> errorMsgs = new LinkedList<String>();
 				req.setAttribute("errorMsgs", errorMsgs);
@@ -411,6 +423,20 @@ public class CatInfoServlet extends HttpServlet {
 			} catch (Exception e) {
 				errorMsgs.add("this catID is not avaliable");
 			}
+		}
+		
+		//顯示到CatPage
+		if ("getCatPage".equals(action)) {
+			
+			Integer catID = null;
+			String str = req.getParameter("catID");
+			catID = Integer.valueOf(req.getParameter("catID"));
+			System.out.println("catID:" + catID);
+			CatAndShelVO catAndShelVO = catInfoService.getOneAndShel(catID);
+			req.setAttribute("catAndShelVO", catAndShelVO); // 資料庫取出的empVO物件,存入req
+			String url = "/views/catInfo/CatPage.jsp";
+			RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 listOneEmp.jsp
+			successView.forward(req, res);
 		}
 		
 	}

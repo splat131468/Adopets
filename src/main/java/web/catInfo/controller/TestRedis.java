@@ -20,7 +20,7 @@ public class TestRedis {
 		JedisPool jedisPool = JedisUtil.getJedisPool();
 		Jedis jedis = jedisPool.getResource();
 //		new CatInfoDAOimpl().jedisAdd(1, 1);
-		new CatInfoRedisimpl().jedisAdd(2, 10);
+//		new CatInfoRedisimpl().jedisAdd(2, 10);
 		
 		List<String> catList1 = jedis.lrange("member:1:favorite", 0, -1);
 		List<String> catList2 = jedis.lrange("member:2:favorite", 0, -1);
@@ -36,6 +36,8 @@ public class TestRedis {
 //				jedis.close();				
 //			}
 //		}
+		jedis.close();
+		JedisUtil.shutdownJedisPool();
 //		CatInfoVO myCat1 = new CatInfoVO(1, 2, "收容所1", "Cat1", null, null, null, null, null, null, null, null, null, null, null);
 //		CatInfoVO myCat2 = new CatInfoVO(2, 2, "收容所1", "Cat2", null, null, null, null, null, null, null, null, null, null, null);
 //		CatInfoVO myCat3 = new CatInfoVO();
@@ -48,10 +50,10 @@ public class TestRedis {
 ////		System.out.println(jObjStr);
 //		
 //		
-		String jArrayStr1 = new JSONArray(catList1).toString();
-		String jArrayStr2 = new JSONArray(catList2).toString();
-		System.out.println(jArrayStr1);
-		System.out.println(jArrayStr2);
+//		String jArrayStr1 = new JSONArray(catList1).toString();
+//		String jArrayStr2 = new JSONArray(catList2).toString();
+//		System.out.println(jArrayStr1);
+//		System.out.println(jArrayStr2);
 //		StringBuilder sb = new StringBuilder("mem:").append(myCat1.getMemID());
 //		jedis.set(sb.toString(), jArrayStr);
 ////		jedis.set("cats", jArrayStr);

@@ -39,14 +39,16 @@ public class Favorite extends HttpServlet {
 		
 		PrintWriter out = res.getWriter();
 		String action = req.getParameter("action");
-		
+//		System.out.println(action);
 		//找到某個 memID 的 favorite cat list
 		if("getRedis".equals(action)) {
-			System.out.println(action);
+//			System.out.println(action);
 			Jedis jedis = jedisPool.getResource();
 			String memID = req.getParameter("key");
-			System.out.println(memID);
+//			System.out.println(memID);
 			List<String> catList = jedis.lrange(memID, 0, -1);
+			
+//			System.out.println(catList);
 			out.println(catList);
 			jedis.close();
 		}
@@ -71,6 +73,22 @@ public class Favorite extends HttpServlet {
 //			String jArrayStr2 = new JSONArray(catList2).toString();
 //			System.out.println(jArrayStr1);
 //			System.out.println(jArrayStr2);
+			jedis.close();
+		}
+		//這是給列出我的最愛用的
+		if("getRedisListFav".equals(action)) {
+			
+//			System.out.println(action);
+			Jedis jedis = jedisPool.getResource();
+			String memID = req.getParameter("key");
+//			System.out.println(memID);
+			//現在redis取得會員的favorite list
+			List<String> catList = jedis.lrange(memID, 0, -1);
+			//再F/w到catInfoServlet做查詢
+			req.setAttribute("catList", catList);
+//			System.out.println(catList);
+			req.getRequestDispatcher("/CatInfoServlet").forward(req, res);
+//			out.println(catList);
 			jedis.close();
 		}
 //		String data = IOUtils.toString(req.getInputStream(), StandardCharsets.UTF_8);

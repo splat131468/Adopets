@@ -12,6 +12,7 @@ import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
 import web.catInfo.dao.CatInfoDAO;
 import web.catInfo.dao.impl.CatInfoDAOimpl;
+import web.catInfo.entity.CatAndShelVO;
 import web.catInfo.entity.CatInfoVO;
 
 public class CatInfoService {
@@ -89,8 +90,7 @@ public class CatInfoService {
 	
 	public List<CatInfoVO> getMulti(CatInfoVO catInfoVO) {
 		List<CatInfoVO> getMulti = new ArrayList<>();
-		
-		System.out.println("service get : " + catInfoVO.getCreateDate());
+//		System.out.println("service get : " + catInfoVO.getCreateDate());
 		try {
 			InputStream inputStream = Resources.getResourceAsStream("mybatis-config.xml");
 			SqlSessionFactoryBuilder sqlSessionFactoryBuilder = new SqlSessionFactoryBuilder();
@@ -99,15 +99,18 @@ public class CatInfoService {
 			CatInfoDAO catInfoDAO = session.getMapper(CatInfoDAO.class);
 			getMulti = catInfoDAO.getMulti(catInfoVO);
 			session.commit();
-			
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
-		
-		
-		
 		return getMulti;
-		
+	}
+	
+	public List<CatInfoVO> getFavList(List<String> catList) {
+		return dao.getFavList(catList);
+	}
+	
+	public CatAndShelVO getOneAndShel(Integer catID) {
+		return dao.getOneAndShel(catID);
 	}
 	
 	

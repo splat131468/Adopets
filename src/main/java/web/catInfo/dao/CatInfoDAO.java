@@ -2,6 +2,7 @@ package web.catInfo.dao;
 
 import java.util.List;
 
+import web.catInfo.entity.CatAndShelVO;
 import web.catInfo.entity.CatInfoVO;
 
 public interface CatInfoDAO {
@@ -13,8 +14,8 @@ public interface CatInfoDAO {
 	public List<CatInfoVO> getAll();
 	public Integer getLastCatID();
 	public List<CatInfoVO> getMulti(CatInfoVO catInfoVO);
-
-	
+	public List<CatInfoVO> getFavList(List<String> catList);
+	public CatAndShelVO getOneAndShel(Integer catID);
 
 	
 	
