@@ -87,6 +87,7 @@
   <div class="dialog-off-canvas-main-canvas" data-off-canvas-main-canvas="">
     <div id="site" class="layout-container">
   <!--這是標題這是標題這是標題這是標題這是標題這是標題這是標題這是標題這是標題這是標題這是標題這是標題這是標題這是標題這是標題-->
+
       <header role="banner" class="header-inner">
         <div class="region region-navigation">
           <div class="region--inner">
@@ -94,7 +95,7 @@
               <!--這裡是logo-->
               <div iclass="logo">
                 <a href="#" rel="home" class="site-logo">
-                  <img src="./img/Adopets.svg" alt="Home">
+                  <img src="${pageContext.request.contextPath}/views/catInfo/img/Adopets.svg" alt="Home">
                 </a>
               </div>
               <nav role="navigation" aria-labelledby="block-consumer-react-main-menu-menu"
@@ -271,7 +272,7 @@
               <div class="header-inner-profile__container">
                 <ul class="header-inner-profile">
                   <li><a href="#" class="header-inner-profile-btn">註冊</a></li>
-                  <li><a href="#" class="header-inner-profile-btn">登入</a></li>
+                  <li><a href="${pageContext.request.contextPath}/views/member/signIn.jsp" class="header-inner-profile-btn">登入</a></li>
                 </ul>
               </div>
             </div>
