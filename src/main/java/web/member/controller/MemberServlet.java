@@ -85,7 +85,7 @@ public class MemberServlet extends HttpServlet {
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					request.setAttribute("memberVO", memberVO); // 含有輸入格式錯誤的memberVO物件,也存入request
-					RequestDispatcher failureView = request.getRequestDispatcher("/views/member/register.jsp");
+					RequestDispatcher failureView = request.getRequestDispatcher("/views/signIn/signIn.jsp");
 					failureView.forward(request, response);
 					return;
 				}
@@ -104,7 +104,7 @@ public class MemberServlet extends HttpServlet {
 				/*************************** 其他可能的錯誤處理 **********************************/
 			} catch (Exception e) {
 				errorMsgs.add(e.getMessage());
-				RequestDispatcher failureView = request.getRequestDispatcher("/views/member/register.jsp");
+				RequestDispatcher failureView = request.getRequestDispatcher("/views/signIn/signIn.jsp");
 				failureView.forward(request, response);
 			}
 		}
@@ -173,7 +173,7 @@ public class MemberServlet extends HttpServlet {
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					request.setAttribute("memberVO", memberVO); // 含有輸入格式錯誤的VO物件,也存入request
-					RequestDispatcher failureView = request.getRequestDispatcher("/views/member/register.jsp");
+					RequestDispatcher failureView = request.getRequestDispatcher("/views/signIn/signIn.jsp");
 					failureView.forward(request, response);
 					return; // 程式中斷
 				}
@@ -193,7 +193,7 @@ public class MemberServlet extends HttpServlet {
 			} catch (Exception e) {
 				e.printStackTrace();
 				errorMsgs.add("修改資料失敗:" + e.getMessage());
-				RequestDispatcher failureView = request.getRequestDispatcher("/views/member/register.jsp");
+				RequestDispatcher failureView = request.getRequestDispatcher("/views/signIn/signIn.jsp");
 				failureView.forward(request, response);
 			}
 		}

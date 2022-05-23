@@ -228,19 +228,19 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- Main Sidebar Container -->
     <aside class="main-sidebar sidebar-dark-primary elevation-4">
       <!-- 首頁 Logo -->
-      <a href="starter.html" class="brand-link">
+      <a href="<%=request.getContextPath()%>/views/background_login/background.jsp" class="brand-link">
         <span class="brand-text font-weight-light"><img src="<%=request.getContextPath()%>/resources/background/img/Adopets.svg" width="55%"></span>
       </a>
 
-      <!-- Sidebar -->
+     <!-- Sidebar -->
       <div class="sidebar">
         <!-- Sidebar user panel (optional) -->
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
           <div class="image">
-            <img src="dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
+            <img src="${pageContext.request.contextPath}/UploadAdmImg?adminID=${adminVO.adminID}" class="img-circle elevation-2" alt="User Image">
           </div>
           <div class="info">
-            <a href="#" class="d-block">Alexander Pierce</a>
+            <a href="#" class="d-block">${adminVO.name}</a>
           </div>
         </div>
 
@@ -284,7 +284,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
             </li>
 
             <li class="nav-item">
-              <a href="lists.html" class="nav-link">
+              <a href="<%=request.getContextPath()%>/views/order/Orders.jsp"
+ class="nav-link">
                 <i class="nav-icon fa-solid fa-clipboard-list"></i>
                 <p>訂單管理</p>
               </a>
