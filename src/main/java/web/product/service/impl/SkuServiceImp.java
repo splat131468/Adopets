@@ -12,6 +12,14 @@ import web.product.service.SkuService;;
 
 public class SkuServiceImp implements SkuService {
 
+	
+	
+	public List<SkuVO> getAll(){
+		
+		return null;
+	}
+	
+	
 	@Override
 	public int insertSKU(int spuID, List<Integer> prices, List<Integer> stocks, List<JsonElement> attrList) {
 

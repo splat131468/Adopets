@@ -101,7 +101,7 @@
               }),
               type: "POST",
               success: function () {
-                $("#prodList").load("http://localhost:8081/Adopets/views/ecommerce/Pet_Supplement.jsp #prodList")
+                $("#prodList").load("/Adopets/views/ecommerce/Pet_Supplement.jsp #prodList")
               }
 
             })
@@ -524,28 +524,29 @@
                       <div class="latest-prdouct__slider__item">
                         <a href="#" class="latest-product__item">
                           <div class="latest-product__item__pic">
-                            <img src="img_ecommerce/latest-product/lp-1.jpg" alt="">
+                         
+                            <img src="${pageContext.request.contextPath}/views/ecommerce/img_ecommerce/廣告1.jpeg" alt="">
                           </div>
                           <div class="latest-product__item__text">
-                            <h6>Crab Pool Security</h6>
-                            <span>$30.00</span>
+                            <h6>優質貓罐頭</h6>
+                            
                           </div>
                         </a>
                         <a href="#" class="latest-product__item">
                           <div class="latest-product__item__pic">
-                            <img src="img_ecommerce/latest-product/lp-2.jpg" alt="">
+                            <img src="${pageContext.request.contextPath}/views/ecommerce/img_ecommerce/廣告2.jpeg" alt="">
                           </div>
                           <div class="latest-product__item__text">
-                            <h6>Crab Pool Security</h6>
-                            <span>$30.00</span>
+                            <h6>優質貓罐頭</h6>
+                           
                           </div>
                         </a>
                         <a href="#" class="latest-product__item">
                           <div class="latest-product__item__pic">
-                            <img src="img_ecommerce/latest-product/lp-3.jpg" alt="">
+                            <img src="${pageContext.request.contextPath}/views/ecommerce/img_ecommerce/廣告3.jpeg" alt="">
                           </div>
                           <div class="latest-product__item__text">
-                            <h6>Crab Pool Security</h6>
+                            <h6>貓罐頭廣告</h6>
                             <span>$30.00</span>
                           </div>
                         </a>
@@ -553,29 +554,29 @@
                       <div class="latest-prdouct__slider__item">
                         <a href="#" class="latest-product__item">
                           <div class="latest-product__item__pic">
-                            <img src="img_ecommerce/latest-product/lp-1.jpg" alt="">
+                            <img src="${pageContext.request.contextPath}/views/ecommerce/img_ecommerce/廣告1.jpeg" alt="">
                           </div>
                           <div class="latest-product__item__text">
-                            <h6>Crab Pool Security</h6>
-                            <span>$30.00</span>
+                            <h6>優質貓罐頭</h6>
+                         
                           </div>
                         </a>
                         <a href="#" class="latest-product__item">
                           <div class="latest-product__item__pic">
-                            <img src="img_ecommerce/latest-product/lp-2.jpg" alt="">
+                            <img src="${pageContext.request.contextPath}/views/ecommerce/img_ecommerce/廣告2.jpeg" alt="">
                           </div>
                           <div class="latest-product__item__text">
-                            <h6>Crab Pool Security</h6>
-                            <span>$30.00</span>
+                            <h6>優質貓罐頭</h6>
+                       
                           </div>
                         </a>
                         <a href="#" class="latest-product__item">
                           <div class="latest-product__item__pic">
-                            <img src="img_ecommerce/latest-product/lp-3.jpg" alt="">
+                            <img src="${pageContext.request.contextPath}/views/ecommerce/img_ecommerce/廣告3.jpeg" alt="">
                           </div>
                           <div class="latest-product__item__text">
-                            <h6>Crab Pool Security</h6>
-                            <span>$30.00</span>
+                            <h6>優質貓罐頭</h6>
+                          
                           </div>
                         </a>
                       </div>

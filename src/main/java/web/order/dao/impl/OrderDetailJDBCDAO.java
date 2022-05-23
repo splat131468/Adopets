@@ -327,8 +327,7 @@ public class OrderDetailJDBCDAO implements OrderDetailDAO_interface {
 
 		return res;
 	
-		
-		
+			
 		
 	}
 

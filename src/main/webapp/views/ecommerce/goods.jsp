@@ -70,7 +70,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
               url: url,
               dataType: "text",
               success: function () {
-                $("body").load("http://localhost:8081/Adopets/views/ecommerce/goods.jsp", "#tb");
+                $("body").load("/Adopets/views/ecommerce/goods.jsp", "#tb");
               }
             })
           }
