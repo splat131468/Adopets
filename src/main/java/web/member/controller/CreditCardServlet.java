@@ -10,9 +10,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-import web.member.entity.CreditCardVO;
-import web.member.service.impl.CreditCardService;
+import web.member.entity.MemberVO;
+import web.member.service.impl.MemberService;
 
 /**
  * Servlet implementation class CreditCardServlet
@@ -41,26 +42,28 @@ public class CreditCardServlet extends HttpServlet {
 			// Store this set in the request scope, in case we need to
 			// send the ErrorPage view.
 			request.setAttribute("errorMsgs", errorMsgs);
-
+			HttpSession session = request.getSession();
+			MemberVO memberVO = (MemberVO)session.getAttribute("MemberVO");
 			try {
 				/*********************** 1.接收請求參數 - 輸入格式的錯誤處理 *************************/
 				String inputNumber = request.getParameter("inputNumber");
 
-				CreditCardVO creditCardVO = new CreditCardVO();
-				creditCardVO.setCardNumber(inputNumber);
+				MemberVO updateVO = new MemberVO();
+				updateVO.setAccount(memberVO.getAccount());
+				updateVO.setCreditCard(inputNumber);
 
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
-					request.setAttribute("creditCardVO", creditCardVO); // 含有輸入格式錯誤的VO物件,也存入request
+					request.setAttribute("MemberVO", updateVO); // 含有輸入格式錯誤的VO物件,也存入request
 					RequestDispatcher failureView = request.getRequestDispatcher("/views/member/member.jsp");
 					failureView.forward(request, response);
 					return;
 				}
 
 				/*************************** 2.開始新增資料 ***************************************/
-				CreditCardService creditCardSvc = new CreditCardService();
-				creditCardVO = creditCardSvc.addCreditCard(inputNumber);
-				request.setAttribute("creditCardVO", creditCardVO);
+				MemberService memberService = new MemberService();
+				memberService.updateCreditcard(inputNumber);
+				session.setAttribute("MemberVO", updateVO);
 				/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
 				String url = "/views/member/member.jsp";
 				RequestDispatcher successView = request.getRequestDispatcher(url); // 新增成功後轉交jsp

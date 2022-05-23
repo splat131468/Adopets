@@ -19,16 +19,19 @@ public class MemberVO  implements java.io.Serializable{
 	private LocalDateTime createDate;
 	private Timestamp changeDate;
 	private LocalDateTime lastOLTime;
+	private String creditCard;
 	public MemberVO() {
 		super();
 	}
+	
 	@Override
 	public String toString() {
 		return "MemberVO [memID=" + memID + ", account=" + account + ", password=" + password + ", name=" + name
 				+ ", age=" + age + ", phone=" + phone + ", address=" + address + ", personImg="
 				+ Arrays.toString(personImg) + ", createDate=" + createDate + ", changeDate=" + changeDate
-				+ ", lastOLTime=" + lastOLTime + "]";
+				+ ", lastOLTime=" + lastOLTime + ", creditCard=" + creditCard + "]";
 	}
+
 	public Integer getMemID() {
 		return memID;
 	}
@@ -94,6 +97,12 @@ public class MemberVO  implements java.io.Serializable{
 	}
 	public void setLastOLTime(LocalDateTime lastOLTime) {
 		this.lastOLTime = lastOLTime;
+	}
+	public String getCreditCard() {
+		return creditCard;
+	}
+	public void setCreditCard(String creditCard) {
+		this.creditCard = creditCard;
 	}
 	
 	
