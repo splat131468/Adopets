@@ -3,6 +3,12 @@
 <%@ page import="web.order.entity.*"%>
 <%@ page import="web.order.service.*"%>
 <%@ page import="web.member.service.impl.*"%>
+<%
+
+session.getAttribute("adminVO");
+session.getAttribute("auth");
+%>
+
 
 <%
 OrdersVO ordersVO = (OrdersVO) request.getAttribute("ordersVO"); 
@@ -216,7 +222,7 @@ tr,td {
      <!-- Main Sidebar Container -->
     <aside class="main-sidebar sidebar-dark-primary elevation-4">
       <!-- 首頁 Logo -->
-      <a href="starter.html" class="brand-link">
+      <a  href="<%=request.getContextPath()%>/views/background_login/background.jsp" class="brand-link">
         <span class="brand-text font-weight-light"><img src="<%=request.getContextPath()%>/resources/background/img/Adopets.svg" width="55%"></span>
       </a>
 
@@ -251,7 +257,7 @@ tr,td {
                with font-awesome or any other icon font library -->
 
             <li class="nav-item">
-              <a href="member.html" class="nav-link">
+              <a href="<%=request.getContextPath()%>/views/backgroundMember/backgroundMember.jsp" class="nav-link">
                 <i class="nav-icon fa-solid fa-user"></i>
                 <p>會員管理</p>
               </a>
@@ -265,7 +271,7 @@ tr,td {
             </li>
 
             <li class="nav-item">
-              <a href="goods.html" class="nav-link">
+                <a href="${pageContext.request.contextPath}/prodManage?action=prodList" class="nav-link" >
                 <i class="nav-icon fa-solid fa-store"></i>
                 <p>商品管理</p>
               </a>
@@ -453,5 +459,6 @@ tr,td {
       <strong style="color: #869099;">Copyright &copy; 2022 &nbsp <a href="<%=request.getContextPath()%>/views/background_login/background.jsp">Adopets.io</a>.</strong> All rights reserved.
     </footer>
  </div>
+ 
 </body>
 </html>

@@ -244,7 +244,7 @@ DonateVO donVO = (DonateVO) request.getAttribute("donVO");
 
 
 		<div class="banner">
-
+			
 			<div class="container">
 				<div class="row">
 					<div class="col-md-6">
@@ -279,6 +279,7 @@ DonateVO donVO = (DonateVO) request.getAttribute("donVO");
 					</div>
 
 					<div class="col-sm-6 col-md-5 offset-md-2 col-lg-6 offset-lg-0">
+					
 						<div class="title_a">
 							<span id="title_1">填寫捐款金額</span> <span id="title_12"><i
 								class="fa-solid fa-caret-right"></i></span> <span id="title_1">填寫捐款人資料及收據</span>
@@ -287,7 +288,7 @@ DonateVO donVO = (DonateVO) request.getAttribute("donVO");
 								class="fa-solid fa-caret-right"></i></span> <span id="title_1">捐款資料</span>
 						</div>
 						<div id="content-main" class="content-main">
-
+							
 							<div class="price_set">
 								<label id="title_set">點選金額或自訂金額</label>
 								<div class="price_set_btn">
@@ -715,13 +716,12 @@ DonateVO donVO = (DonateVO) request.getAttribute("donVO");
 							value="新北市中和區公立動物之家" /> <input type="hidden" id="donateStatus"
 							name="donateStatus" value="0" />
 
-
-
-
+					
+					
 
 					</div>
 
-
+				
 				</div>
 
 
@@ -762,7 +762,7 @@ DonateVO donVO = (DonateVO) request.getAttribute("donVO");
 
         </svg>
 	</div>
-
+	
 	<script>
 	    $("#twzipcode_ADV").twzipcode({
 	        zipcodeIntoDistrict: true, // 郵遞區號自動顯示在地區
@@ -821,7 +821,7 @@ DonateVO donVO = (DonateVO) request.getAttribute("donVO");
             	            'success'
                ).then(function() {
             		    
-            	   setTimeout(function(){window.location.reload();},2000);
+            	   setTimeout(function(){window.location.reload();});
             	   });
             	   
                }

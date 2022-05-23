@@ -52,12 +52,11 @@ public class LoginFilter implements Filter {
 		if(memberVO!=null) {		//阻擋尚未登入 判斷是否有登入 無:跳轉至登入畫面
 			chain.doFilter(request, response);
 		}else {
-		    session.setAttribute("preURL", req.getRequestURI()); 
+		    session.setAttribute("preURL", req.getRequestURI());
 			RequestDispatcher successView = req.getRequestDispatcher("/views/signIn/signIn.jsp");
-			successView.forward(req, res);
+			successView.forward(request, response);
 		}
 		// pass the request along the filter chain
-		chain.doFilter(request, response);
 	}
 
 	/**
