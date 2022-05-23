@@ -1,7 +1,6 @@
 package web.member.controller;
 
 import java.io.IOException;
-import java.lang.reflect.Member;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -12,8 +11,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import web.admin.entity.AdminVO;
-import web.admin.service.AdminService;
 import web.member.entity.MemberVO;
 import web.member.service.impl.MemberService;
 import web.tools.AuthCode;

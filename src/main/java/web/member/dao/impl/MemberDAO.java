@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -30,7 +32,7 @@ public class MemberDAO implements MemberDAO_interface {
 	private static final String INSERT_STMT = 
 		"INSERT INTO MEMBER (account,password,name) VALUES (? ,? ,? )";
 	private static final String GET_ALL_STMT = 
-		"SELECT memID,account,password,name,age,phone,address,personImg,creditCard FROM MEMBER order by memID";
+		"SELECT memID,account,password,name,age,phone,address,personImg,creditCard,createDate FROM MEMBER order by memID";
 	private static final String GET_ONE_STMT = 
 		"SELECT memID,account,password,name,age,phone,address,personImg,creditCard FROM MEMBER where memID = ?";
 	private static final String DELETE = 
@@ -48,7 +50,7 @@ public class MemberDAO implements MemberDAO_interface {
 			"SELECT account,password,name,age,phone,address,personImg,creditCard FROM MEMBER where account = ?";
 			
 	// 新增查詢方法
-		public MemberVO checkAccount(String account) {
+	public MemberVO checkAccount(String account) {
 			MemberVO memberVO = null;
 			Connection con = null;
 			PreparedStatement pstmt = null;
@@ -145,6 +147,7 @@ public class MemberDAO implements MemberDAO_interface {
 	
 	@Override
 	public void update(MemberVO memberVO) {
+
 
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -341,6 +344,7 @@ public class MemberDAO implements MemberDAO_interface {
 			while (rs.next()) {
 				// VO  Domain objects
 				memberVO = new MemberVO();
+				memberVO.setMemID(rs.getInt("memID"));
 				memberVO.setAccount(rs.getString("account"));
 				memberVO.setPassword(rs.getString("password"));
 				memberVO.setName(rs.getString("name"));
@@ -349,6 +353,8 @@ public class MemberDAO implements MemberDAO_interface {
 				memberVO.setAddress(rs.getString("address"));
 				memberVO.setPersonImg(rs.getBytes("personImg"));
 				memberVO.setCreditCard(rs.getString("creditCard"));
+				Timestamp timestamp = rs.getTimestamp("createDate");
+				memberVO.setCreateDate(timestamp.toLocalDateTime());
 				
 				list.add(memberVO); // Store the row in the list
 			}

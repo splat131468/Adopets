@@ -1,12 +1,15 @@
 package web.member.controller;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -32,11 +35,11 @@ public class LoginServlet extends HttpServlet {
 		String action = req.getParameter("action");
 		HttpSession session = req.getSession();
 		String preURL =(String)session.getAttribute("preURL");
-
-		List<String> errorMsgs = new LinkedList<String>();
-		req.setAttribute("errorMsgs", errorMsgs);
 		
-		//如果點登出進來這
+		Map<String, String> errors = new HashMap<String, String>();
+		req.setAttribute("errors", errors);
+		
+		//如果點登出進來這  前端畫面尚未完成!
 		if("signOut".equals(action)) {
 			req.getSession().invalidate();
 			String url = "/signIn.jsp";
@@ -54,23 +57,38 @@ public class LoginServlet extends HttpServlet {
 			LonginService longinService = new LonginService();
 			MemberVO memberVO = longinService.login(account, password);//去資料庫確認帳號密碼，並把找到的使用者資料存VO
 			if (memberVO==null) {
-//				errorMsgs.add(""); 尚未完成
+				errors.put("account", "帳號或密碼錯誤");
 			}
 			/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
-			req.getSession().setAttribute("MemberVO", memberVO);
+			// 【帳號 , 密碼有效時, 才做以下工作】
+			req.getSession().setAttribute("memberVO", memberVO);
+			
+			// 新建Cookie
+			Cookie uaccountCookie = new Cookie("useraccount", account);
+			Cookie pwdCookie = new Cookie("password", password);
+			//設置Cookie有效期限
+//			if(remember!=null) {					//前端畫面有做記住帳號才需要判斷
+//				uaccountCookie.setMaxAge(60*60*24);
+//				pwdCookie.setMaxAge(60*60*24);
+//			} else {
+//				uaccountCookie.setMaxAge(0);
+//				pwdCookie.setMaxAge(0);
+//			}
+			// Cookie輸出到客戶端
+			res.addCookie(uaccountCookie);
+	        res.addCookie(pwdCookie);
 	        if (preURL != null) {
 	            session.removeAttribute("preURL");   //*工作2: 看看有無來源網頁 (-->如有來源網頁:則重導至來源網頁)
 	            res.sendRedirect(preURL);            
 	            return;
 	        }else {
 	            session.removeAttribute("preURL");   
-	            123123res.sendRedirect("/Adopets/index.jsp");      //想導入位置尚未確定，需驗證      
+	            res.sendRedirect("");      //想導入位置尚未確定，需驗證      
 	            return;
 	        }
 			/*************************** 其他可能的錯誤處理 **********************************/
 		} catch (Exception e) {
-			errorMsgs.add(e.getMessage());
-			RequestDispatcher failureView = req.getRequestDispatcher("登入失敗");
+			RequestDispatcher failureView = req.getRequestDispatcher("/views/signIn/signIn");
 			failureView.forward(req, res);
 		}
 
