@@ -220,6 +220,7 @@ public class OrdersJNDIDAO implements OrdersDAO_interface {
 	
 	@Override
 	public OrdersVO findMemberOrder(Integer memID) {
+		List<OrdersVO> list = new ArrayList<OrdersVO>();
 		OrdersVO ordersVO = null;
 		Connection con = null;
 		PreparedStatement ppst = null;
@@ -242,7 +243,7 @@ public class OrdersJNDIDAO implements OrdersDAO_interface {
 				ordersVO.setOrderStatus(rs.getInt("orderStatus"));
 				ordersVO.setPaymentType(rs.getInt("paymentType"));
 				ordersVO.setAddress(rs.getString("address"));
-
+				list.add(ordersVO);
 			}
 
 		} catch (SQLException se) {
@@ -264,7 +265,7 @@ public class OrdersJNDIDAO implements OrdersDAO_interface {
 			}
 		}
 
-		return ordersVO;
+		return list;
 	}
 
 	@Override

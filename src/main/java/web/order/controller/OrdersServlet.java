@@ -107,17 +107,15 @@ public class OrdersServlet extends HttpServlet {
 
 			try {
 				/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
-//				HttpSession session = req.getSession();
-//				Integer memID=(Integer) session.getAttribute("memID");
+				HttpSession session = req.getSession();
+				Integer memID=(Integer) session.getAttribute("memID");
 
-				
-				
 				
 
 				/*************************** 2.開始查詢資料 *****************************************/
 				OrdersService odrSvc = new OrdersService();
-//				List<OrdersVO> ordersVO = odrSvc.findMemberOrder(memID);
-				List<OrdersVO> ordersVO = odrSvc.findMemberOrder(5);
+				List<OrdersVO> ordersVO = odrSvc.findMemberOrder(memID);
+//				List<OrdersVO> ordersVO = odrSvc.findMemberOrder(5);
 				System.out.println(ordersVO);
 			
 				// Send the use back to the form, if there were errors
