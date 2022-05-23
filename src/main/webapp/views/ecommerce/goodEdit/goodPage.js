@@ -1,4 +1,3 @@
-
 $(function () {
 
   // 驗證函數 (正數)
@@ -31,7 +30,7 @@ $(function () {
   /// 換iframe函數
   function chgIframe() {
     //路徑
-    $("#insert").replaceWith('<iframe id="addProductPage" src="./addItem.jsp" frameborder="0" scrolling="yes" name="ifm" width="100%" height="700px" ></iframe>');
+    $("#insert").replaceWith('<iframe id="addProductPage" src="/Adopets/views/ecommerce/addItem.jsp" frameborder="0" scrolling="yes" name="ifm" width="100%" height="700px" ></iframe>');
 
     return true;
   }
