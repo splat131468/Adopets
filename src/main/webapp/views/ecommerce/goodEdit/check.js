@@ -82,7 +82,7 @@ $(function () {
 
         // action takeOrder
 
-        fetch("http://localhost:8081/Adopets/shCartAction", {
+        fetch("/Adopets/shCartAction", {
             method: 'POST',
             body: JSON.stringify(data)
         }).then(response => response.text())
@@ -91,6 +91,8 @@ $(function () {
 
             return;
         }) 
+
+        
             // 串金流 先擋一下
 
            

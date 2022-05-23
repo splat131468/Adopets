@@ -17,23 +17,23 @@ scratch. This page gets rid of all links and provides the needed markup only.
       <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
       <!-- Font Awesome -->
-      <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
+      <link rel="stylesheet" href="${pageContext.request.contextPath}/views/ecommerce/plugins/fontawesome-free/css/all.min.css">
       <!-- Ionicons -->
       <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
       <!-- Tempusdominus Bootstrap 4 -->
-      <link rel="stylesheet" href="plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
+      <link rel="stylesheet" href="${pageContext.request.contextPath}/views/ecommerce/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
       <!-- iCheck -->
-      <link rel="stylesheet" href="plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+      <link rel="stylesheet" href="${pageContext.request.contextPath}/views/ecommerce/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
       <!-- JQVMap -->
-      <link rel="stylesheet" href="plugins/jqvmap/jqvmap.min.css">
+      <link rel="stylesheet" href="${pageContext.request.contextPath}/views/ecommerce/plugins/jqvmap/jqvmap.min.css">
       <!-- Theme style -->
-      <link rel="stylesheet" href="dist/css/adminlte.min.css">
+      <link rel="stylesheet" href="${pageContext.request.contextPath}/views/ecommerce/dist/css/adminlte.min.css">
       <!-- overlayScrollbars -->
-      <link rel="stylesheet" href="plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
+      <link rel="stylesheet" href="${pageContext.request.contextPath}/views/ecommerce/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
       <!-- Daterange picker -->
-      <link rel="stylesheet" href="plugins/daterangepicker/daterangepicker.css">
+      <link rel="stylesheet" href="${pageContext.request.contextPath}/views/ecommerce/plugins/daterangepicker/daterangepicker.css">
       <!-- summernote -->
-      <link rel="stylesheet" href="plugins/summernote/summernote-bs4.min.css">
+      <link rel="stylesheet" href="${pageContext.request.contextPath}/views/ecommerce/plugins/summernote/summernote-bs4.min.css">
 
       <script src="https://kit.fontawesome.com/f944d9625b.js" crossorigin="anonymous"></script>
 
@@ -44,15 +44,17 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
 
       <!-- jQuery -->
-      <script src="plugins/jquery/jquery.min.js"></script>
+      <script src="${pageContext.request.contextPath}/views/plugins/jquery/jquery.min.js"></script>
 
 
       <!-- Bootstrap 4 -->
-      <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+      <script src="${pageContext.request.contextPath}/views/ecommerce/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
       <!-- AdminLTE App -->
-      <script src="dist/js/adminlte.min.js"></script>
+      <script src="${pageContext.request.contextPath}/views/ecommerce/dist/js/adminlte.min.js"></script>
+
+      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
       <!-- good的js檔案 -->
-      <script src="goodEdit/goodPage.js"></script>
+      <script src="${pageContext.request.contextPath}/views/ecommerce/goodEdit/goodPage.js"></script>
       <script>
       
 
@@ -64,16 +66,16 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
 
           // 取得商品資料 放進js檔案怪怪的
-          function chkProd(url) {
-            $.ajax({
-              type: "GET",
-              url: url,
-              dataType: "text",
-              success: function () {
-                $("body").load("http://localhost:8081/Adopets/views/ecommerce/goods.jsp", "#tb");
-              }
-            })
-          }
+          // function chkProd(url) {
+          //   $.ajax({
+          //     type: "GET",
+          //     url: url,
+          //     dataType: "text",
+          //     success: function () {
+          //       $("body").load("/Adopets/views/ecommerce/goods.jsp", "#tb");
+          //     }
+          //   })
+          // }
 
           
 
@@ -341,8 +343,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 </li>
 
                 <li class="nav-item">
-                  <a class="nav-link active"
-                    onclick=chkProd("${pageContext.request.contextPath}/prodManage?action=prodList")>
+                  <a href="${pageContext.request.contextPath}/prodManage?action=prodList" class="nav-link active" > 
                     <i class="nav-icon fa-solid fa-store"></i>
                     <p>商品管理</p>
                   </a>

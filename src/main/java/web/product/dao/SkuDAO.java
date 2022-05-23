@@ -7,7 +7,8 @@ import web.product.entity.SkuVO;
 
 
 public interface SkuDAO {
-
+	
+	
 	int insertSKU(List<SkuVO> skus);
 	
 	int updateProd(SkuVO skuVO);

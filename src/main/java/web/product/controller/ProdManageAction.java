@@ -50,6 +50,8 @@ public class ProdManageAction extends HttpServlet {
 			List<SkuVO> allProds = spuSerive.getAllProd();
 
 			req.getSession().setAttribute("allProds", allProds);
+			
+			req.getRequestDispatcher("/views/ecommerce/goods.jsp").forward(req, resp);
 
 			return;
 
