@@ -1,4 +1,3 @@
-
 $(function () {
 
   // 驗證函數 (正數)
@@ -31,7 +30,7 @@ $(function () {
   /// 換iframe函數
   function chgIframe() {
     //路徑
-    $("#insert").replaceWith('<iframe id="addProductPage" src="./addItem.jsp" frameborder="0" scrolling="yes" name="ifm" width="100%" height="700px" ></iframe>');
+    $("#insert").replaceWith('<iframe id="addProductPage" src="/Adopets/views/ecommerce/addItem.jsp" frameborder="0" scrolling="yes" name="ifm" width="100%" height="700px" ></iframe>');
 
     return true;
   }
@@ -122,10 +121,9 @@ $(function () {
 
   // 根據商品名稱 收尋商品(路徑)
   $("#searchByName").on("click", function () {
-    let domain = "localhost";
-    let port = "8081";
+   
     let project = "Adopets";
-    let url = `http://${domain}:${port}/${project}/prodManage`;
+    let url = `/${project}/prodManage`;
     let prodName = $("#srh").val();
     $.ajax({
       url: url,
@@ -135,7 +133,7 @@ $(function () {
         "spuName": prodName
       }),
       success: function () {
-        $("body").load("http://localhost:8081/Adopets/views/ecommerce/goods.jsp", "#tb")
+        $("body").load("/Adopets/views/ecommerce/goods.jsp", "#tb")
 
       },
     });
@@ -153,7 +151,7 @@ $("#updateProd").on("click", function () {
   if (chktable(skuPrice) && chktable(stock)) {
 
     $.ajax({
-      url: "http://localhost:8081/Adopets/prodManage",
+      url: "/Adopets/prodManage",
       data: JSON.stringify({
         "skuID": skuID,
         "stock": stock,
@@ -168,7 +166,7 @@ $("#updateProd").on("click", function () {
         $(`#${skuID}`).closest("tr").find(".stock").text(stock);
         $(`#${skuID}`).closest("tr").find(".status").text(status);
         // console.log(status);
-        $("body").load("http://localhost:8081/Adopets/views/ecommerce/goods.jsp", "#tb");
+        $("body").load("/Adopets/views/ecommerce/goods.jsp", "#tb");
         $("div.overlay").fadeOut();
       },
       error:function(){

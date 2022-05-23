@@ -40,7 +40,7 @@ $(function () {
             let data = { arr: arr, action: "getPrcSk", spuID, spuID };
 
 
-            fetch("http://localhost:8081/Adopets/cartAction", {
+            fetch("/Adopets/cartAction", {
                 method: 'POST',
                 body: JSON.stringify(data)
             }).then(function (response) {
@@ -58,7 +58,7 @@ $(function () {
             let data = { arr: arr, action: "getPrcSk", spuID, spuID };
 
 
-            fetch("http://localhost:8081/Adopets/cartAction", {
+            fetch("/Adopets/cartAction", {
                 method: 'POST',
                 body: JSON.stringify(data)
             }).then(function (response) {
@@ -108,7 +108,7 @@ $(function () {
         }
 
 
-        fetch("http://localhost:8081/Adopets/shCartAction", {
+        fetch("/Adopets/shCartAction", {
             method: 'POST',
             body: JSON.stringify(data)
         }).then(function (response) {
@@ -171,7 +171,7 @@ $(function () {
                     }
                 }
 
-                fetch("http://localhost:8081/Adopets/shCartAction", {
+                fetch("/Adopets/shCartAction", {
                     method: 'POST',
                     body: JSON.stringify(data)
                 }).then(function (response) {
@@ -206,7 +206,7 @@ $(function () {
 
 
 
-        fetch("http://localhost:8081/Adopets/shCartAction", {
+        fetch("/Adopets/shCartAction", {
             method: 'POST',
             body: JSON.stringify(data)
         }).then(function (response) {
@@ -326,14 +326,14 @@ $(function () {
            
           
 
-        fetch("http://localhost:8081/Adopets/shCartAction", {
+        fetch("/Adopets/shCartAction", {
             method: 'POST',
             body: JSON.stringify(data)
         }).then(function (response) {
 
 
 
-            location.href = 'http://localhost:8081/Adopets/views/ecommerce/checkout.jsp';
+            location.href = '/Adopets/views/ecommerce/checkout.jsp';
         })
 
       

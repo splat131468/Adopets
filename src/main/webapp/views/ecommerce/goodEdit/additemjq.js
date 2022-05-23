@@ -234,7 +234,7 @@ $(function () {
         let product_Category = $(".selected").find('.sub-desc').html();
 
         $.ajax({
-            url: "http://localhost:8081/Adopets/ProductAction",
+            url: "/Adopets/ProductAction",
             data: JSON.stringify({
                 "ctgName": product_Category,
                 "action": "getAttrList"
@@ -285,8 +285,8 @@ $(function () {
     $('.cancel').on("click", function () {
         if (confirm("你確定要放棄本次編輯？")) {
             //  路徑 要改
-            window.top.location = "http://localhost:8081/Adopets/views/ecommerce/goods.jsp";
-            $("body").load("http://localhost:8081/Adopets/views/ecommerce/goods.jsp", "#tb");
+            window.top.location = "/Adopets/views/ecommerce/goods.jsp";
+            $("body").load("/Adopets/views/ecommerce/goods.jsp", "#tb");
         }
     })
 
@@ -912,10 +912,9 @@ $(function () {
         })
 
         // 記得改路徑
-        let domain = "localhost";
-        let port = "8081";
+       
         let project = "Adopets";
-        let url = `http://${domain}:${port}/${project}/ProductAction`;
+        let url = `/${project}/ProductAction`;
 
         fetch(url, {
             method: 'POST',
@@ -944,11 +943,11 @@ $(function () {
     function chkProd() {
         $.ajax({
             type: "GET",
-            url: "http://localhost:8081/Adopets/prodManage?action=prodList",
+            url: "/Adopets/prodManage?action=prodList",
             dataType: "text",
             success: function () {
-                window.top.location = "http://localhost:8081/Adopets/views/ecommerce/goods.jsp";
-                $("body").load("http://localhost:8081/Adopets/views/ecommerce/goods.jsp", "#tb");
+                window.top.location = "/Adopets/views/ecommerce/goods.jsp";
+                $("body").load("/Adopets/views/ecommerce/goods.jsp", "#tb");
             }
         })
     }

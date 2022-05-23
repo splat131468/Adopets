@@ -64,10 +64,9 @@ public class CategoryDAOImp implements CategoryDAO {
 	@Override
 	public List<CategoryVO> getAllCategory() {
 		
-		SessionFactory factory = HibernateUtil.getSessionFactory();
-		Session session = factory.getCurrentSession();
-		Transaction transaction = session.beginTransaction();
+		 Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		
+		 session.beginTransaction();
 		
 		CriteriaBuilder builder = session.getCriteriaBuilder();
 		
@@ -79,12 +78,12 @@ public class CategoryDAOImp implements CategoryDAO {
 		// 第三部
 		TypedQuery<CategoryVO> typed = session.createQuery(query);
 		List<CategoryVO> list = typed.getResultList();
+		session.getTransaction().commit();
 		
 		
 		
-		transaction.commit();
-		session.close();
-		HibernateUtil.closeSessionFactory();
+		
+//		HibernateUtil.closeSessionFactory();
 		
 		return list ;
 	}

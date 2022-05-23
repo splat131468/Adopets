@@ -413,7 +413,7 @@ public class AllInOne extends AllInOneBase{
 			if(!PlatformID.isEmpty() && ((AioCheckOutCVS) obj).getMerchantID().isEmpty()){
 				((AioCheckOutCVS) obj).setMerchantID(MerchantID);
 			} else if(!PlatformID.isEmpty() && !((AioCheckOutCVS) obj).getMerchantID().isEmpty()){
-			} else {
+			} else { 
 				((AioCheckOutCVS) obj).setMerchantID(MerchantID);
 			}
 			((AioCheckOutCVS) obj).setInvoiceMark(invoice == null? "N" : "Y");
