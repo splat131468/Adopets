@@ -58,7 +58,7 @@ public class TogetherWS {
 
 	@OnMessage
 	public void onMessage(Session userSession, String message) {
-		System.out.println("mes:"+message);
+//		System.out.println("mes:"+message);
 		CatChatMessage catChatMessage = gson.fromJson(message, CatChatMessage.class);
 		
 		String catID = catChatMessage.getCatID(); 
@@ -74,7 +74,7 @@ public class TogetherWS {
 			CatChatMessage catCmHistory = new CatChatMessage("history", catID, historyMsg);
 			if (userSession != null && userSession.isOpen()) {
 				userSession.getAsyncRemote().sendText(gson.toJson(catCmHistory)); //給前端一個json
-				System.out.println("history = " + gson.toJson(catCmHistory));
+//				System.out.println("history = " + gson.toJson(catCmHistory));
 				return;
 			}
 		}
@@ -89,7 +89,7 @@ public class TogetherWS {
 			}
 			
 		}
-		System.out.println("來自 onMessage received: " + message);
+//		System.out.println("來自 onMessage received: " + message);
 	}
 
 	@OnClose

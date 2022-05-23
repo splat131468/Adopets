@@ -2239,7 +2239,7 @@
 
                     <div class="tier tier_flush@maxLg u-vr8x u-vrTop6x">
                         <div class="grid grid_gutterLg">
-                        	<!-- 左邊 -->
+                        	<!-- 貓咪基本資訊 -->
                             <div class="grid-col grid-col_1/3@minLg">
                                 <div class="card card_divide">
                                     <div class="card-section">
@@ -2407,7 +2407,7 @@
                                                     </button>
                                                     <div class="actionCard-footer-cta m-actionCard-footer-cta_1/2 m-actionCard-footer-cta_containsBtn"
                                                         data-pdpfavoritebtns-actioncardportal=""><button
-                                                            class="favoriteBtn s-favoriteBtn_awaiting favoriteBtn_pdp"
+                                                            class="favoriteBtn favoriteBtn_pdp"
                                                             aria-label="Favorite Wave" data-test="Favorite_Btn"><svg
                                                                 focusable="false" role="presentation"
                                                                 aria-hidden="true">
@@ -2435,7 +2435,7 @@
                                     </div> -->
                                 </div>
                             </div>
-                            <!-- 中間 -->
+                            <!-- 聊天室 -->
                             <div class="grid-col grid-col_1/3@minLg" style="height:677px">
                             	<%-- <h1>${catAndShelVO.catName} 的 Chat Room</h1> --%>
 								<h3 id="statusOutput" class="statusOutput"></h3>
@@ -2449,7 +2449,7 @@
 								</div>
                             </div>
 
-                            <!-- 右邊 -->
+                            <!-- 收容所資訊 -->
                             <div class="grid-col grid-col_1/3@minLg">
                                 <div class="edgeGuard u-vr6x u-isHidden@maxLg">
 
@@ -2484,7 +2484,7 @@
                                                     <a href="${pageContext.request.contextPath}/views/chatroom/CatChatRoom_GROUP.jsp?catid=${catAndShelVO.catID}&catname=${catAndShelVO.catName}"
                                                         class="btn btn_clearPrimaryS2 m-btn_full"
                                                           target="_blank">
-                                                        聊天室
+                                                        認養聊天室
                                                     </a>
                                                 </div>
                                             </div>
@@ -2495,7 +2495,7 @@
                                                 </button>
                                                 <div class="actionCard-footer-cta m-actionCard-footer-cta_1/2 m-actionCard-footer-cta_containsBtn">
                                                     <button
-                                                        class="favoriteBtn s-favoriteBtn_awaiting favoriteBtn_pdp"
+                                                        class="favoriteBtn favoriteBtn_pdp"
                                                         aria-label="Favorite Wave" data-test="Favorite_Btn"><svg
                                                             focusable="false" role="presentation" aria-hidden="true">
                                                             <use xlink:href="#icon-favorite_outline"></use>
@@ -2568,15 +2568,21 @@
                                                     </div>
 
                                                     <p></p>
-                                                    <div class="get-directions" data-location-name=""
-                                                        data-latitude="123" data-longitude="122">
-                                                        <pf-ensighten on-click="Consumer157_168_185" shelter-id="NY294"
-                                                            animal-status="adoptable">
-                                                            <a href="https://www.google.com/maps/dir/current+location/3+Oakland+Ave.%2C+Menands%2C+NY%2C+US+12204"
-                                                                target="_blank" class="txt txt_link m-txt_bold">
+                                                    <div class="get-directions">
+                                                        <div>
+                                                            <p 
+                                                            	href="#"
+                                                            	target="_blank"
+                                                           		class="txt txt_link m-txt_bold map"
+                                                           		onclick="navigator.geolocation.getCurrentPosition(function(position){
+                                                         	        let log = (position.coords.longitude); // 於 console 中，查看 position
+                                                     	        	let lat = (position.coords.latitude); // 於 console 中，查看 position
+                                                     	        	let loc = `https://www.google.com.tw/maps/dir/\${lat}%2C\${log}/${catAndShelVO.shelterName}`;
+                                                     	        	window.open(loc, '_blank');
+                                                     	      		});">
                                                                 帶我到那裡！
-                                                            </a>
-                                                        </pf-ensighten>
+                                                            </p>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </li>
@@ -2670,7 +2676,7 @@
                             <div class="fixedBottom-inner">
                                 <div class="fixedBottom-inner-fab u-isHidden@minLg">
                                     <span id="PdpFavoriteBtns-mobilePortal" class="u-hr5x"><button
-                                            class="favoriteBtn s-favoriteBtn_awaiting favoriteBtn_primary u-displayBlock"
+                                            class="favoriteBtn favoriteBtn_primary u-displayBlock"
                                             aria-label="Favorite Wave" data-test="Favorite_Btn"><svg focusable="false"
                                                 role="presentation" aria-hidden="true">
                                                 <use xlink:href="#icon-favorite_outline"></use>
@@ -2730,7 +2736,7 @@
                                     </div>
                                     <div class="split-item u-fontSize0">
                                         <span id="PdpFavoriteBtns-desktopPortal" class="u-hr5x"><button
-                                                class="favoriteBtn s-favoriteBtn_awaiting favoriteBtn_primary"
+                                                class="favoriteBtn favoriteBtn_primary"
                                                 aria-label="Favorite Wave" data-test="Favorite_Btn"><svg
                                                     focusable="false" role="presentation" aria-hidden="true">
                                                     <use xlink:href="#icon-favorite_outline"></use>
@@ -4089,7 +4095,9 @@
                 aria-live="polite"></span>
         </div>
     </div>
+    <script src="${pageContext.request.contextPath}/views/catInfo/files/jquery.min.js"></script>
     <script src="${pageContext.request.contextPath}/views/catInfo/files/CatPage.js"></script>
+    <!-- google map -->
     <script>
       function initMap() {
         var uluru = {lat: ${catAndShelVO.longitude}, lng: ${catAndShelVO.latitude}};
@@ -4113,7 +4121,7 @@
     <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCFhgMBabtXKyeHEYKHQ1cKcD_ofd4FhPM&callback=initMap">
     </script>
-    
+     <!-- websocket -->
     <script type="text/javascript">
     
 	    var MyPoint = "/TogetherWS/${catAndShelVO.catID}";
@@ -4129,7 +4137,7 @@
     
     function connect() {
 		// create a websocket
-		console.log("hi" + endPointURL);
+		/* console.log("hi" + endPointURL); */
 		webSocket = new WebSocket(endPointURL);
 
 		webSocket.onopen = function(event) {
@@ -4149,7 +4157,7 @@
 				/* console.log("here is js history"); */
 				messagesArea.innerHTML = '';
 				let messages = JSON.parse(jsonObj.message);//jsonObj.message 又是一個json string 要再轉成object（array） 
-				console.log(messages);
+				/* console.log(messages); */
 				
 				for (var i = 0; i < messages.length; i++) {
 					var historyData = JSON.parse(messages[i]);
@@ -4165,25 +4173,16 @@
 			}
 		};
 
-		webSocket.onclose = function(event) {
-			updateStatus("WebSocket Disconnected");
-		};
+			webSocket.onclose = function(event) {
+				updateStatus("WebSocket Disconnected");
+			};
 		};
 		function sendMessage() {
-			/* 		var userName = inputUserName.value.trim();
-					if (userName === "") {
-						alert("Input a user name");
-						inputUserName.focus();
-						return;
-					} */
 
 					var inputMessage = document.getElementById("message");
 					var message = inputMessage.value.trim();
 				    var date = new Date();
 				    var createTime = date.getFullYear() +"."+ ("0" + (date.getMonth() + 1)).slice(-2) +"."+ ("0" + date.getDate()).slice(-2) +"_"+ ("0" + date.getHours() ).slice(-2) +":"+ ("0" + date.getMinutes()).slice(-2) +":"+ ("0" + date.getSeconds()).slice(-2);
-				    /* var createTime = date.getFullYear() +"."+ ("0" + (date.getMonth() + 1)).slice(-2) +"."+ ("0" + date.getDate()).slice(-2) +"_"+ ("0" + date.getHours() ).slice(-2); */
-					/* console.log(createTime); */
-
 					if (message === "") {
 						alert("Input a message");
 						inputMessage.focus();
@@ -4194,50 +4193,118 @@
 							"userName" : self,
 							"message" : message,
 							"createTime" : createTime
-						
 						};
-						console.log(jsonObj);
+						/* console.log(jsonObj); */
 						webSocket.send(JSON.stringify(jsonObj));
 						inputMessage.value = "";
 						inputMessage.focus();
 					}
 				}
-
 				function disconnect() {
 					webSocket.close();
 					document.getElementById('sendMessage').disabled = true;
 					document.getElementById('connect').disabled = false;
 					document.getElementById('disconnect').disabled = true;
 				}
-
 				function updateStatus(newStatus) {
 					statusOutput.innerHTML = newStatus;
 				}
-				
 				// 一進到聊天室就取得歷史訊息
 				function getHistory() {
-					/* console.log("this is getHistory"); */
-					/* var container = document.getElementById("row"); */
-					/* container.addEventListener("click", function(e) { */
-						/* var friend = e.srcElement.textContent; */
-						/* updateFriendName(friend); */
 					var jsonObj = {
 			 					"type" : "history",
 								"catID" : ${catAndShelVO.catID},
-							/* 	"sender" : self,
-								"receiver" : friend, */
 								"message" : ""
 							};  
-						
-						
-
 						webSocket.send(JSON.stringify(jsonObj));
-					/* }); */
 				}
+    </script>
+    
+    <script>
+    
+  //貓咪按我的最愛加上效果並傳到redis
+ 	$(".favoriteBtn").on("click", function(){
+ 		/* console.log("favorite btn"); */
+ 		$(".favoriteBtn").toggleClass("s-favoriteBtn_favorited s-favoriteBtn_sessionFavorited");
+		let catID = ${catAndShelVO.catID};
 		
+		  $.ajax({
+			     url: "${pageContext.request.contextPath}/Favorite",
+			     dataType: "json",
+			     data:{
+			    	 "action":"addRedis",
+			         "member:1:favorite":catID  
+		  		 },
+	              type: "POST",
+	              success: function (result) {
+	            	 console.log("send cat ok");
+	            	 console.log("cat list : " + result);
+	            	 console.log("cat list : " + result.length);
+	            	/* console.log($.isArray(result)); */ 
+  					/* console.log(JSON.stringify(result)); */
+ 	               }
+		  });
+ 		
+ 	});
+ 	
+
+ 	//page load 進來時標上我的最愛
+ 	$(document).ready(function() {
+	<!--test -->  
+ 	    if (navigator.geolocation) { // 判斷瀏覽器是否有支援地理定位功能
+ 	      // 會以非同步方式，取得定位資訊(需要等待一點時間)
+ 	      console.log("geo in");
+ 	 /*   	  navigator.geolocation.getCurrentPosition(function(position){
+ 	        console.log(position.coords.longitude); // 於 console 中，查看 position
+ 	        console.log(position.coords.latitude); // 於 console 中，查看 position
+ 	       
+ 	      }); */
+ 	      //alert("抓取資料中…");
+ 	    } else {
+ 	      alert("瀏覽器不支援 Geolocation 功能");
+ 	    }
+ 	  
+	<!--test -->  
+	
+	
+ 		
+ 		
+ 		
+ 		
+		  $.ajax({
+			     url: "${pageContext.request.contextPath}/Favorite",
+			     dataType: "json",
+			     data:{
+			    	 "action":"getRedis",
+			    	 "key":"member:1:favorite"  
+		  		 },
+	              type: "POST",
+	              success: function (result) {  
+	         
+			 		console.log("cat list : " + result);
+			 		$.each(result, function(index, catID){
+			 			/* console.log(${catAndShelVO.catID} + ":" + index + ":" + catID); */
+			 			if (catID === ${catAndShelVO.catID}) {
+			 				console.log("got it");
+				 			/* $(".petCard-favoriteBtn > button[value='" + catID + "']").addClass("s-favoriteBtn_favorited s-favoriteBtn_sessionFavorited"); */
+				 			$(".favoriteBtn").addClass("s-favoriteBtn_favorited s-favoriteBtn_sessionFavorited");
+				 			/* $(".favoriteBtn.favoriteBtn_pdp").addClass("favoriteBtn s-favoriteBtn_favorited s-favoriteBtn_sessionFavorited favoriteBtn_pdp"); */
+				 			
+			 			}
+			  		});
+	               }
+		  });
+ 		
+ 		
+ 		
+	});
+ 	
     
     
     </script>
+    
+ 	
+    
     
 </body>
     

@@ -84,6 +84,7 @@ public class Favorite extends HttpServlet {
 //			System.out.println(memID);
 			//現在redis取得會員的favorite list
 			List<String> catList = jedis.lrange(memID, 0, -1);
+			System.out.println("cat List in favorite = " + catList.size());
 			//再F/w到catInfoServlet做查詢
 			req.setAttribute("catList", catList);
 //			System.out.println(catList);

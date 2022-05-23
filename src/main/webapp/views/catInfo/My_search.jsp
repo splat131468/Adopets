@@ -667,7 +667,7 @@
 	                                                    <li>
 	                                                    	<div
 	                                                            class="txt txt_label m-txt_heavy m-txt_uppercase m-txt_alignCenter u-vr1x">
-							                                        <button class="submit_btn" type="submit" >Submit</button>
+							                                        <button class="submit_btn" type="submit" >送出</button>
                                                             </div>
 	                                                    </li>
 	                                                </ul>
@@ -1980,6 +1980,7 @@
 	              success: function (result) {
 	            	 console.log("send cat ok");
 	            	 console.log("cat list : " + result);
+	            	 console.log("cat list : " + result.length);
 	            	/* console.log($.isArray(result)); */ 
   					/* console.log(JSON.stringify(result)); */
  	               }

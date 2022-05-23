@@ -72,8 +72,8 @@ public class CatInfoServlet extends HttpServlet {
 		if("getRedisListFav".equals(action)) {
 			List<String> catList = (ArrayList) req.getAttribute("catList");
 //			catList = req.getAttribute("catList");
-			System.out.println(catList);
-			System.out.println(catInfoService.getFavList(catList));
+//			System.out.println("catList in servlet = " + catList);
+//			System.out.println(catInfoService.getFavList(catList));
 			List<CatInfoVO> lists = catInfoService.getFavList(catList);
 			req.getSession().setAttribute("lists", lists);
 			req.getRequestDispatcher("/views/catInfo/My_favorite.jsp").forward(req, res);

@@ -237,7 +237,7 @@ public class CatInfoDAOimpl implements CatInfoDAO {
 				list.add(catInfoVO);
 			}
 	} catch(SQLException e) {
-		throw new RuntimeException("資料庫發生錯誤" + e.getMessage());
+		e.getMessage();
 	}
 		
 	return list;

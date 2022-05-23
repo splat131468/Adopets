@@ -295,9 +295,13 @@
                                                                 <%=request.getSession().getId() %>
                                                                 <%=request.getSession().isNew() %>
                                                                 </div> --%>
-                                                                <span class="count">
-                                                                    我的最愛 共有 ${lists.size()} 隻喵
-                                                                </span>
+                                                                <div>
+	                                                                我的最愛 共有
+	                                                                <span class="count">
+	                                                                    ${lists.size()}
+	                                                                </span>
+	                                                                隻喵
+                                                                </div>
                                                             </button>
                                                         </pf-focus-manager>
 
@@ -1764,10 +1768,14 @@
 	 	 	$(".shelter > input").attr('value', diffday);
 	 	}
 	});
- 	//貓咪按我的最愛加上效果並傳到redis
- 	$(".petCard-favoriteBtn > button").on("click", function(){
+ 	//貓咪按我的最愛慢慢移除並update到redis
+
+ 	
+ 		$(".petCard-favoriteBtn > button").on("click", function(){
  		/* console.log("favorite btn"); */
  		$(this).toggleClass("s-favoriteBtn_favorited s-favoriteBtn_sessionFavorited");
+ 		/* console.log($(this)); */
+ 		$(this).closest("div").parent().parent().fadeOut(1000);
 		let catID = $(this).attr("value");
 		
 		  $.ajax({
@@ -1781,12 +1789,16 @@
 	              success: function (result) {
 	            	 console.log("send cat ok");
 	            	 console.log("cat list : " + result);
-	            	/* console.log($.isArray(result)); */ 
-  					/* console.log(JSON.stringify(result)); */
+	            	 console.log("cat list : " + result.length);
+	            	 console.log($(".count").text());
+	            	 
+	            	 $(".count").text(result.length);
+	            	
  	               }
 		  });
  		
- 	});
+ 		});
+ 	
  	
 
  	//page load 進來時標上我的最愛
