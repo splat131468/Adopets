@@ -19,14 +19,14 @@
             <div class="container">
                 <div class="row mb-3 justify-content-center mt-5">
                     <div class="col-4 themed-grid-col">
-                        <form class="row g-3">
+                        <form class="row g-3" METHOD="post" action="<%=request.getContextPath()%>/MemberForgotPwdServlet">
                             <div class="col-12">
                               <label for="inputEmail" class="form-label">註冊帳號</label>
-                              <input type="email" class="form-control" id="inputEmail" placeholder="Email">
+                              <label style="color: red">${errors.nonexistent}</label>
+                              <input type="email" class="form-control" id="inputEmail" name="email" placeholder="Email">
                             </div>
                             <div class="col-12 position">
                               <div class="btn btn-primary btnPurple">送出</div>
-                              <!-- java mail api尚未完成 -->
                             </div>
                         </form>
                     </div>

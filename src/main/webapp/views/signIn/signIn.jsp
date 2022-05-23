@@ -1,7 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<% String path = request.getContextPath(); String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/"; %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="web.member.*" %>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,8 +11,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
-  <link rel="stylesheet" href="<%=request.getContextPath()%>/views/member/css/signIn.css"> 
-  <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"> -->
+  <link rel="stylesheet" href="<%=request.getContextPath()%>/views/member/css/signIn.css" type="text/css"> 
 </head>
 <body>
   <div class="mask">  </div>
@@ -21,27 +22,27 @@
     <div class="lb-header">
       <p class="active" id="login-box-link">Adopet會員登入</p>
     </div>
-    <form class="email-login" METHOD="post" ACTION="">
+    <form class="email-login" METHOD="post" action="<%=request.getContextPath()%>/views/signIn/signIn" >
       <div class="u-form-group">
-        <input type="email" placeholder="Email"/>
+        <input type="email" name="account" value="" placeholder="Email"/>
       </div>
       <div>
-        <p class="error" id="error_email">*輸入錯誤 請重新檢查</p>
+<!--         <p class="error" id="error_email">*輸入錯誤 請重新檢查</p> -->
 
         <!--  尚未完成帳號密碼檢查 -->
       
       </div>
       <div class="u-form-group">
-        <input type="password" placeholder="Password"/>
+        <input type="password" name="password" value="" placeholder="Password"/>
       </div>
       <div>
         <p class="error" id="error_password">*密碼不正確 你還記得密碼嗎?</p>
       </div>
       <div class="u-form-group">
-        <button type="submit">登入</button>
+        <button type="submit" value="Login">登入</button>
       </div>
       <div class="u-form-group">
-        <a href="<%=request.getContextPath()%>/views/member/forgotPwd.jsp" class="forgot-password">忘記密碼?</a>
+        <a href="<%=request.getContextPath()%>/views/signIn/forgotPwd.jsp" class="forgot-password">忘記密碼?</a>
       </div>
     </form>
     <p class="text_align_center active">或使用以下登入</p>
@@ -57,7 +58,7 @@
     </div>
     <div>
       <p class="text_align_center active">還不是會員嗎?</p>
-      <a href="<%=request.getContextPath()%>/views/member/register.jsp" class="merber_click">成為會員</a>
+      <a href="<%=request.getContextPath()%>/views/signIn/register.jsp" class="merber_click">成為會員</a>
     </div>
   </div>
   <button class="homepage">登入</button>
