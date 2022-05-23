@@ -1,0 +1,24 @@
+.submit_btn {
+    font-size: 15px;
+    color: #6504b5; 
+    height: 55px;
+    width: 100px;
+    background-color:#fff;
+    border-radius: 5px;
+    box-shadow: 0 1px 3px rgba(77, 71, 81, .2);
+    text-align: center;
+    margin-top: 10px;
+
+
+}
+.submit_btn:hover {
+     outline: none;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    -webkit-box-shadow: 0 1px 3px rgba(77, 71, 81, .2);
+    box-shadow: 0 1px 3px rgba(77, 71, 81, .2);
+    background-color: #6504b5;
+    color: #fff;
+
+
+}

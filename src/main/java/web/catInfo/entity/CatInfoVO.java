@@ -4,12 +4,12 @@ import java.sql.Date;
 
 public class CatInfoVO {
 	
-	private Integer catID;
-	private Integer memID;
-	private String shelterName;
-	private String catName;
-	private Integer age;
-	private String breed;
+	private Integer catID; //
+	private Integer memID; 
+	private String shelterName; // 
+	private String catName; //
+	private Integer age; //
+	private String breed; //
 	private String size;
 	private String sex;
 	private String coatColor;

@@ -34,6 +34,8 @@ public class OrdersJDBCDAO implements OrdersDAO_interface {
 			+ "orderStatus,paymentType,address from ORDERS order by orderID";
 	private static final String GET_DETAIL_BYORDER ="select orderDetailID, orderID, skuID, prodName,"
 			+ "prodNum, prodPrice from ORDERDETAIL where orderID =? order by orderDetailID";
+	private static final String FINDMEMBER_ORDERS = "select orderID,memID,createTime,orderPrice,"
+			+ "orderStatus,paymentType,address from ORDERS where memID=?";
 
 	@Override
 	public void insert(OrdersVO ordersVO) {
@@ -166,6 +168,59 @@ public class OrdersJDBCDAO implements OrdersDAO_interface {
 
 	}
 
+	@Override
+	public List<OrdersVO> findMemberOrder(Integer memID) {
+		List<OrdersVO> list = new ArrayList<OrdersVO>();
+		OrdersVO ordersVO = null;
+		Connection con = null;
+		PreparedStatement ppst = null;
+		ResultSet rs = null;
+
+		try {
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, password);
+			ppst = con.prepareStatement(FINDMEMBER_ORDERS);
+
+			ppst.setInt(1, memID);
+
+			rs = ppst.executeQuery();
+
+			while (rs.next()) {
+				ordersVO = new OrdersVO();
+				ordersVO.setOrderID(rs.getInt("orderID"));
+				ordersVO.setMemID(rs.getInt("memID"));
+				ordersVO.setCreateTime(rs.getTimestamp("createTime"));
+				ordersVO.setOrderPrice(rs.getInt("orderPrice"));
+				ordersVO.setOrderStatus(rs.getInt("orderStatus"));
+				ordersVO.setPaymentType(rs.getInt("paymentType"));
+				ordersVO.setAddress(rs.getString("address"));
+				list.add(ordersVO);
+			}
+
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+		} finally {
+			if (ppst != null) {
+				try {
+					ppst.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+
+		return list;
+	}
+	
 	@Override
 	public OrdersVO findParmaryKey(Integer orderID) {
 
@@ -370,8 +425,22 @@ public class OrdersJDBCDAO implements OrdersDAO_interface {
 //		System.out.print(ordersVO3.getPaymentType() + ",");
 //		System.out.print(ordersVO3.getAddress() + ",");
 //		System.out.println("---------------------");
+		
+		// 查詢會員訂單
+//		List<OrdersVO> list = dao.findMemberOrder(5);
+//		System.out.println("---------------------");
+//		for (OrdersVO Orders : list) {
+//			System.out.print(Orders.getOrderID() + ",");
+//			System.out.print(Orders.getMemID() + ",");
+//			System.out.print(Orders.getCreateTime() + ",");
+//			System.out.print(Orders.getOrderPrice() + ",");
+//			System.out.print(Orders.getOrderStatus() + ",");
+//			System.out.print(Orders.getPaymentType() + ",");
+//			System.out.print(Orders.getAddress() + ",");
+//			System.out.println();
+//			}
 
-		// 查詢
+		 //查詢
 //		List<OrdersVO> list = dao.getAll();
 //		System.out.println("---------------------");
 //		for (OrdersVO Orders : list) {
@@ -383,17 +452,18 @@ public class OrdersJDBCDAO implements OrdersDAO_interface {
 //			System.out.print(Orders.getPaymentType() + ",");
 //			System.out.print(Orders.getAddress() + ",");
 //			System.out.println();
-//	}
-	Set<OrderDetailVO> set = dao.getDetailByOrder(5);
-	for (OrderDetailVO detail : set) {
-		System.out.print(detail.getOrderDetailID() + ",");
-		System.out.print(detail.getOrderID() + ",");
-		System.out.print(detail.getSkuID() + ",");
-		System.out.print(detail.getProdName() + ",");
-		System.out.print(detail.getProdNum() + ",");
-		System.out.print(detail.getProdPrice() + ",");
-		System.out.println();
-	}
+//			}
+		
+//		Set<OrderDetailVO> set = dao.getDetailByOrder(5);
+//		for (OrderDetailVO detail : set) {
+//			System.out.print(detail.getOrderDetailID() + ",");
+//			System.out.print(detail.getOrderID() + ",");
+//			System.out.print(detail.getSkuID() + ",");
+//			System.out.print(detail.getProdName() + ",");
+//			System.out.print(detail.getProdNum() + ",");
+//			System.out.print(detail.getProdPrice() + ",");
+//			System.out.println();
+//			}
 	}
 
 	// gk 
