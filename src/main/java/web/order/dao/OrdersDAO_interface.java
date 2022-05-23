@@ -15,6 +15,7 @@ public interface OrdersDAO_interface {
 	public void update(OrdersVO ordersVO);
 	public void delete(Integer orderID);
 	public OrdersVO findParmaryKey(Integer orderID);
+	public List<OrdersVO> findMemberOrder(Integer memID);
 	public List<OrdersVO> getAll();
 	public Set<OrderDetailVO> getDetailByOrder(Integer orderID);
 	// 建立訂單

@@ -1,6 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="Big5"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="web.order.entity.*"%>
+<%@ page import="web.product.service.impl.SpuServiceImp"%>
 
 <%
 OrderDetailVO orderDetailVO = (OrderDetailVO) request.getAttribute("orderDetailVO");
@@ -89,20 +90,20 @@ th, td {
 						</c:forEach>
 					</select></td>
 				</tr>
-			<tr>
-				<td>規格編號:</td>
-				<td><input type="text" name="skuID" size="45"
-					value="<%=(orderDetailVO == null) ? "2" : orderDetailVO.getSkuID()%>" /></td>
-			</tr>
-				<%-- 		<jsp:useBean id="skuSvc" scope="page" class="com.sku.model.SkuService" /> --%>
-			<!-- 	<tr> -->
-			<!-- 		<td>會員編號:<font color=red><b>*</b></font></td> -->
-			<!-- 		<td><select size="1" name="skuID"> -->
-			<%-- 			<c:forEach var="skuVO" items="${skuSvc.all}"> --%>
-			<%-- 				<option value="${skuVO.skuID}" ${(param.skuID==skuVO.skuID)? 'selected':'' } >${skuVO.skuID} --%>
-			<%-- 			</c:forEach> --%>
-			<!-- 		</select></td> -->
-			<!-- 	</tr> -->
+<!-- 			<tr> -->
+<!-- 				<td>規格編號:</td> -->
+<!-- 				<td><input type="text" name="skuID" size="45" -->
+<%-- 					value="<%=(orderDetailVO == null) ? "2" : orderDetailVO.getSkuID()%>" /></td> --%>
+<!-- 			</tr> -->
+					<jsp:useBean id="skuSvc" scope="page" class="web.product.service.impl.SpuServiceImp" />
+				<tr>
+					<td>規格編號:<font color=red><b>*</b></font></td>
+					<td><select size="1" name="skuID">
+						<c:forEach var="skuVO" items="${skuSvc.allProd}">
+							<option value="${skuVO.skuID}" ${(param.skuID==skuVO.skuID)? 'selected':'' } >${skuVO.skuID}
+						</c:forEach>
+					</select></td>
+				</tr>
 			<tr>
 				<td>商品名稱:</td>
 				<td><input type="TEXT" name="prodName" size="45"

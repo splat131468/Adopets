@@ -7,9 +7,9 @@
     <meta charset='utf-8'>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <title>商品新增</title>
-    <link href='./goodEdit/bootstrap.css' rel='stylesheet'>
-    <link href='./goodEdit/fontAwesome.css' rel='stylesheet'>
-    <link href="./goodEdit/goodEdit.css" rel='stylesheet'>
+    <link href='${pageContext.request.contextPath}/views/ecommerce//goodEdit/bootstrap.css' rel='stylesheet'>
+    <link href='${pageContext.request.contextPath}/views/ecommerce//goodEdit/fontAwesome.css' rel='stylesheet'>
+    <link href="${pageContext.request.contextPath}/views/ecommerce//goodEdit/goodEdit.css" rel='stylesheet'>
 
 
     <script type='text/javascript' src="./goodEdit/jQuery.js"></script>
@@ -229,7 +229,7 @@
     </div>
     <!--  -->
 
-    <script src="./goodEdit/additemjq.js"></script>
+    <script src="${pageContext.request.contextPath}/views/ecommerce//goodEdit/additemjq.js"></script>
    
 </body>
 

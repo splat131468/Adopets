@@ -24,7 +24,9 @@ $('.msg').html(msg + input + '</span>');
 // test
 
 
+
 $('.droppage').click(function () {
+	console.log("hello this is droppage inner");
     $(this).attr('tabindex', 1).focus();
     $(this).toggleClass('active');
     $(this).find('.droppage-menu').slideToggle(300);
@@ -45,4 +47,5 @@ $('.droppage').click(function () {
     msg = '<span class="msg">Hidden input value: ';
     $('.msg').html(msg + input + '</span>');
     }); 
+
     

@@ -81,6 +81,10 @@ public class OrdersService {
 	public OrdersVO findPrimaryKeyOrder(Integer orderID) {
 		return dao.findParmaryKey(orderID);
 	}
+	
+	public List<OrdersVO> findMemberOrder(Integer memID) {
+		return dao.findMemberOrder(memID);
+	}
 
 	public List<OrdersVO> getAll() {
 		return dao.getAll();

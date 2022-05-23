@@ -9,14 +9,79 @@
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Adopet Home</title>
-  <link rel="stylesheet" href="files/homepage.css">
-  <link rel="stylesheet" href="files/css_L5nWqD5SQK8ZrCIRrm01g1QcB7QmIYINuJjhTPq7WFs.css">
-  <link rel="stylesheet" href="files/css_48il_hUScvaXu5Lky-fqRm9LjbUTybcek-Dq368IMAI.css">
-  <link rel="stylesheet" href="files/flickity.min.css">
-  <link rel="stylesheet" href="files/style.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/views/catInfo/files/homepage.css">
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/views/catInfo/files/css_L5nWqD5SQK8ZrCIRrm01g1QcB7QmIYINuJjhTPq7WFs.css">
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/views/catInfo/files/css_48il_hUScvaXu5Lky-fqRm9LjbUTybcek-Dq368IMAI.css">
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/views/catInfo/files/flickity.min.css">
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/views/catInfo/files/style.css">
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/views/catInfo/files/my_home_6_1.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+  <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <style>
+  /*Necessary CSS*/
+
+		.search-form {
+		  transition: all 0.4s ease;
+		  background-color: #fff;
+		  display: inline-block;
+		  border-radius: 10px;
+		}
+		
+		#location {
+		  transition: all 0.4s ease;
+		  width: 0px;
+		  padding: 0px;
+		  border: none;
+		}
+		
+		#query {
+		  width: 300px;
+		  height: 40px;
+		}
+		
+		.search-form input, .search-form button {
+		  height: 40px;
+		  padding-left: 1.5rem;
+		  border-radius: 10px;
+		}
+		
+		.search-form input {
+		  border: none;
+		  outline-style:none;
+		  box-shadow:none;
+		}
+		
+		.search-form button {
+		  background: #fff;
+		  border: none;
+		}
+		
+		.search-form button:hover {
+		  color: #63ADF2;
+		}
+		
+		/*Generic CSS*/
+		
+		body {
+		  background-color: #000!important;
+		}
+		
+		.container {
+		  margin-top: 20px;
+		}
+		
+		h1 {
+		  /* padding-bottom: 1px; */
+		  color: #fff!important;
+		}
+  </style>
+  
 </head>
 
 <body>
+ 
 
 
   <div class="dialog-off-canvas-main-canvas" data-off-canvas-main-canvas="">
@@ -182,7 +247,7 @@
             <!--我的最愛+購物車+登入+登出-->
             <div class="profile-navigation">
               <!--我的最愛-->
-              <a href="#" class="nav-favorites-btn">
+              <a href="" class="nav-favorites-btn">
                 <svg role="img" focusable="false">
                   <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-favorite"></use>
                 </svg>
@@ -268,57 +333,37 @@
 
           </div>
           <div id="block-petsearchbar" class="block block-consumer-blocks block-pet-search-bar">
-
-
-
-            <section id="pet-search-bar">
-              <div class="petSearchBar-container">
-                <div class="petSearchBar u-isHidden@maxLg">
-                  <div class="inputField-container"><label class="u-isVisuallyHidden"
-                      for="simpleSearchAnimalType">Search
-                      Terrier, Kitten, etc.</label>
-                    <div aria-expanded="false" aria-haspopup="listbox" class="inputField-wrapper">
-                      <div id="simpleSearchAnimalType-description" class="u-isVisuallyHidden" aria-hidden="true">This is
-                        a
-                        search field. A list of options may be retrieved based on your typed query. If options are
-                        retrieved, use up and down arrow keys or mobile controls to navigate the list.</div>
-                      <div class="u-isVisuallyHidden" role="status" aria-live="polite" aria-atomic="true">
-                        <div id="simpleSearchAnimalType-description" class="u-isVisuallyHidden" aria-hidden="true">This
-                          is a
-                          search field. A list of options may be retrieved based on your typed query. If options are
-                          retrieved, use up and down arrow keys or mobile controls to navigate the list.</div>
-                        <div class="u-isVisuallyHidden" role="status" aria-live="polite" aria-atomic="true">No results
-                          match
-                          your query</div>
-                      </div><input type="text" id="simpleSearchAnimalType" name="simpleSearchAnimalType"
-                        class=" field-input inputField" placeholder="找幼貓，成貓..." autocomplete="off" spellcheck="false"
-                        aria-autocomplete="list" aria-describedby="simpleSearchAnimalType-description" role="combobox"
-                        aria-controls="simpleSearchAnimalType-listBox" aria-owns="simpleSearchAnimalType-listBox"
-                        aria-haspopup="listbox" aria-expanded="false" aria-activedescendant="animal-quick-link-0"
-                        value="">
-                    </div>
-                  </div>
-                  <div class="verticalLine-container">
-                    <div class="verticalLine"></div>
-                  </div>
-                  <div class="inputField-container"><label class="u-isVisuallyHidden" for="simpleSearchLocation">Enter
-                      City,
-                      State, or ZIP location</label>
-                    <div aria-expanded="false" aria-haspopup="listbox" class="inputField-wrapper">
-                      <div id="simpleSearchLocation-description" class="u-isVisuallyHidden" aria-hidden="true">This is a
-                        search field. A list of options may be retrieved based on your typed query. If options are
-                        retrieved, use up and down arrow keys or mobile controls to navigate the list.</div>
-                      <div class="u-isVisuallyHidden" role="status" aria-live="polite" aria-atomic="true">No results
-                        match
-                        your query</div><input type="text" id="simpleSearchLocation" name="simpleSearchLocation"
-                        class=" field-input inputField" placeholder="選擇搜尋方式" autocomplete="off" spellcheck="false"
-                        aria-autocomplete="list" role="combobox" aria-controls="simpleSearchLocation-listBox"
-                        aria-owns="simpleSearchLocation-listBox" aria-expanded="false"
-                        aria-describedby="simpleSearchLocation-description"
-                        aria-activedescendant="location-quick-link-0" value="">
-                    </div>
-                  </div>
-                  <div class="iconSearch-container"><button class="iconSearch"><span class="u-isVisuallyHidden">Begin
+		<!-- search bar -->
+		<div class="petSearchBar-container container text-center">
+			<form class="search-form">
+			  <input name="search[query]" id="query" placeholder="搜尋貓咪" type="text" value="">
+			  
+			  <input name="search[location]" id="location" placeholder="位置" type="text" value="">
+			 <i class="fa-solid fa-location-arrow"></i>
+			  
+			  <button name="commit" type="submit" class="button primary">
+			     <i class="fa fa-search" aria-hidden="true"></i>
+			  </button>
+			</form>
+		</div>
+		<!-- search bar -->
+	
+		<!-- search bar -->
+     <!--         <section id="pet-search-bar">
+              <div class="petSearchBar-container">123
+                <div class="petSearchBar search-form">
+					<div class="container text-center">
+						<form class="search-form">
+						  <input name="search[query]" id="query" placeholder="Search jobs by keyword"           type="text" value="">
+						  <input name="search[location]" id="location" placeholder="Type a Location" type="text"    value="">
+						  <button name="commit" type="submit" class="button primary">
+						     <i class="fa fa-search" aria-hidden="true"></i>
+						  </button>
+						</form>
+					</div>
+                  
+                  <div class="iconSearch-container">
+                  	<button class="iconSearch"><span class="u-isVisuallyHidden">Begin
                         search</span><svg width="40" height="40" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <title>begin search</title>
                         <path d="M0 5a5 5 0 015-5h30a5 5 0 015 5v30a5 5 0 01-5 5H5a5 5 0 01-5-5V5z" fill="#6504B5">
@@ -329,33 +374,13 @@
                         <path
                           d="M25.253 23.256l2.987 2.962a1.422 1.422 0 01.006 2.027 1.436 1.436 0 01-2.032 0l-2.97-2.945a9.516 9.516 0 002.009-2.044z"
                           fill="#fff"></path>
-                      </svg></button></div>
-                </div>
-                <div class="petSearchBar u-isHidden@minLg">
-                  <div class="inputField-container"><label class="u-isVisuallyHidden"
-                      for="simpleSearchAnimalType">Search
-                      Terrier, Kitten, etc.</label>
-                    <div id="simpleSearchAnimalType-description" class="u-isVisuallyHidden" aria-hidden="true">This is a
-                      search field. A list of options may be retrieved based on your typed query. If options are
-                      retrieved,
-                      use up and down arrow keys or mobile controls to navigate the list.</div>
-                    <div class="u-isVisuallyHidden" role="status" aria-live="polite" aria-atomic="true">No results match
-                      your query</div><input type="text" id="simpleSearchAnimalType" name="simpleSearchAnimalType"
-                      class=" field-input inputField inputField-animalType inputField-withSearchIcon"
-                      placeholder="Search Terrier, Kitten, etc." autocomplete="off" spellcheck="false"
-                      aria-autocomplete="list" aria-controls="simpleSearchAnimalType-listBox"
-                      aria-describedby="simpleSearchAnimalType-description" value="">
+                      </svg>
+                    </button>
                   </div>
                 </div>
-              </div>
-            </section>
-
-
+            </section> -->
           </div>
-
-
         </div>
-
       </header>
   <!--這是main body這是main body這是main body這是main body這是main body這是main body這是main body這是main body這是main body-->
       <main role="main">
@@ -363,6 +388,7 @@
         <div class="layout-content">
           <div class="region region-content">
             <div data-drupal-messages-fallback="" class="hidden"></div>
+            
             <div id="block-consumer-react-content" class="block block-system block-system-main-block">
 
 
@@ -395,12 +421,13 @@
                               <section id="recommended-pets">
                                 <div class="recommendations m-recommendations_singleRow u-isHidden@maxMd">
                                   <div class="recommendations-header u-vr5x">
-                                    <div class="tier"><a
-                                        href="${pageContext.request.contextPath}/views/catInfo/My_search.jsp"
-                                        class="u-displayBlock txt">
-                                        <h2 class="txt txt_h1 m-txt_tight m-txt_colorPrimary m-txt_alignCenter">貓咪配對結果
-                                        </h2>
-                                      </a></div>
+                                    <div class="tier">
+                                    	<a
+                                        	href="${pageContext.request.contextPath}/CatInfoServlet?action=listEmps_ByCompositeQuery"
+                                        	class="u-displayBlock txt">
+                                        	<h2 class="txt txt_h1 m-txt_tight m-txt_colorPrimary m-txt_alignCenter">貓咪配對結果</h2>
+                                      </a>
+                                   </div>
                                   </div>
                                   <div class="recommendations-body">
                                     <div class="recommendations-body-inner">
@@ -1213,7 +1240,7 @@
             </nav>
           </div>
           <!--個人專欄個人專欄個人專欄個人專欄個人專欄個人專欄個人專欄個人專欄個人專欄個人專欄個人專欄-->
-          <div class="region region-footer-right" >
+          <!-- <div class="region region-footer-right" >
             <div class="block block-block-content  block-signup">
               <div class=" field--name-body ">
                 <p>開發者 : AAA</p>
@@ -1245,7 +1272,7 @@
             
             
           </div>
-          
+           -->
           <!--個人專欄個人專欄個人專欄個人專欄個人專欄個人專欄個人專欄個人專欄個人專欄個人專欄個人專欄-->
           <div class="region region-footer-right" >
             <div class="block block-block-content  block-signup" >
@@ -1266,15 +1293,7 @@
               <div class="field--name-field-link"><a href="" >簡介</a></div>
               
             </div>
-            <div class="block block-block-content  block-signup" >
-              <div class=" field--name-body ">
-                <p>開發者 : AAA</p>
-                <p>開發項目 : 寵物配對</p>
-                <p>Contact : </p>
-              </div>
-              <div class="field--name-field-link"><a href="" >簡介</a></div>
-              
-            </div>
+       
 
             
             
@@ -1495,70 +1514,39 @@
     </div>
   </div>
 
-
-
-
-
-
   <!--JS們JS們JS們JS們JS們JS們JS們JS們JS們JS們JS們JS們JS們JS們JS們JS們JS們JS們JS們JS們JS們JS們JS們JS們JS們JS們JS們JS們JS們-->
-  <script type="application/json"
-    data-drupal-selector="drupal-settings-json">{
-      "path":{"baseUrl":"\/",
-        "scriptPath":null,
-        "pathPrefix":"",
-        "currentPath":"node\/13",
-        "currentPathIsAdmin":false,
-        "isFront":true,
-        "currentLanguage":"en"},
-      "pluralDelimiter":"\u0003",
-      "suppressDeprecationErrors":true,
-      "lazy":{
-        "lazysizes":{
-          "lazyClass":"lazyload",
-          "loadedClass":"lazyloaded",
-          "loadingClass":"lazyloading",
-          "preloadClass":"lazypreload",
-          "errorClass":"lazyerror",
-          "autosizesClass":"lazyautosizes",
-          "srcAttr":"data-src",
-          "srcsetAttr":"data-srcset",
-          "sizesAttr":"data-sizes",
-          "minSize":40,
-          "customMedia":[],
-          "init":true,
-          "expFactor":1.5,
-          "hFac":0.8,
-          "loadMode":2,
-          "loadHidden":true,
-          "ricTimeout":0,
-          "throttleDelay":125,
-          "plugins":[]
-        },
-        "placeholderSrc":"",
-        "preferNative":false,
-        "minified":true,
-        "libraryPath":"\/libraries\/lazysizes"
-      },
-      "recent_pets":[],"gamw":{"blocks":{"Petfinder\/Homepage":{"1af1317c-9393-432e-bd1c-5041658f0858":{"uuid":"1af1317c-9393-432e-bd1c-5041658f0858","ad_unit":"Petfinder\/Homepage","sizes":{"0":{"300x250":[300,250]},"728":{"300x250":[300,250]}},"pos":["homepage_left_300x250","homepage_left_300x250"],"dev_mode":0,"collapsed":0,"targeting_attributes":{"site":"Petfinder","location.pathname":["\/"],"location.host":["http:\/\/www.petfinder.com"],"location.href":["http:\/\/www.petfinder.com\/"],"newsession":[],"pos":["homepage_left_300x250"]},"gamw_id":"46267414"},"3a98b4b9-3bf4-4fbb-b65a-70af4bb5e77f":{"uuid":"3a98b4b9-3bf4-4fbb-b65a-70af4bb5e77f","ad_unit":"Petfinder\/Homepage","sizes":{"0":{"300x250":[300,250]},"728":{"300x250":[300,250]}},"pos":["homepage_right_300x250","homepage_right_300x250"],"dev_mode":0,"collapsed":0,"targeting_attributes":{"site":"Petfinder","location.pathname":["\/"],"location.host":["http:\/\/www.petfinder.com"],"location.href":["http:\/\/www.petfinder.com\/"],"newsession":[],"pos":["homepage_right_300x250"]},"gamw_id":"46267414"},"f7250f79-125a-4dbe-ac4e-56909a500981":{"uuid":"f7250f79-125a-4dbe-ac4e-56909a500981","ad_unit":"Petfinder\/Homepage","sizes":{"0":{"320x100":[320,100]},"728":{"728x90":[728,90]}},"pos":["homepage_bottom_320x100","homepage_bottom_728x90"],"dev_mode":0,"collapsed":0,"targeting_attributes":{"location.qwe":"test","site":"Petfinder","location.pathname":["\/"],"location.host":["http:\/\/www.petfinder.com"],"location.href":["http:\/\/www.petfinder.com\/"],"newsession":[],"pos":["homepage_bottom_728x90"]},"gamw_id":"46267414"},"3f1b440a-56d9-49c9-afe9-f08134a3ff84":{"uuid":"3f1b440a-56d9-49c9-afe9-f08134a3ff84","ad_unit":"Petfinder\/Homepage","sizes":{"0":{"320x100":[320,100]},"728":{"728x90":[728,90]}},"pos":["homepage_top_320x100","homepage_top_728x90"],"dev_mode":0,"collapsed":0,"targeting_attributes":{"site":"Petfinder","location.pathname":["\/"],"location.host":["http:\/\/www.petfinder.com"],"location.href":["http:\/\/www.petfinder.com\/"],"newsession":[],"pos":["homepage_top_728x90"]},"gamw_id":"46267414"}}}},
-      "consumer_ad_unit":[],"saved_search_shelf":{"title":"Your Saved Searches","cta":[{"uri":"\/user\/search-alerts\/","title":"VIEW ALL SAVED SEARCHES","options":[]}]},
-      "recommended_pets":[],
-      "quickLinks":{
-      "menu_link_content":{"title":"隨機選取貓咪","url":"#","icon":"icon-search"},
-      "menu_link_content":{"title":"幼貓，小貓","url":"#","icon":"icon-cat"},
-      "menu_link_content:01538bf1-6f22-4d06-81ae-38b3a952bb78":{"title":"成貓","url":"#","icon":"icon-cat"},
-      "menu_link_content:a5256466-0fb8-4a08-a39a-ef426d16d757":{"title":"需要特殊照顧的貓","url":"#","icon":"icon-cat"},
-      "menu_link_content:53aca868-2b3f-4fe1-b350-f514b7db6fda":{"title":"親近動物的貓","url":"#","icon":"icon-cat"},
-      "menu_link_content:6c72c4ad-d53f-4b8f-83c1-b2ced7e1fb83":{"title":"喜歡小孩的貓","url":"#","icon":"icon-cat"}},
-      "useraccountmenu":{
-        "links":[
-        {"uri":"\/user\/account","title":"Account Info","options":[]},
-        {"uri":"\/saved-searches","title":"My Saved Searches ","options":[]},
-        {"uri":"\/user\/logout","title":"Sign Out","options":[]}]},
-      "user":{"uid":0,"permissionsHash":"696b65b201356ece91f9c316c4a1b2809efbe52f44002bd7c2c32dfb81fdbfd1"}}</script>
-  <script src="files/js_sirhyW4WWVy6pNU2R7uXVz8pVJ85ED3GdubwbBovyA8.js"></script>
-  <script src="files/flickity.pkgd.min.js"></script>
-  <script src="files/js_pOzsLAyMBlX-_8a0VTDlP6z8nBu3ETSxU_4x1HKfbE8.js"></script>
-  <script src="files/script.js"></script>
+  <script src="${pageContext.request.contextPath}/views/catInfo/files/my_home_1.js"></script>
+
+  <script src="${pageContext.request.contextPath}/views/catInfo/files/my_home_4.js"></script>
+  <script src="${pageContext.request.contextPath}/views/catInfo/files/my_search.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script>
+	$('#query,#location').focusin(  
+	  function(){  
+	    $("#location").css({"width": "320px","padding": "1.5rem"});
+	  }).focusout(  
+	  function(){  
+	    $("#location").css({"width": "0px","padding": "0px", "margin": "0px"});
+	  });
+
+  </script>
+  
+  <script>
+  
+
+  
+  	$(".fa-location-arrow").on("click", function(){
+  		navigator.geolocation.getCurrentPosition(function(position){
+  		  // 取得 position 位置資訊，可於 console 中印出來看看
+  		 alert(position);
+  		});
+
+  	});
+  
+  </script>
+  <!-- <script src="files/flickity.pkgd.min.js"></script> -->
+<!--   <script src="files/js_pOzsLAyMBlX-_8a0VTDlP6z8nBu3ETSxU_4x1HKfbE8.js"></script> -->
+<!--   <script src="files/script.js"></script> -->
 
 </body>
 

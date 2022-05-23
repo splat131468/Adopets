@@ -41,7 +41,7 @@
 						<a href="<%=request.getContextPath()%>/views/member/donateLog.jsp" class="">捐款紀錄</a>
 					</div>
 					<div class="col-md-2 col-sm-4">
-						<a href="<%=request.getContextPath()%>/views/member/orderListLog.jsp" class="">訂單紀錄</a>
+						<a href="<%=request.getContextPath()%>/OrdersServlet?action=get_Member_Order" class="">訂單紀錄</a>
 					</div>
 					<div class="col-md-2 col-sm-4">
 						<a href="#" class="">我想登出</a>
@@ -138,6 +138,7 @@
 								<div class="creditCardList">
 									<input type="text" disabled class="form-control-plaintext"
 										id="" value="**** **** **** 1234">
+										<span class="form-control-plaintext">${param.creditCard}</span>
 <!-- 									<button -->
 <!-- 										class="btn btn-outline-primary btn-sm btnPurple-outline">刪除信用卡</button> -->
 									<!--to do list 範例修改  -->

@@ -255,7 +255,7 @@
                     }
             }
 
-        fetch("http://localhost:8081/Adopets/shCartAction", {
+        fetch("/Adopets/shCartAction", {
             method: 'POST',
             body: JSON.stringify(data)
         }).then(function (response) {
