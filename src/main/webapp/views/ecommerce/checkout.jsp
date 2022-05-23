@@ -576,6 +576,10 @@
             </section>
             <!-- Checkout Section End -->
 
+            <section id="xxx">
+
+            </section>
+
             <!-- Footer Section Begin -->
             <footer class="footer spad">
                 <div class="container">

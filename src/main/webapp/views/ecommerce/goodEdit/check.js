@@ -80,11 +80,23 @@ $(function () {
           return;
         }
 
+        // action takeOrder
+
         fetch("http://localhost:8081/Adopets/shCartAction", {
             method: 'POST',
             body: JSON.stringify(data)
-        }).then(function () {
-        })
+        }).then(response => response.text())
+        .then(text=>{
+            $("#xxx").html(text);
+
+            return;
+        }) 
+            // 串金流 先擋一下
+
+           
+
+         
+        
         // 轉送
         swal({
             title: "購買成功 感謝您！！",
@@ -92,8 +104,9 @@ $(function () {
             timer: 1500,
           }).then(function(){
             // 不給前一頁
-            window.history.replaceState(null, "", '/Adopets/comAction?action=ecoMainP');
-            window.history.go(0);
+            // 金流測驗
+            // window.history.replaceState(null, "", '/Adopets/comAction?action=ecoMainP');
+            // window.history.go(0);
 
           })
        

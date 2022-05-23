@@ -42,6 +42,8 @@ public class OrdersJNDIDAO implements OrdersDAO_interface {
 			+ "orderStatus,paymentType,address from ORDERS order by orderID";
 	private static final String GET_DETAIL_BYORDER ="select orderDetailID, orderID, skuID, prodName,"
 			+ "prodNum, prodPrice from ORDERDETAIL where orderID =? order by orderDetailID ";
+	private static final String FINDMEMBER_ORDERS = "select orderID,memID,createTime,orderPrice,"
+			+ "orderStatus,paymentType,address from ORDERS where memID=?";
 
 	@Override
 	public void insert(OrdersVO ordersVO) {
@@ -179,6 +181,55 @@ public class OrdersJNDIDAO implements OrdersDAO_interface {
 			ppst = con.prepareStatement(FINDPARMARYKEY_ORDERS);
 
 			ppst.setInt(1, orderID);
+
+			rs = ppst.executeQuery();
+
+			while (rs.next()) {
+				ordersVO = new OrdersVO();
+				ordersVO.setOrderID(rs.getInt("orderID"));
+				ordersVO.setMemID(rs.getInt("memID"));
+				ordersVO.setCreateTime(rs.getTimestamp("createTime"));
+				ordersVO.setOrderPrice(rs.getInt("orderPrice"));
+				ordersVO.setOrderStatus(rs.getInt("orderStatus"));
+				ordersVO.setPaymentType(rs.getInt("paymentType"));
+				ordersVO.setAddress(rs.getString("address"));
+
+			}
+
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+		} finally {
+			if (ppst != null) {
+				try {
+					ppst.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+
+		return ordersVO;
+	}
+	
+	@Override
+	public OrdersVO findMemberOrder(Integer memID) {
+		OrdersVO ordersVO = null;
+		Connection con = null;
+		PreparedStatement ppst = null;
+		ResultSet rs = null;
+
+		try {
+			con = ds.getConnection();
+			ppst = con.prepareStatement(FINDMEMBER_ORDERS);
+
+			ppst.setInt(1, memID);
 
 			rs = ppst.executeQuery();
 

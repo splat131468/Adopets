@@ -1,7 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="Big5"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="web.order.entity.*"%>
-
+<%@ page import="web.member.service.impl.*"%>
 <%
 OrdersVO ordersVO = (OrdersVO) request.getAttribute("ordersVO"); 
 %>
@@ -53,20 +53,20 @@ OrdersVO ordersVO = (OrdersVO) request.getAttribute("ordersVO");
 
 						<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/OrdersServlet" name="form1">
 							<table>
-								<%-- 		<jsp:useBean id="memSvc" scope="page" class="com.member.model.MemberService" /> --%>
-								<!-- 	<tr> -->
-								<!-- 		<td>會員編號:<font color=red><b>*</b></font></td> -->
-								<!-- 		<td><select size="1" name="memID"> -->
-								<%-- 			<c:forEach var="MemberVO" items="${memSvc.all}"> --%>
-								<%-- 				<option value="${MemberVO.memID}" ${(param.memID==MemberVO.memID)? 'selected':'' } >${MemberVO.name} --%>
-								<%-- 			</c:forEach> --%>
-								<!-- 		</select></td> -->
-								<!-- 	</tr> -->
-								<tr>
-									<td>會員編號:</td>
-									<td><input type="TEXT" name="memID" size="45"
-										value="<%=(ordersVO == null) ? "5" : ordersVO.getMemID()%>" /></td>
-								</tr>
+										<jsp:useBean id="memSvc" scope="page" class="web.member.service.impl.MemberService" />
+									<tr>
+										<td>會員編號:<font color=red><b>*</b></font></td>
+										<td><select size="1" name="memID">
+											<c:forEach var="MemberVO" items="${memSvc.all}">
+												<option value="${MemberVO.memID}" ${(param.memID==MemberVO.memID)? 'selected':'' } >${MemberVO.name}
+											</c:forEach>
+										</select></td>
+									</tr>
+<!-- 								<tr> -->
+<!-- 									<td>會員編號:</td> -->
+<!-- 									<td><input type="TEXT" name="memID" size="45" -->
+<%-- 										value="<%=(ordersVO == null) ? "5" : ordersVO.getMemID()%>" /></td> --%>
+<!-- 								</tr> -->
 								<tr>
 									<td>訂單價格:</td>
 									<td><input type="TEXT" name="orderPrice" size="45"

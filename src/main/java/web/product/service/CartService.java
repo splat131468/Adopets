@@ -43,6 +43,6 @@ public interface CartService {
 	
 	List<OrderDetailVO>  cartCheckOut(List<Integer> skuIDArr);
 	
-	void takeOrder(List<Integer> skuIDArr, OrdersVO ordersVO, Integer memID); 
+	String takeOrder(List<Integer> skuIDArr, OrdersVO ordersVO, Integer memID); 
 	
 }

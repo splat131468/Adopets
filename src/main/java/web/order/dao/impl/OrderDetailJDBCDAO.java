@@ -31,6 +31,7 @@ public class OrderDetailJDBCDAO implements OrderDetailDAO_interface {
 	private static final String GETALL_ORDERDETAIL = "select orderDetailID,orderID,skuID,prodName,"
 			+ "prodNum,prodPrice from ORDERDETAIL order by orderDetailID";
 
+
 	@Override
 	public void insert(OrderDetailVO orderDetailVO) {
 		Connection con = null;
