@@ -32,8 +32,8 @@ public class DonateService {
 		donateVO.setDonateAmo(donateAmo);
 		donateVO.setDonateStatus(donateStatus);
 		donateVO.setDonateMes(donateMes);
-		dao.insert(donateVO);
-
+		Integer DonateID = dao.insert(donateVO);
+		donateVO.setDonateID(DonateID);
 		return donateVO;
 	}
 

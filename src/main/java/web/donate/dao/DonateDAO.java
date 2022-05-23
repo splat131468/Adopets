@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -41,12 +42,12 @@ public class DonateDAO implements DonateDAO_interface {
 	private static final String UPDATE = "UPDATE DONATE set donateStatus=? where donateID = ?";
 
 	@Override
-	public void insert(DonateVO donateVO) {
+	public Integer insert(DonateVO donateVO) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		try {
 			con = ds.getConnection();
-			pstmt = con.prepareStatement(INSERT_DONATE);
+			pstmt = con.prepareStatement(INSERT_DONATE,Statement.RETURN_GENERATED_KEYS);
 
 			pstmt.setInt(1, donateVO.getMemID());
 			pstmt.setInt(2, donateVO.getCatID());
@@ -61,7 +62,10 @@ public class DonateDAO implements DonateDAO_interface {
 			
 
 			pstmt.executeUpdate();
-
+			ResultSet generatedKeys = pstmt.getGeneratedKeys();
+			generatedKeys.next();
+			
+			return generatedKeys.getInt(1);
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 			// Clean up JDBC resources
