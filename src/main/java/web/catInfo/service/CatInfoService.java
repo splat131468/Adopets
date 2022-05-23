@@ -1,10 +1,18 @@
 package web.catInfo.service;
 
+import java.io.InputStream;
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
+
+import org.apache.ibatis.io.Resources;
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
 import web.catInfo.dao.CatInfoDAO;
 import web.catInfo.dao.impl.CatInfoDAOimpl;
+import web.catInfo.entity.CatAndShelVO;
 import web.catInfo.entity.CatInfoVO;
 
 public class CatInfoService {
@@ -79,5 +87,32 @@ public class CatInfoService {
 		catID = dao.getLastCatID();
 		return catID;
 	}
+	
+	public List<CatInfoVO> getMulti(CatInfoVO catInfoVO) {
+		List<CatInfoVO> getMulti = new ArrayList<>();
+//		System.out.println("service get : " + catInfoVO.getCreateDate());
+		try {
+			InputStream inputStream = Resources.getResourceAsStream("mybatis-config.xml");
+			SqlSessionFactoryBuilder sqlSessionFactoryBuilder = new SqlSessionFactoryBuilder();
+			SqlSessionFactory factory = sqlSessionFactoryBuilder.build(inputStream);
+			SqlSession session = factory.openSession();
+			CatInfoDAO catInfoDAO = session.getMapper(CatInfoDAO.class);
+			getMulti = catInfoDAO.getMulti(catInfoVO);
+			session.commit();
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return getMulti;
+	}
+	
+	public List<CatInfoVO> getFavList(List<String> catList) {
+		return dao.getFavList(catList);
+	}
+	
+	public CatAndShelVO getOneAndShel(Integer catID) {
+		return dao.getOneAndShel(catID);
+	}
+	
+	
 
 }

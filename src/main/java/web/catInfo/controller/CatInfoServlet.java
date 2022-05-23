@@ -1,10 +1,11 @@
 package web.catInfo.controller;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -13,9 +14,17 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.io.IOUtils;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.mysql.cj.Session;
+
+import web.catInfo.entity.CatAndShelVO;
 import web.catInfo.entity.CatInfoVO;
 import web.catInfo.service.CatInfoService;
 
@@ -36,22 +45,143 @@ public class CatInfoServlet extends HttpServlet {
 			throws ServletException, IOException {
 		req.setCharacterEncoding("UTF-8");
 		res.setContentType("text/html; charset=UTF-8");
-		String id = req.getParameter("id");
-		String action = req.getParameter("action");
-		
-		System.out.println("hello:" + id + " hello: " + action);
-		
-		
 		PrintWriter out = res.getWriter();
-		out.println(id);
-		
-		
-		
+//		String pa = req.getParameter("member:1:favorite");
 //		String data = IOUtils.toString(req.getInputStream(), StandardCharsets.UTF_8);
-//		System.out.println(data);
+//		Gson gson=new Gson();
+//		String data = IOUtils.toString(req.getInputStream(), StandardCharsets.UTF_8);
+//		  JsonObject fromJson = gson.fromJson(data, JsonObject.class);
+//		BufferedReader br = 
+//				new BufferedReader(new InputStreamReader(req.getInputStream()));
+//		JSONObject jsonObj = new JSONObject(req.getInputStream());
+//		try {
+//			String favorite = fromJson.get("member:1:favorite").getAsString();
+//			System.out.println(favorite);
+//			System.out.println(jsonObj.getString("member:1:favorite"));
+// 		}catch (Exception e) {
+//			System.out.println("error");
+//		}
+		
+//		out.print(123);
+		String action = req.getParameter("action");
+//		System.out.println("Servlet get action = " + action);
+//		System.out.println("Servlet get value = ");
 		CatInfoService catInfoService = new CatInfoService();
+		
+		//從FoviriteServlet過來的,來找出對應的cat
+		if("getRedisListFav".equals(action)) {
+			List<String> catList = (ArrayList) req.getAttribute("catList");
+//			catList = req.getAttribute("catList");
+//			System.out.println("catList in servlet = " + catList);
+//			System.out.println(catInfoService.getFavList(catList));
+			List<CatInfoVO> lists = catInfoService.getFavList(catList);
+			req.getSession().setAttribute("lists", lists);
+			req.getRequestDispatcher("/views/catInfo/My_favorite.jsp").forward(req, res);
+//			req.getSession().setAttribute("catInfoVO", catInfoVO);
+		}
+		
+		//多條件查詢(首頁找全部+個別多條件)
+		if("listEmps_ByCompositeQuery".equals(action)) {
+//			System.out.println(action);
+			Map<String, String[]> mapa = req.getParameterMap();
+			Set<String> keys = mapa.keySet();
+//			System.out.println(keys);
+			CatInfoVO catInfoVO = new CatInfoVO();	//把搜尋條件存在catInfoVO		
+			for(String key : keys) {
+				String value = mapa.get(key)[0];
+				if(value != null && value.trim().length() != 0 && !"action".equals(key)) {
+//					System.out.println("我在servlet, key: " + key + ", value: " + value);
+					if("breed".equals(key)) {
+						catInfoVO.setBreed(value);
+						}
+					if("age".equals(key)) {
+						switch (value) {
+							case "幼貓":
+								catInfoVO.setAge(0);
+								break;
+							case "小貓":
+								catInfoVO.setAge(1);
+								break;
+							case "成貓":
+								catInfoVO.setAge(2);
+								break;
+							case "老貓":
+								catInfoVO.setAge(3);
+								break;
+						}
+					}
+					if("size".equals(key)) {
+						catInfoVO.setSize(value);
+					}
+					if("Gender".equals(key)) {
+						catInfoVO.setSex(value);
+					}
+					if("Color".equals(key)) {
+						catInfoVO.setCoatColor(value);
+					}
+					if("Color".equals(key)) {
+						catInfoVO.setCoatColor(value);
+					}
+					if("shelter_day".equals(key)) {
+//						System.out.println("in age" + value);
+						java.sql.Date now = null;
+						long oneday = 86400000;
+						switch (value) {
+						case "1":
+							now = new java.sql.Date(System.currentTimeMillis() - oneday*1);
+//							System.out.println("在1 裡面 " + now);
+							catInfoVO.setCreateDate(now);
+							break;
+						case "7":
+							now = new java.sql.Date(System.currentTimeMillis() - oneday*7);
+							catInfoVO.setCreateDate(now);
+							break;
+						case "14":
+							now = new java.sql.Date(System.currentTimeMillis() - oneday*14);
+							catInfoVO.setCreateDate(now);
+							break;
+						case "30":
+							now = new java.sql.Date(System.currentTimeMillis() - oneday*30);
+//							System.out.println(now);
+							catInfoVO.setCreateDate(now);
+							break;
+					}
+					}
+					
+				}
+			}
+//			System.out.println(new java.sql.Date(System.currentTimeMillis()));
+//			System.out.println("我在servlet, breed: " + catInfoVO.getBreed()+ ", age: " + catInfoVO.getAge()+ ", size: " + catInfoVO.getSize()+ ", Gender: " + catInfoVO.getSex()+ ", coat color: " + catInfoVO.getCoatColor()+ ", date: " + catInfoVO.getCreateDate());
+//			out.println("我在servlet, key: " + key + ", value: " + value + ", breed: " + catInfoVO.getBreed()+ ", age: " + catInfoVO.getAge());
+			
+//			catInfoVO.setBreed(value);
+			List<CatInfoVO> lists = catInfoService.getMulti(catInfoVO);
+			
+//			System.out.println(lists.size());
+//			req.setAttribute("lists", lists);
+			req.getSession().setAttribute("lists", lists);
+			req.getSession().setAttribute("catInfoVO", catInfoVO); //這個是給留給分頁存放多值條件
+//			req.setAttribute("size", lists.size());
+//			req.getSession().getAttribute("lists");
+//			int n = (int) req.getSession().getAttribute("size");
 
-		//新增新增新增新增新增新增新增新增
+//			System.out.println("test : " + n);
+//			req.setAttribute("listsa", lists);
+//			req.setAttribute("xxx", "xxxx");
+//			System.out.println("印出 " + lists);
+//			res.getWriter().append(lists.get(0).getBreed());
+
+	
+			req.getRequestDispatcher("/views/catInfo/My_search.jsp").forward(req, res);
+//			req.getRequestDispatcher("/views/catInfo/TestNewFile.jsp").forward(req, res);
+
+			
+		
+			
+//			System.out.println(" CatInfoServlet ok2");
+		}
+
+//新增新增新增新增新增新增新增新增
 	    if ("insert".equals(action)) { 
 				List<String> errorMsgs = new LinkedList<String>();
 				req.setAttribute("errorMsgs", errorMsgs);
@@ -79,7 +209,7 @@ public class CatInfoServlet extends HttpServlet {
 						errorMsgs.add("健康資訊請勿空白");
 					}
 					String adoptCost_str = req.getParameter("adoptCost");
-					System.out.println(adoptCost_str);
+//					System.out.println(adoptCost_str);
 //					if (("").equals(adoptCost_str)) {
 //						errorMsgs.add("認養金額請勿空白");
 //					}else {
@@ -178,7 +308,7 @@ public class CatInfoServlet extends HttpServlet {
 //					memID = new Integer(req.getParameter("memID"));	//			
 //					memID = 1;	//			
 				}
-				System.out.println(memID);
+//				System.out.println(memID);
 				String shelterName = req.getParameter("shelterName");
 				String catName = req.getParameter("catName");
 				Boolean haveVaccine = Boolean.valueOf(req.getParameter("haveCaccine"));
@@ -236,7 +366,7 @@ public class CatInfoServlet extends HttpServlet {
 			
 			try {
 				Integer catID = Integer.valueOf(req.getParameter("catID"));
-				System.out.println("catID : " + catID);
+//				System.out.println("catID : " + catID);
 				catInfoService.deleteCat(catID);
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
@@ -293,6 +423,20 @@ public class CatInfoServlet extends HttpServlet {
 			} catch (Exception e) {
 				errorMsgs.add("this catID is not avaliable");
 			}
+		}
+		
+		//顯示到CatPage
+		if ("getCatPage".equals(action)) {
+			
+			Integer catID = null;
+			String str = req.getParameter("catID");
+			catID = Integer.valueOf(req.getParameter("catID"));
+			System.out.println("catID:" + catID);
+			CatAndShelVO catAndShelVO = catInfoService.getOneAndShel(catID);
+			req.setAttribute("catAndShelVO", catAndShelVO); // 資料庫取出的empVO物件,存入req
+			String url = "/views/catInfo/CatPage.jsp";
+			RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 listOneEmp.jsp
+			successView.forward(req, res);
 		}
 		
 	}
