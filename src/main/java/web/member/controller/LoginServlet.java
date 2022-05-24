@@ -83,7 +83,7 @@ public class LoginServlet extends HttpServlet {
 	            return;
 	        }else {
 	            session.removeAttribute("preURL");   
-	            res.sendRedirect("");      //想導入位置尚未確定，需驗證      
+	            res.sendRedirect("/Adopets/views/catInfo/My_home.jsp");      //想導入位置尚未確定，需驗證      
 	            return;
 	        }
 			/*************************** 其他可能的錯誤處理 **********************************/

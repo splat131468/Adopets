@@ -1213,7 +1213,12 @@
                                 <svg role="img" focusable="false">
                                     <use xlink:href="#icon-account"></use>
                                 </svg>
-                                <span class="header-inner-profile-accountBtn-title">會員ID</span>
+                                  <c:if test="${empty memberVO.name}">
+                                	<span class="header-inner-profile-accountBtn-title">會員ID</span>
+                                </c:if>
+                                 <c:if test="${not empty memberVO.name}">
+                                	<span class="header-inner-profile-accountBtn-title">Hi ~ ${memberVO.name}</span>
+                                </c:if>
                             </button>
                             <div class="header-inner-profile-wrapper">
                                 <ul pfdc-header-profiledropdown="" bind-active-class-to="[pfdc-header-profilemenu]"

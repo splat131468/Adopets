@@ -5,6 +5,7 @@
 <%@ page import="java.util.*"%>
 <%@ page import="web.catInfo.service.*"%>
 <%@ page import="web.catInfo.entity.*"%>
+<%@ page import="web.member.entity.MemberVO"%>
 
 <%
 	CatInfoService catInfoService = new CatInfoService();
@@ -24,7 +25,7 @@
  		
  	} */
     
-  
+   MemberVO memberVO = (MemberVO)session.getAttribute("memberVO");
 %>
 
 <%-- --${catInfoVO.breed}--
@@ -159,7 +160,7 @@
 
                         </div>
                         <!--我是我的最愛我是我的最愛我是我的最愛我是我的最愛我是我的最愛我是我的最愛我是我的最愛我是我的最愛我是我的最愛-->
-                        <a href="${pageContext.request.contextPath}/Favorite?action=getRedisListFav&key=member:1:favorite" title="Favorites"
+                        <a href="${pageContext.request.contextPath}/Favorite?action=getRedisListFav" title="Favorites"
                             class="header-inner-favoritesBtn"
                             pf-mix-click="trackingBridge.ensighten(&#39;analyticsFilterFavoritesGlobalNav&#39;);"
                             data-analytics-key="favorites">
@@ -188,7 +189,12 @@
                                 <svg role="img" focusable="false">
                                     <use xlink:href="#icon-account"></use>
                                 </svg>
-                                <span class="header-inner-profile-accountBtn-title">會員ID</span>
+                                <c:if test="${empty memberVO.name}">
+                                	<span class="header-inner-profile-accountBtn-title">會員ID</span>
+                                </c:if>
+                                 <c:if test="${not empty memberVO.name}">
+                                	<span class="header-inner-profile-accountBtn-title">Hi ~ ${memberVO.name}</span>
+                                </c:if>
                             </button>
                             <div class="header-inner-profile-wrapper">
                                 <ul pfdc-header-profiledropdown="" bind-active-class-to="[pfdc-header-profilemenu]"
@@ -1974,7 +1980,7 @@
 			     dataType: "json",
 			     data:{
 			    	 "action":"addRedis",
-			         "member:1:favorite":catID  
+			         "catID":catID  
 		  		 },
 	              type: "POST",
 	              success: function (result) {
@@ -1996,8 +2002,8 @@
 			     url: "${pageContext.request.contextPath}/Favorite",
 			     dataType: "json",
 			     data:{
-			    	 "action":"getRedis",
-			    	 "key":"member:1:favorite"  
+			    	 "action":"getRedis"/* ,
+			    	 "key":"member:1:favorite"   */
 		  		 },
 	              type: "POST",
 	              success: function (result) {  
