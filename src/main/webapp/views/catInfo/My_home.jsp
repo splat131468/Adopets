@@ -11,7 +11,7 @@
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Adopet Home</title>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/views/catInfo/files/homepage.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/views/catInfo/files/homepage_1.css">
   <link rel="stylesheet" href="${pageContext.request.contextPath}/views/catInfo/files/css_L5nWqD5SQK8ZrCIRrm01g1QcB7QmIYINuJjhTPq7WFs.css">
   <link rel="stylesheet" href="${pageContext.request.contextPath}/views/catInfo/files/css_48il_hUScvaXu5Lky-fqRm9LjbUTybcek-Dq368IMAI.css">
   <link rel="stylesheet" href="${pageContext.request.contextPath}/views/catInfo/files/flickity.min.css">
@@ -76,7 +76,7 @@
 		
 		h1 {
 		  /* padding-bottom: 1px; */
-		  color: #fff!important;
+		  /* color: #fff!important; */
 		}
   </style>
   
@@ -273,7 +273,7 @@
 
               <div class="header-inner-profile__container">
                 <ul class="header-inner-profile">
-<<<<<<< HEAD
+
                   
 					<c:if test="${empty memberVO.memID}">
                   		<li><a href="${pageContext.request.contextPath}/views/signIn/register.jsp" class="header-inner-profile-btn">註冊</a></li>
@@ -282,10 +282,7 @@
                   	<c:if test="${not empty memberVO.memID}">
                   		<li><a href="${pageContext.request.contextPath}/views/member/member.jsp" class="header-inner-profile-btn ">Hi ~ ${memberVO.name}</a></li>
                   	</c:if>
-=======
-                  <li><a href="#" class="header-inner-profile-btn">註冊</a></li>
-                  <li><a href="${pageContext.request.contextPath}/views/member/signIn.jsp" class="header-inner-profile-btn">登入</a></li>
->>>>>>> 7efc3866e30dc2616d82adb63dfa73392d15f8ec
+
                 </ul>
               </div>
             </div>

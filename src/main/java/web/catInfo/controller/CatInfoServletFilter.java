@@ -16,9 +16,9 @@ import javax.servlet.http.HttpSession;
 import web.member.entity.MemberVO;
 
 @WebFilter(
-		  urlPatterns={"/Favorite"}  
+		  urlPatterns={"/CatInfoServlet"}  
 		)
-		public class FavoriteFilter implements Filter{
+		public class CatInfoServletFilter implements Filter{
 		 @Override
 		 public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 		   throws IOException, ServletException {
@@ -29,7 +29,7 @@ import web.member.entity.MemberVO;
 		  if(memberVO!=null) {  //阻擋尚未登入 判斷是否有登入 無:跳轉至登入畫面
 		   chain.doFilter(request, response);
 		  }else {
-		      session.setAttribute("preURL","/Adopets/Favorite?action=getRedisListFav");
+		      session.setAttribute("preURL","/Adopets/CatInfoServlet?action=listEmps_ByCompositeQuery");
 		   RequestDispatcher successView = req.getRequestDispatcher("/views/signIn/signIn.jsp");
 		   successView.forward(request, response);
 		  }
