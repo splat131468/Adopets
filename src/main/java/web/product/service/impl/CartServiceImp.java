@@ -208,14 +208,15 @@ public class CartServiceImp implements CartService {
 		aCheckOut.setNeedExtraPaidInfo("N");
 //		System.out.println(allInOne.aioCheckOut(aCheckOut, null));
 
-		return allInOne.aioCheckOut(aCheckOut, null);
 
 		// 這個部分要等有domain才能夠做下去
 		// 移除庫存
-//		skuService.takeOrder(sellList);
+		skuService.takeOrder(sellList);
 
 		// 移除購物車
-//		cartService.delMulItem(memID, cart);
+		cartService.delMulItem(memID, cart);
+		
+		return allInOne.aioCheckOut(aCheckOut, null);
 
 	}
 
