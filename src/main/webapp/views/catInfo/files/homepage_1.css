@@ -569,7 +569,8 @@ screen and (min-width:925px) {
     flex-shrink: 0;
     font-size: 14px;
     position: relative;
-    width: 215px
+    width: 215px;
+    margin: 0px;
 }
 
 @media screen and (max-width:667px) {

@@ -4137,7 +4137,8 @@
 	
 		var messagesArea = document.getElementById("messagesArea");
 		var statusOutput = document.getElementById("statusOutput");
-		var self = 'USER1'; //sender改用EL ${userName}
+		var self = `${memberVO.name}`; //sender改用EL ${userName}
+
 		var webSocket;
     
     function connect() {
