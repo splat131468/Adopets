@@ -18,6 +18,7 @@ import org.json.JSONArray;
 
 import com.google.gson.Gson;
 
+import web.member.entity.MemberVO;
 import web.order.entity.OrderDetailVO;
 import web.order.entity.OrdersVO;
 import web.order.service.OrdersService;
@@ -107,8 +108,10 @@ public class OrdersServlet extends HttpServlet {
 
 			try {
 				/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
-				HttpSession session = req.getSession();
-				Integer memID=(Integer) session.getAttribute("memID");
+				MemberVO memberVO = (MemberVO) req.getSession().getAttribute("memberVO");
+			    
+			    
+			    Integer memID = memberVO.getMemID();
 
 				
 
@@ -127,7 +130,7 @@ public class OrdersServlet extends HttpServlet {
 
 				/*************************** 3.查詢完成,準備轉交(Send the Success view) *************/
 				req.setAttribute("list", ordersVO); // 資料庫取出的OrdersVO物件,存入req
-				String url = "/views/member/orderListMember.jsp";
+				String url = "/views/member/orderListLog.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); 
 				System.out.println("2222222222222");
 				successView.forward(req, res);
