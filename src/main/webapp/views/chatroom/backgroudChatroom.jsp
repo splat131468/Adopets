@@ -304,6 +304,13 @@ tr,td {
                 <p>捐款管理</p>
               </a>
             </li>
+            
+             <li class="nav-item">
+               <a href="<%=request.getContextPath()%>/views/catInfo/select_page.jsp" class="nav-link">
+                <i class="nav-icon fa-solid fa-sack-dollar"></i>
+                <p>貓咪管理</p>
+              </a>
+            </li>
 
             <li class="nav-item">
               <a href="#" class="nav-link ">

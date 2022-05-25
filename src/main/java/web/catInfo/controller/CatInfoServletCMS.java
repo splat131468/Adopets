@@ -31,9 +31,9 @@ import web.catInfo.service.CatInfoService;
 
 
 
-@WebServlet("/CatInfoServlet")
+@WebServlet("/CatInfoServletCMS")
 @MultipartConfig(fileSizeThreshold = 1024 * 1024, maxFileSize = 5 * 1024 * 1024, maxRequestSize = 5 * 5 * 1024 * 1024)
-public class CatInfoServlet extends HttpServlet {
+public class CatInfoServletCMS extends HttpServlet {
 
 
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) 

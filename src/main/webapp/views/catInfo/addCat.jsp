@@ -100,7 +100,7 @@ ul>li {
 			</td>
 			<td>
 				<h4>
-					<a href="${pageContext.request.contextPath}/views/catInfo/select_page.jsp">回首頁</a>
+					<a href="${pageContext.request.contextPath}/views/catInfo/CatCMS.jsp">回首頁</a>
 				</h4>
 			</td>
 		</tr>
