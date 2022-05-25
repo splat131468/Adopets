@@ -123,7 +123,7 @@
 			</div>
 		</c:forEach> 
 
-<FORM METHOD="post" ACTION="CatInfoServlet" name="form1" enctype="multipart/form-data">
+<FORM METHOD="post" ACTION="CatInfoServletCMS" name="form1" enctype="multipart/form-data">
 <table>
 	<tr>
 		<td>貓咪編號:<font color=red><b>*</b></font></td>

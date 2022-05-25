@@ -250,7 +250,7 @@
             <!--我的最愛+購物車+登入+登出-->
             <div class="profile-navigation">
               <!--我的最愛-->
-              <a href="" class="nav-favorites-btn">
+              <a href="${pageContext.request.contextPath}/Favorite?action=getRedisListFav" class="nav-favorites-btn">
                 <svg role="img" focusable="false">
                   <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-favorite"></use>
                 </svg>
@@ -304,13 +304,13 @@
                   <div class="paragraph paragraph--type--hero-banner-images paragraph--view-mode--default">
                     <!--首頁圖片-->
                     <picture>
-                      <source srcset="./img/page.png" media="(min-width: 1438px)">
-                      <source srcset="./img/page.png" media="(min-width: 1140px)">
-                      <source srcset="./img/page.png" media="(min-width: 925px)">
-                      <source srcset="./img/page.png" media="(min-width: 728px)">
-                      <source srcset="./img/page.png" media="(min-width: 667px)">
-                      <source srcset="./img/page.png" media="(max-width: 499px)">
-                      <img src="./img/page.png" aria-hidden="true" class="hero-img" alt="Dog and cat picture">
+                      <source srcset="${pageContext.request.contextPath}/views/catInfo/img/page.png" media="(min-width: 1438px)">
+                      <source srcset="${pageContext.request.contextPath}/views/catInfo/img/page.png" media="(min-width: 1140px)">
+                      <source srcset="${pageContext.request.contextPath}/views/catInfo/img/page.png" media="(min-width: 925px)">
+                      <source srcset="${pageContext.request.contextPath}/views/catInfo/img/page.png" media="(min-width: 728px)">
+                      <source srcset="${pageContext.request.contextPath}/views/catInfo/img/page.png" media="(min-width: 667px)">
+                      <source srcset="${pageContext.request.contextPath}/views/catInfo/img/page.png" media="(max-width: 499px)">
+                      <img src="${pageContext.request.contextPath}/views/catInfo/img/page.png" aria-hidden="true" class="hero-img" alt="Dog and cat picture">
                     </picture>
                   </div>
                 </div>
