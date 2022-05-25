@@ -687,12 +687,12 @@
                                         <!-- cat body cat body cat body cat body cat body cat body cat body cat body cat body -->
                                         <div class="searchContainer-body">
                                         	 
-                                        	<!-- add tag add tag add tag add tag add tag add tag -->
-                                        	  <div class="split split_stack@maxMd m-split_alignTop">
+                                        	<!-- add tag + best match -->
+                                        	  <!-- <div class="split split_stack@maxMd m-split_alignTop">
                                                 <div class="split-item">
                                                     <div id="Pet_Search_Applied_Filters" class="u-hr6x"></div>
-                                                    
-                                                   	add tag
+                                                    add tag
+                                                   	
                                                 </div>
                                                 <div class="split-item u-isHidden@maxLg">
                                                     <pfdc-generic-select id="sort-select"
@@ -746,7 +746,7 @@
                                                     </pf-element>
                                                 </div>
                                             </div>
-                                        	
+                                        	 -->
                                         	
                                         	
                                         	 
