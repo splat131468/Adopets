@@ -277,95 +277,81 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <!-- /.navbar -->
 
         <!-- Main Sidebar Container -->
-        <aside style="height: 100%;" class="main-sidebar sidebar-dark-primary elevation-4">
+        <aside class="main-sidebar sidebar-dark-primary elevation-4">
           <!-- 首頁 Logo -->
           <a href="starter.html" class="brand-link">
-            <span class="brand-text font-weight-light"><img src="dist/img/Adopets.svg" width="55%"></span>
+            <span class="brand-text font-weight-light"><img src="<%=request.getContextPath()%>/resources/background/img/Adopets.svg" width="55%"></span>
           </a>
-
-          <!-- Sidebar -->
+    
+           <!-- Sidebar -->
           <div class="sidebar">
             <!-- Sidebar user panel (optional) -->
             <div class="user-panel mt-3 pb-3 mb-3 d-flex">
               <div class="image">
-                <img src="dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
+                <img src="${pageContext.request.contextPath}/UploadAdmImg?adminID=${adminVO.adminID}" class="img-circle elevation-2" alt="User Image">
               </div>
               <div class="info">
-                <a href="#" class="d-block">Alexander Pierce</a>
+                <a href="#" class="d-block">${adminVO.name}</a>
               </div>
             </div>
-
+    
             <!-- SidebarSearch Form -->
             <div class="form-inline">
               <div class="input-group" data-widget="sidebar-search">
-                <input  class="form-control form-control-sidebar" type="search" placeholder="商品名稱" aria-label="Search">
+                <input class="form-control form-control-sidebar" type="search" placeholder="Search" aria-label="Search">
                 <div class="input-group-append">
-                  <button  class="btn btn-sidebar">
+                  <button class="btn btn-sidebar">
                     <i class="fas fa-search fa-fw"></i>
                   </button>
                 </div>
               </div>
             </div>
-
+    
             <!-- Sidebar Menu -->
             <nav class="mt-2">
-              <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
-                data-accordion="false">
+              <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                 <!-- Add icons to the links using the .nav-icon class
-               with font-awesome or any other icon font library -->
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+                   with font-awesome or any other icon font library -->
+    
                 <li class="nav-item">
                   <a href="<%=request.getContextPath()%>/views/backgroundMember/backgroundMember.jsp" class="nav-link">
                     <i class="nav-icon fa-solid fa-user"></i>
                     <p>會員管理</p>
                   </a>
                 </li>
-
+    
                 <li class="nav-item">
-                  <a href="checked.html" class="nav-link">
+                  <a href="checked.html" class="nav-link ">
                     <i class="nav-icon fas fa-edit"></i>
                     <p>審核管理</p>
                   </a>
                 </li>
-
+    
                 <li class="nav-item">
-                  <a href="${pageContext.request.contextPath}/prodManage?action=prodList" class="nav-link active" > 
+                  <a href="${pageContext.request.contextPath}/prodManage?action=prodList" class="nav-link active">
                     <i class="nav-icon fa-solid fa-store"></i>
                     <p>商品管理</p>
                   </a>
                 </li>
-
+    
                 <li class="nav-item">
                   <a href="<%=request.getContextPath()%>/views/order/Orders.jsp" class="nav-link">
                     <i class="nav-icon fa-solid fa-clipboard-list"></i>
                     <p>訂單管理</p>
                   </a>
                 </li>
-
+    
                 <li class="nav-item">
                   <a href="<%=request.getContextPath()%>/views/donate/donateBackground.jsp" class="nav-link">
                     <i class="nav-icon fa-solid fa-sack-dollar"></i>
                     <p>捐款管理</p>
                   </a>
                 </li>
-
-
+    
+    
+    
                 <li class="nav-item">
-                  <a href="#" class="nav-link">
+                  <a href="#" class="nav-link ">
                     <i class="nav-icon fa-solid fa-gear"></i>
                     <p>
                       系統管理
@@ -374,45 +360,31 @@ scratch. This page gets rid of all links and provides the needed markup only.
                   </a>
                   <ul class="nav nav-treeview">
                     <li class="nav-item">
-                      <a href="#" class="nav-link">
-                        <i class="nav-icon fas"></i>
+                      <a href="<%=request.getContextPath()%>/views/admin/system.jsp" class="nav-link">
+                        <i style="margin-left: 33px;"></i>
                         <p>使用者管理</p>
                       </a>
                     </li>
-
-
+    
                     <li class="nav-item">
-                      <a href="#" class="nav-link">
-                        <i class="nav-icon fas"></i>
-                        <p>操作紀錄</p>
+                      <a href="<%=request.getContextPath()%>/views/admin/systemAuth.jsp" class="nav-link">
+                        <i style="margin-left: 33px;"></i>
+                        <p>權限管理</p>
                       </a>
                     </li>
+    
                   </ul>
-
-                <li class="nav-item">
-                  <a href="#" class="nav-link">
-                    <i class="nav-icon fas fa-th"></i>
-                    <p>
-                      Simple Link
-                      <span class="right badge badge-danger">New</span>
-                    </p>
-                  </a>
                 </li>
-
-
-
-
-
-
-
-
+    
+    
+    
+    
               </ul>
             </nav>
             <!-- /.sidebar-menu -->
           </div>
           <!-- /.sidebar -->
         </aside>
-
 
 
 
