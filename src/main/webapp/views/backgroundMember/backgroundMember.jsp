@@ -6,11 +6,11 @@
 <%@ page import="web.member.entity.*"%>
 <%@ page import="web.member.service.impl.*"%>
 <!DOCTYPE html>
-<%-- <% --%>
+<%
 
-// session.getAttribute("adminVO");
-// session.getAttribute("auth");
-<%-- %> --%>
+session.getAttribute("adminVO");
+session.getAttribute("auth");
+%>
 <%
     MemberService memSvc = new MemberService();
     List<MemberVO> list = memSvc.getAll();
