@@ -70,12 +70,16 @@ public class CatInfoServlet extends HttpServlet {
 		
 		//從FoviriteServlet過來的,來找出對應的cat
 		if("getRedisListFav".equals(action)) {
-			List<String> catList = (ArrayList) req.getAttribute("catList");
+			try {
+				List<String> catList = (ArrayList) req.getAttribute("catList");
+				List<CatInfoVO> lists = catInfoService.getFavList(catList);
+				req.getSession().setAttribute("lists", lists);
+				
+			}catch (Exception e) {
+			}
 //			catList = req.getAttribute("catList");
 //			System.out.println("catList in servlet = " + catList);
 //			System.out.println(catInfoService.getFavList(catList));
-			List<CatInfoVO> lists = catInfoService.getFavList(catList);
-			req.getSession().setAttribute("lists", lists);
 			req.getRequestDispatcher("/views/catInfo/My_favorite.jsp").forward(req, res);
 //			req.getSession().setAttribute("catInfoVO", catInfoVO);
 		}
@@ -435,6 +439,18 @@ public class CatInfoServlet extends HttpServlet {
 			CatAndShelVO catAndShelVO = catInfoService.getOneAndShel(catID);
 			req.setAttribute("catAndShelVO", catAndShelVO); // 資料庫取出的empVO物件,存入req
 			String url = "/views/catInfo/CatPage.jsp";
+			RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 listOneEmp.jsp
+			successView.forward(req, res);
+		}
+		if ("getCatback".equals(action)) {
+			
+			Integer catID = null;
+			String str = req.getParameter("catID");
+			catID = Integer.valueOf(req.getParameter("catID"));
+			System.out.println("catID:" + catID);
+			CatAndShelVO catAndShelVO = catInfoService.getOneAndShel(catID);
+			req.setAttribute("catAndShelVO", catAndShelVO); // 資料庫取出的empVO物件,存入req
+			String url = "/views/chatroom/backgroundchatroom2.jsp";
 			RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 listOneEmp.jsp
 			successView.forward(req, res);
 		}

@@ -329,7 +329,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
 
                 <li class="nav-item">
-                  <a href="member.html" class="nav-link">
+                  <a href="<%=request.getContextPath()%>/views/backgroundMember/backgroundMember.jsp" class="nav-link">
                     <i class="nav-icon fa-solid fa-user"></i>
                     <p>會員管理</p>
                   </a>
@@ -350,16 +350,16 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 </li>
 
                 <li class="nav-item">
-                  <a href="lists.html" class="nav-link">
+                  <a href="<%=request.getContextPath()%>/views/order/Orders.jsp" class="nav-link">
                     <i class="nav-icon fa-solid fa-clipboard-list"></i>
                     <p>訂單管理</p>
                   </a>
                 </li>
 
                 <li class="nav-item">
-                  <a href="money.html" class="nav-link">
+                  <a href="<%=request.getContextPath()%>/views/donate/donateBackground.jsp" class="nav-link">
                     <i class="nav-icon fa-solid fa-sack-dollar"></i>
-                    <p>金流管理</p>
+                    <p>捐款管理</p>
                   </a>
                 </li>
 

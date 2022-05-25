@@ -19,6 +19,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 
+import web.member.entity.MemberVO;
 import web.order.entity.OrderDetailVO;
 import web.order.entity.OrdersVO;
 import web.order.service.OrderDetailService;
@@ -40,7 +41,7 @@ public class ShCartAction extends HttpServlet {
 	SpuService spuService = new SpuServiceImp();
 	OrdersService orderService = new OrdersService();
 	OrderDetailService orderDetailService = new OrderDetailService();
-	SkuService skuService=new SkuServiceImp();
+	SkuService skuService = new SkuServiceImp();
 
 	private static final long serialVersionUID = 1L;
 
@@ -55,26 +56,28 @@ public class ShCartAction extends HttpServlet {
 		if ("getCart".equals(action)) {
 
 			try {
-			// 判斷登入
-			// 假定memID = 1
-			Integer memID = new Integer(1);
-			
-			List<CartItem> cart = cartService.getCart(memID);
+				// 判斷登入
+				// 假定memID = 1
+				MemberVO memberVO = (MemberVO) req.getSession().getAttribute("memberVO");
 
-			// 建立一個List做畫面呈現
-			List<SkuVO> skuVO = new ArrayList<SkuVO>();
+				Integer memID = memberVO.getMemID();
 
-			// 用cart裡的 spuID 去找產品
+				List<CartItem> cart = cartService.getCart(memID);
 
-			cart.forEach(e -> {
-				SkuVO skuID = new SkuVO();
-				skuVO.add(spuService.getSkuVO(e.getSkuID()));
-			});
-			req.setAttribute("cart", cart);
-			req.setAttribute("cartList", skuVO);
-			req.getRequestDispatcher("/views/ecommerce/shoping-cart.jsp").forward(req, resp);
-			return;
-			}catch (Exception e) {
+				// 建立一個List做畫面呈現
+				List<SkuVO> skuVO = new ArrayList<SkuVO>();
+
+				// 用cart裡的 spuID 去找產品
+
+				cart.forEach(e -> {
+					SkuVO skuID = new SkuVO();
+					skuVO.add(spuService.getSkuVO(e.getSkuID()));
+				});
+				req.setAttribute("cart", cart);
+				req.setAttribute("cartList", skuVO);
+				req.getRequestDispatcher("/views/ecommerce/shoping-cart.jsp").forward(req, resp);
+				return;
+			} catch (Exception e) {
 				System.out.println("取得購物車有誤");
 			}
 		}
@@ -98,15 +101,15 @@ public class ShCartAction extends HttpServlet {
 		// 商品新增
 		if ("addItem".equals(action)) {
 			try {
-			// 判斷是否登入 取得用戶id
-//			req.getSession().getAttribute("memID")
-			// 先假設memID = 1
-			Integer memID = new Integer(1);
-			JsonElement jsonElement = fromJson.get("cartItem");
-			CartItem cartItem = gson.fromJson(jsonElement, CartItem.class);
-			String res = cartService.addItem(memID, cartItem);
-			resp.getWriter().append(gson.toJson(res));
-			}catch (Exception e) {
+				MemberVO memberVO = (MemberVO) req.getSession().getAttribute("memberVO");
+
+				Integer memID = memberVO.getMemID();
+
+				JsonElement jsonElement = fromJson.get("cartItem");
+				CartItem cartItem = gson.fromJson(jsonElement, CartItem.class);
+				String res = cartService.addItem(memID, cartItem);
+				resp.getWriter().append(gson.toJson(res));
+			} catch (Exception e) {
 				System.out.println("商品新增有誤");
 			}
 			return;
@@ -114,38 +117,40 @@ public class ShCartAction extends HttpServlet {
 		} else if ("updateCart".equals(action)) {
 
 			try {
-			// 判斷登入
+				// 判斷登入
+				MemberVO memberVO = (MemberVO) req.getSession().getAttribute("memberVO");
+				
+				Integer memID = memberVO.getMemID();
+				
+				JsonElement jsonElement = fromJson.get("cartItem");
 
-			// 假定memID = 1
-			Integer memID = new Integer(1);
-			JsonElement jsonElement = fromJson.get("cartItem");
+				CartItem cartItem = gson.fromJson(jsonElement, CartItem.class);
 
-			CartItem cartItem = gson.fromJson(jsonElement, CartItem.class);
+				// 新增並取得新的skuVO
+				SkuVO skuVO = cartService.updateCartItem(memID, cartItem);
 
-			// 新增並取得新的skuVO
-			SkuVO skuVO = cartService.updateCartItem(memID, cartItem);
-		
-			resp.getWriter().append(gson.toJson(skuVO));
-			}catch (Exception e) {
+				resp.getWriter().append(gson.toJson(skuVO));
+			} catch (Exception e) {
 				System.out.println("更改有誤");
 			}
-			
+
 			return;
-			
+
 		} else if ("deleteCart".equals(action)) {
 
 			try {
-			// 判斷登入
+				MemberVO memberVO = (MemberVO) req.getSession().getAttribute("memberVO");
+				
+				
+				Integer memID = memberVO.getMemID();
+				
+				JsonElement jsonElement = fromJson.get("cartItem");
 
-			// 假定memID = 1
-			Integer memID = new Integer(1);
-			JsonElement jsonElement = fromJson.get("cartItem");
+				CartItem cartItem = gson.fromJson(jsonElement, CartItem.class);
+				String res = cartService.delSingleItem(memID, cartItem);
 
-			CartItem cartItem = gson.fromJson(jsonElement, CartItem.class);
-			String res = cartService.delSingleItem(memID, cartItem);
-
-			resp.getWriter().append(gson.toJson(res));
-			}catch (Exception e) {
+				resp.getWriter().append(gson.toJson(res));
+			} catch (Exception e) {
 				System.out.println("刪除有誤");
 			}
 
@@ -153,74 +158,72 @@ public class ShCartAction extends HttpServlet {
 		} else if ("updateNum".equals(action)) {
 
 			try {
-			// 判斷登入
+				MemberVO memberVO = (MemberVO) req.getSession().getAttribute("memberVO");
+				
+				
+				Integer memID = memberVO.getMemID();
+				
+				JsonElement jsonElement = fromJson.get("cartItem");
 
-			// 假定memID = 1
-			Integer memID = new Integer(1);
-			JsonElement jsonElement = fromJson.get("cartItem");
+				CartItem cartItem = gson.fromJson(jsonElement, CartItem.class);
 
-			CartItem cartItem = gson.fromJson(jsonElement, CartItem.class);
+				Integer updateNum = cartService.updateNum(memID, cartItem);
 
-			Integer updateNum = cartService.updateNum(memID, cartItem);
-
-			resp.getWriter().append(gson.toJson(updateNum));
-			}catch (Exception e) {
+				resp.getWriter().append(gson.toJson(updateNum));
+			} catch (Exception e) {
 				System.out.println("修正購物車商品數量有誤");
 			}
 			return;
 			// 前往訂單頁面
 		} else if ("cartCheckOut".equals(action)) {
-			
+
 			try {
-				
-			JsonElement jsonElement = fromJson.get("skuIDArr");
-			// 轉成List 取得帶結帳的skuID
-			List<Integer> skuIDArr = gson.fromJson(jsonElement, new TypeToken<List<Integer>>() {
-			}.getType());
 
-			// 提供商品規格list 取得訂單明細物件
-			List<OrderDetailVO> detail = cartService.cartCheckOut(skuIDArr);
-			
+				JsonElement jsonElement = fromJson.get("skuIDArr");
+				// 轉成List 取得帶結帳的skuID
+				List<Integer> skuIDArr = gson.fromJson(jsonElement, new TypeToken<List<Integer>>() {
+				}.getType());
 
-			HttpSession session = req.getSession();
-			session.setAttribute("checkout", detail);
+				// 提供商品規格list 取得訂單明細物件
+				List<OrderDetailVO> detail = cartService.cartCheckOut(skuIDArr);
 
+				HttpSession session = req.getSession();
+				session.setAttribute("checkout", detail);
 
-			req.getRequestDispatcher("/views/ecommerce/checkout.jsp").forward(req, resp);
-			
-			}catch (Exception e) {
+				req.getRequestDispatcher("/views/ecommerce/checkout.jsp").forward(req, resp);
+
+			} catch (Exception e) {
 				System.out.println("勾選的商品有錯誤");
 			}
 			return;
 
 		} else if ("takeOrder".equals(action)) {
-			
-		try {
-			
-		
-			JsonElement jsonElement = fromJson.get("skuIDArr");
-			// 轉成List 取得帶結帳的skuID
-			List<Integer> skuIDArr = gson.fromJson(jsonElement, new TypeToken<List<Integer>>() {
-			}.getType());
-			// 會員驗證
-			Integer memID = new Integer(1);
-			
-		// 建立訂單
-			jsonElement = fromJson.get("ordersVO");
-			
-		
-			
-			OrdersVO ordersVO = gson.fromJson(jsonElement, OrdersVO.class);
-			
-	
-			String takeOrder = cartService.takeOrder(skuIDArr, ordersVO, memID);
 
-			// 清除session
-			req.getSession().removeAttribute("checkout");
-			resp.getWriter().append(takeOrder);
-		}catch (Exception e) {
-			System.out.println("結帳有誤");
-		}
+			try {
+
+				JsonElement jsonElement = fromJson.get("skuIDArr");
+				// 轉成List 取得帶結帳的skuID
+				List<Integer> skuIDArr = gson.fromJson(jsonElement, new TypeToken<List<Integer>>() {
+				}.getType());
+				// 會員驗證
+				MemberVO memberVO = (MemberVO) req.getSession().getAttribute("memberVO");
+				
+				
+				Integer memID = memberVO.getMemID();
+
+				// 建立訂單
+				jsonElement = fromJson.get("ordersVO");
+
+				OrdersVO ordersVO = gson.fromJson(jsonElement, OrdersVO.class);
+
+				String takeOrder = cartService.takeOrder(skuIDArr, ordersVO, memID);
+
+				// 清除session
+				req.getSession().removeAttribute("checkout");
+				resp.getWriter().append(takeOrder);
+			} catch (Exception e) {
+				System.out.println("結帳有誤");
+			}
 
 		}
 
