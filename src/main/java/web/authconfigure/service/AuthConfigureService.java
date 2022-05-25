@@ -2,9 +2,9 @@ package web.authconfigure.service;
 
 import java.util.List;
 
+import web.auth.entity.AuthVO;
 import web.authconfigure.dao.AuthConfigureDAO;
 import web.authconfigure.dao.impl.AuthConfigureDAO_interface;
-import web.authconfigure.entity.AdminAllVO;
 import web.authconfigure.entity.AuthConfigureVO;
 
 public class AuthConfigureService {
@@ -51,11 +51,9 @@ private AuthConfigureDAO_interface dao;
 		return dao.getAll();
 	}
 	
-	public List<AdminAllVO> getFindByManager(Integer adminID) {
+	public List<AuthVO> getFindByManager(Integer adminID) {
 		return dao.findByManager(adminID);
 	}
 	
-	public List<AdminAllVO> getFindAllManager() {
-		return dao.findAllManager();
-	}
+
 }

@@ -449,13 +449,13 @@ src="<%=request.getContextPath()%>/resources/background/js/system.js"></script>
 		                      for="chk_1">會員管理</label>
 		                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 		                    <input id="chk_2" type="checkbox" name="choice" class="checknum" onclick="setAll()"  value="2"  /><label
-		                      for="chk_2">審核管理</label>
+		                      for="chk_2">商品管理</label>
 		                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 		                    <input id="chk_3" type="checkbox" name="choice" class="checknum" onclick="setAll()"  value="3"  /><label
-		                      for="chk_3">商品管理</label>
+		                      for="chk_3">訂單管理</label>
 		                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 		                    <input id="chk_4" type="checkbox" name="choice" class="checknum" onclick="setAll()"  value="4" /><label
-		                      for="chk_4">訂單管理</label>
+		                      for="chk_4">貓咪管理</label>
 		
 		                    <br>
 		
@@ -463,24 +463,12 @@ src="<%=request.getContextPath()%>/resources/background/js/system.js"></script>
 		                      for="chk_5">捐款管理</label>
 		                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 		                    <input id="chk_6" type="checkbox" name="choice" class="checknum" onclick="setAll()"  value="6" /><label
-		                      for="chk_6">貓咪管理</label>
+		                      for="chk_6">使用者管理</label>
 		                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 		                    <input id="chk_7" type="checkbox" name="choice" class="checknum" onclick="setAll()"  value="7" ><label
-		                      for="chk_7">收容所管理</label>
+		                      for="chk_7">權限管理</label>
 		                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		                    <input id="chk_8" type="checkbox" name="choice" class="checknum" onclick="setAll()" value="8"  /><label
-		                      for="chk_8">活動管理</label>
-		
-		                    <br>
-		
-		                    <input id="chk_9" type="checkbox" name="choice" class="checknum" onclick="setAll()" value="9"  /><label
-		                      for="chk_9">使用者管理</label>
-		                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		                    <input id="chk_10" type="checkbox" name="choice" class="checknum" onclick="setAll()" value="10"  /><label
-		                      for="chk_10">權限管理</label>
-		                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		                    <input id="chk_11" type="checkbox" name="choice" class="checknum" onclick="setAll()" value="11"  /><label
-		                      for="chk_11">XXXXXX</label>
+		                    
 
 		                  </div>
 

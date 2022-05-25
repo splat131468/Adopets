@@ -12,8 +12,8 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
+import web.auth.entity.AuthVO;
 import web.authconfigure.dao.impl.AuthConfigureDAO_interface;
-import web.authconfigure.entity.AdminAllVO;
 import web.authconfigure.entity.AuthConfigureVO;
 
 
@@ -45,36 +45,10 @@ public class AuthConfigureDAO implements AuthConfigureDAO_interface{
 
 		private static final String DELETE = "DELETE FROM AUTHCONFIGURE where adminID = ?";
 
-		private static final String GET_ONE_MANAGER = "SELECT\r\n"
-				+ "  a.adminID,\r\n"
-				+ "  a.account,\r\n"
-				+ "  a.password,\r\n"
-				+ "  a.name,\r\n"
-				+ "  a.personImg,\r\n"
-				+ "  a.accStatus,\r\n"
-				+ "  aq.authID,\r\n"
-				+ "  AUTH.authName\r\n"
-				+ "FROM ADMIN a \r\n"
-				+ "JOIN AUTHCONFIGURE aq\r\n"
-				+ "  ON a.adminID = aq.adminID\r\n"
-				+ "JOIN AUTH\r\n"
-				+ "  ON aq.authID = AUTH.authID where a.adminID = ?";
+		private static final String GET_ONE_MANAGER = "SELECT AUTH.authName FROM AUTHCONFIGURE aq left JOIN AUTH ON aq.authID = AUTH.authID WHERE aq.adminID = ?";
 		
 		
-		private static final String GET_ALL_MANAGER = "SELECT\r\n"
-				+ "  a.adminID,\r\n"
-				+ "  a.account,\r\n"
-				+ "  a.password,\r\n"
-				+ "  a.name,\r\n"
-				+ "  a.personImg,\r\n"
-				+ "  a.accStatus,\r\n"
-				+ "  aq.authID,\r\n"
-				+ "  AUTH.authName\r\n"
-				+ "FROM ADMIN a \r\n"
-				+ "JOIN AUTHCONFIGURE aq\r\n"
-				+ "  ON a.adminID = aq.adminID\r\n"
-				+ "JOIN AUTH\r\n"
-				+ "  ON aq.authID = AUTH.authID";
+	
 		
 		
 		
@@ -304,10 +278,9 @@ public class AuthConfigureDAO implements AuthConfigureDAO_interface{
 		}
 
 		@Override
-		public List<AdminAllVO> findByManager(Integer adminID) {
-			List<AdminAllVO> list = new ArrayList<AdminAllVO>();
-			AdminAllVO adminAllVO = null;
-			
+		public List<AuthVO> findByManager(Integer adminID) {
+			List<AuthVO> list = new ArrayList<AuthVO>();
+			AuthVO authVO = null;		
 			Connection con = null;
 			PreparedStatement pstmt = null;
 			ResultSet rs = null;
@@ -321,16 +294,9 @@ public class AuthConfigureDAO implements AuthConfigureDAO_interface{
 
 				while (rs.next()) {
 					// authConfigureVO 也稱為 Domain objects
-					adminAllVO = new AdminAllVO();				
-					adminAllVO.setAdminID(rs.getInt("adminID"));
-					adminAllVO.setAccount(rs.getString("account"));
-					adminAllVO.setPassword(rs.getString("password"));
-					adminAllVO.setName(rs.getString("name"));
-					adminAllVO.setPersonImg(rs.getBytes("personImg"));
-					adminAllVO.setAccStatus(rs.getBoolean("accStatus"));
-					adminAllVO.setAuthID(rs.getInt("authID"));
-					adminAllVO.setAuthName(rs.getString("authName"));		
-					list.add(adminAllVO);
+					authVO = new AuthVO();				
+					authVO.setAuthName(rs.getString("authName"));
+					list.add(authVO);
 				}
 			} catch (SQLException se) {
 				throw new RuntimeException("A database error occured. " + se.getMessage());
@@ -365,59 +331,5 @@ public class AuthConfigureDAO implements AuthConfigureDAO_interface{
 		
 		
 		
-		@Override
-		public List<AdminAllVO> findAllManager() {
-			List<AdminAllVO> list = new ArrayList<AdminAllVO>();
-			AdminAllVO adminAllVO = null;
-			
-			Connection con = null;
-			PreparedStatement pstmt = null;
-			ResultSet rs = null;
-
-			try {
-				con = ds.getConnection();
-				pstmt = con.prepareStatement(GET_ALL_MANAGER);
-				rs = pstmt.executeQuery();
-
-				while (rs.next()) {
-					// authConfigureVO 也稱為 Domain objects
-					adminAllVO = new AdminAllVO();				
-					adminAllVO.setAdminID(rs.getInt("adminID"));
-					adminAllVO.setAccount(rs.getString("account"));
-					adminAllVO.setPassword(rs.getString("password"));
-					adminAllVO.setName(rs.getString("name"));
-					adminAllVO.setPersonImg(rs.getBytes("personImg"));
-					adminAllVO.setAccStatus(rs.getBoolean("accStatus"));
-					adminAllVO.setAuthID(rs.getInt("authID"));
-					adminAllVO.setAuthName(rs.getString("authName"));		
-					list.add(adminAllVO);
-				}
-			}  catch (SQLException se) {
-				throw new RuntimeException("A database error occured. " + se.getMessage());
-				// Clean up JDBC resources
-			} finally {
-				if (rs != null) {
-					try {
-						rs.close();
-					} catch (SQLException se) {
-						se.printStackTrace(System.err);
-					}
-				}
-				if (pstmt != null) {
-					try {
-						pstmt.close();
-					} catch (SQLException se) {
-						se.printStackTrace(System.err);
-					}
-				}
-				if (con != null) {
-					try {
-						con.close();
-					} catch (Exception e) {
-						e.printStackTrace(System.err);
-					}
-				}
-			}
-			return list;
-		}
+	
 }

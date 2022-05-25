@@ -309,7 +309,7 @@ src="<%=request.getContextPath()%>/resources/background/js/system.js"></script>
             </li>
 
             <li class="nav-item">
-             <a href="<%=request.getContextPath()%>/views/donate/donateBackground.jsp" class="nav-link">
+             <a href="<%=request.getContextPath()%>/views/donate/donateBackground.jsp" class="nav-link active">
                 <i class="nav-icon fa-solid fa-sack-dollar"></i>
                 <p>捐款管理</p>
               </a>
