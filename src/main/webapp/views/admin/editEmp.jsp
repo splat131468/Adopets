@@ -277,7 +277,7 @@ src="<%=request.getContextPath()%>/resources/background/js/system.js"></script>
                with font-awesome or any other icon font library -->
 
             <li class="nav-item">
-              <a href="member.html" class="nav-link">
+              <a href="<%=request.getContextPath()%>/views/backgroundMember/backgroundMember.jsp" class="nav-link">
                 <i class="nav-icon fa-solid fa-user"></i>
                 <p>會員管理</p>
               </a>
@@ -298,7 +298,7 @@ src="<%=request.getContextPath()%>/resources/background/js/system.js"></script>
             </li>
 
             <li class="nav-item">
-              <a href="lists.html" class="nav-link">
+              <a href="<%=request.getContextPath()%>/views/order/Orders.jsp" class="nav-link">
                 <i class="nav-icon fa-solid fa-clipboard-list"></i>
                 <p>訂單管理</p>
               </a>
@@ -442,13 +442,13 @@ src="<%=request.getContextPath()%>/resources/background/js/system.js"></script>
 		                      for="chk_1">會員管理</label>
 		                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 		                    <input id="chk_2" type="checkbox" name="choice" class="checknum" onclick="setAll()"  value="2" ${authConfigureSvc.getOneAuthConfigure(admVO.adminID).toString().indexOf('2')!=-1 ?'checked':''} /><label
-		                      for="chk_2">審核管理</label>
+		                      for="chk_2">商品管理</label>
 		                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 		                    <input id="chk_3" type="checkbox" name="choice" class="checknum" onclick="setAll()"  value="3" ${authConfigureSvc.getOneAuthConfigure(admVO.adminID).toString().indexOf('3')!=-1 ?'checked':''} /><label
-		                      for="chk_3">商品管理</label>
+		                      for="chk_3">訂單管理</label>
 		                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 		                    <input id="chk_4" type="checkbox" name="choice" class="checknum" onclick="setAll()"  value="4" ${authConfigureSvc.getOneAuthConfigure(admVO.adminID).toString().indexOf('4')!=-1 ?'checked':''}/><label
-		                      for="chk_4">訂單管理</label>
+		                      for="chk_4">貓咪管理</label>
 		
 		                    <br>
 		
@@ -456,24 +456,10 @@ src="<%=request.getContextPath()%>/resources/background/js/system.js"></script>
 		                      for="chk_5">捐款管理</label>
 		                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 		                    <input id="chk_6" type="checkbox" name="choice" class="checknum" onclick="setAll()"  value="6" ${authConfigureSvc.getOneAuthConfigure(admVO.adminID).toString().indexOf('6')!=-1 ?'checked':''}/><label
-		                      for="chk_6">貓咪管理</label>
+		                      for="chk_6">使用者管理</label>
 		                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 		                    <input id="chk_7" type="checkbox" name="choice" class="checknum" onclick="setAll()"  value="7" ${authConfigureSvc.getOneAuthConfigure(admVO.adminID).toString().indexOf('7')!=-1 ?'checked':''}><label
-		                      for="chk_7">收容所管理</label>
-		                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		                    <input id="chk_8" type="checkbox" name="choice" class="checknum" onclick="setAll()" value="8"  ${authConfigureSvc.getOneAuthConfigure(admVO.adminID).toString().indexOf('8')!=-1 ?'checked':''}/><label
-		                      for="chk_8">活動管理</label>
-		
-		                    <br>
-		
-		                    <input id="chk_9" type="checkbox" name="choice" class="checknum" onclick="setAll()" value="9"  ${authConfigureSvc.getOneAuthConfigure(admVO.adminID).toString().indexOf('9')!=-1 ?'checked':''}/><label
-		                      for="chk_9">使用者管理</label>
-		                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		                    <input id="chk_10" type="checkbox" name="choice" class="checknum" onclick="setAll()" value="10"  ${authConfigureSvc.getOneAuthConfigure(admVO.adminID).toString().indexOf('10')!=-1 ?'checked':''}/><label
-		                      for="chk_10">權限管理</label>
-		                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		                    <input id="chk_11" type="checkbox" name="choice" class="checknum" onclick="setAll()" value="11"  ${authConfigureSvc.getOneAuthConfigure(admVO.adminID).toString().indexOf('11')!=-1 ?'checked':''}/><label
-		                      for="chk_11">XXXXXX</label>
+		                      for="chk_7">權限管理</label>
 
 		                  </div>
 

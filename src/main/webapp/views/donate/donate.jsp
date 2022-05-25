@@ -45,13 +45,13 @@ DonateVO donVO = (DonateVO) request.getAttribute("donVO");
 	src="https://cdn.jsdelivr.net/npm/jquery-twzipcode@1.7.14/jquery.twzipcode.min.js"></script>
 
 <!-- 信用卡 -->
-<script
-	src="<%=request.getContextPath()%>/resources/background/js/donate_creditcard.js"></script>
+<!-- <script -->
+<%-- 	src="<%=request.getContextPath()%>/resources/background/js/donate_creditcard.js"></script> --%>
 <!-- 信用卡 JS-->
-<script
-	src="https://cpwebassets.codepen.io/assets/common/stopExecutionOnTimeout-1b93190375e9ccc259df3a57c1abc0e64599724ae30d7ea4c6877eb615f89387.js"></script>
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/imask/3.4.0/imask.min.js"></script>
+<!-- <script -->
+<!-- 	src="https://cpwebassets.codepen.io/assets/common/stopExecutionOnTimeout-1b93190375e9ccc259df3a57c1abc0e64599724ae30d7ea4c6877eb615f89387.js"></script> -->
+<!-- <script -->
+<!-- 	src="https://cdnjs.cloudflare.com/ajax/libs/imask/3.4.0/imask.min.js"></script> -->
 
 
 <link rel="stylesheet"
@@ -61,8 +61,10 @@ DonateVO donVO = (DonateVO) request.getAttribute("donVO");
 
 <link rel="stylesheet"
 	href="https://unpkg.com/purecss@2.0.6/build/pure-min.css">
-<script
-	src="<%=request.getContextPath()%>/resources/background/js/random_verification.js"></script>
+	
+<!-- <script -->
+<%-- 	src="<%=request.getContextPath()%>/resources/background/js/random_verification.js"></script> --%>
+
 <!--標頭的css-->
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/resources/background/css/homepage.css">
@@ -83,7 +85,7 @@ DonateVO donVO = (DonateVO) request.getAttribute("donVO");
 					<!--這裡是logo-->
 					<div iclass="logo">
 						<a href="#" rel="home" class="site-logo"> <img
-							src="./dist/img/Adopets.svg" alt="Home">
+							src="<%=request.getContextPath()%>/resources/background/img/Adopets.svg" alt="Home">
 						</a>
 					</div>
 					<nav role="navigation"
@@ -380,6 +382,7 @@ DonateVO donVO = (DonateVO) request.getAttribute("donVO");
 								</div>
 
 								<div class="crm-group">
+								  <form id="Ecpay">
 									<fieldset id="profile-group-10">
 										<legend>捐款基本資料 Basic Donor information</legend>
 
@@ -405,7 +408,7 @@ DonateVO donVO = (DonateVO) request.getAttribute("donVO");
 
 											<div class="content">
 												<input size="30" maxlength="64" type="text" name="last_name"
-													id="last_name-5" class="form-text_name">
+													id="last_name-5" class="form-text_name" required="required">
 											</div>
 
 										</div>
@@ -417,7 +420,7 @@ DonateVO donVO = (DonateVO) request.getAttribute("donVO");
 
 											<div class="content2">
 												<input size="30" maxlength="64" type="text"
-													name="first_name" id="first_name-5" class="form-text_name">
+													name="first_name" id="first_name-5" class="form-text_name" required="required">
 											</div>
 										</div>
 
@@ -474,7 +477,7 @@ DonateVO donVO = (DonateVO) request.getAttribute("donVO");
 											<span> <a class="btn" type="button">上一步</a>
 											</span>
 											<div class="content6_next">
-												<button class="btn_next" type="button">下一步>></button>
+												<button class="btn_next" type="submit">下一步>></button>
 											</div>
 										</div>
 										<label for="pwd" generated="true" class="errorN" id="errorN"
@@ -483,6 +486,11 @@ DonateVO donVO = (DonateVO) request.getAttribute("donVO");
 
 
 									</fieldset>
+										<input type="hidden" id="memID" name="memID" value="1" /> 
+										<input type="hidden" id="catID" name="catID" value="1" /> 
+										<input type="hidden" id="shelterName" name="shelterName" value="新北市中和區公立動物之家" /> 
+										<input type="hidden" id="donateStatus" name="donateStatus" value="0" />
+									</form>	
 								</div>
 
 							</div>
@@ -490,7 +498,8 @@ DonateVO donVO = (DonateVO) request.getAttribute("donVO");
 						</div>
 
 
-
+<!----------------------------------------------- 改用綠界金流 -------------------------------------------------------->
+<!--  
 						<div id="content-main2">
 
 							<div class="container preload">
@@ -704,20 +713,12 @@ DonateVO donVO = (DonateVO) request.getAttribute("donVO");
 										</div>
 									</div>
 								</fieldset>
-
-
 							</div>
 
-
 						</div>
-						<input type="hidden" id="memID" name="memID" value="1" /> <input
-							type="hidden" id="catID" name="catID" value="1" /> <input
-							type="hidden" id="shelterName" name="shelterName"
-							value="新北市中和區公立動物之家" /> <input type="hidden" id="donateStatus"
-							name="donateStatus" value="0" />
-
+-->				
 					
-					
+				
 
 					</div>
 
@@ -732,7 +733,7 @@ DonateVO donVO = (DonateVO) request.getAttribute("donVO");
 
 
 	</div>
-
+	<section id="xxx"></section>
 
 	<br>
 	<footer>
@@ -776,58 +777,108 @@ DonateVO donVO = (DonateVO) request.getAttribute("donVO");
 	<script
 		src="<%=request.getContextPath()%>/resources/background/js/homepage.js"></script>
 	<script>
-       function onEditButtonClick() {
+	$("form").bind("submit",function(){
+		 console.log("AAAA");	
+         
+         let memID = $("#memID").val();
+         let catID = $("#catID").val();
+         let shelterName = $("#shelterName").val();
 
-		    console.log("AAAA");	
+         let last_name = $("#last_name-5").val(); 
+         let first_name = $("#first_name-5").val();
+         
+         let donateEmail = $("#email-5").val();
+         let phone = $(".phone_name").val();
+         let city = $( ".city option:selected" ).val();
+         let town = $( ".town option:selected" ).val();
+         let street_address = $(".street_address").val();
+         let donateAmo = $("#moneyD").val();  
+         let donateStatus = $("#donateStatus").val();
+         let donateMes = $("#donate_message").val();
+         
+         console.log(donateAmo);	
+         console.log(city);	
+         console.log(town);	
+         $.ajax({
+             url: "<%=request.getContextPath()%>/NewDonate",
+             data:{
+         	     "action":"New_Donate",
+               "memID": memID,
+               "catID": catID,
+               "shelterName": shelterName,
+               "last_name": last_name,
+               "first_name": first_name,
+               "donateEmail": donateEmail,
+               "phone": phone,
+               "city": city,
+               "town": town,
+               "street_address": street_address,
+               "donateAmo": donateAmo,
+               "donateStatus": donateStatus,
+               "donateMes": donateMes
+             },
+             type: "POST",
+             dataType:"text",
+             success: function (data) {
+                 $("#xxx").html(data);
+             }
+
+           });
+		return false;
+	 });
+	
+//        function onEditButtonClick() {
+
+// 		    console.log("AAAA");	
            
-           let memID = $("#memID").val();
-           let catID = $("#catID").val();
-           let shelterName = $("#shelterName").val();
-           let donateName = $(".donateName").val(); 
-           let donateEmail = $("#email-5").val();
-           let phone = $(".phone_name").val();
-           let city = $( ".city option:selected" ).val();
-           let town = $( ".town option:selected" ).val();
-           let street_address = $(".street_address").val();
-           let donateAmo = $("#moneyD").val();  
-           let donateStatus = $("#donateStatus").val();
-           let donateMes = $("#donate_message").val();
+//            let memID = $("#memID").val();
+//            let catID = $("#catID").val();
+//            let shelterName = $("#shelterName").val();
+//            let donateName = $(".donateName").val(); 
+//            let donateEmail = $("#email-5").val();
+//            let phone = $(".phone_name").val();
+//            let city = $( ".city option:selected" ).val();
+//            let town = $( ".town option:selected" ).val();
+//            let street_address = $(".street_address").val();
+//            let donateAmo = $("#moneyD").val();  
+//            let donateStatus = $("#donateStatus").val();
+//            let donateMes = $("#donate_message").val();
            
-           console.log(donateAmo);	
-           console.log(city);	
-           console.log(town);	
-           $.ajax({
-               url: "<%=request.getContextPath()%>/NewDonate",
-               data:{
-           	     "action":"New_Donate",
-                 "memID": memID,
-                 "catID": catID,
-                 "shelterName": shelterName,
-                 "donateName": donateName,
-                 "donateEmail": donateEmail,
-                 "phone": phone,
-                 "city": city,
-                 "town": town,
-                 "street_address": street_address,
-                 "donateAmo": donateAmo,
-                 "donateStatus": donateStatus,
-                 "donateMes": donateMes
-               },
-               type: "POST",
-               success: function () {
-            	   Swal.fire(
-            	            '感謝您的捐款!',
-            	            'Wish you a nice day!',
-            	            'success'
-               ).then(function() {
+//            console.log(donateAmo);	
+//            console.log(city);	
+//            console.log(town);	
+//            $.ajax({
+<%--                url: "<%=request.getContextPath()%>/NewDonate", --%>
+//                data:{
+//            	     "action":"New_Donate",
+//                  "memID": memID,
+//                  "catID": catID,
+//                  "shelterName": shelterName,
+//                  "donateName": donateName,
+//                  "donateEmail": donateEmail,
+//                  "phone": phone,
+//                  "city": city,
+//                  "town": town,
+//                  "street_address": street_address,
+//                  "donateAmo": donateAmo,
+//                  "donateStatus": donateStatus,
+//                  "donateMes": donateMes
+//                },
+//                type: "POST",
+//                success: function () {
+//             	   Swal.fire(
+//             	            '感謝您的捐款!',
+//             	            'Wish you a nice day!',
+//             	            'success'
+//                ).then(function() {
             		    
-            	   setTimeout(function(){window.location.reload();});
-            	   });
+//             	   setTimeout(function(){window.location.reload();});
+//             	   });
             	   
-               }
+//                }
 
-             })
-          }
+//              })
+//           }
   
        </script>
 
