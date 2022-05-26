@@ -27,6 +27,8 @@ import com.mysql.cj.Session;
 import web.catInfo.entity.CatAndShelVO;
 import web.catInfo.entity.CatInfoVO;
 import web.catInfo.service.CatInfoService;
+import web.order.entity.OrdersVO;
+import web.order.service.OrdersService;
 
 
 
@@ -445,32 +447,9 @@ public class CatInfoServlet extends HttpServlet {
 			RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 listOneEmp.jsp
 			successView.forward(req, res);
 		}
-		if ("getCatback".equals(action)) {
-			
-			Integer catID = null;
-			String str = req.getParameter("catID");
-			catID = Integer.valueOf(req.getParameter("catID"));
-			System.out.println("catID:" + catID);
-			CatAndShelVO catAndShelVO = catInfoService.getOneAndShel(catID);
-			req.setAttribute("catAndShelVO", catAndShelVO); // 資料庫取出的empVO物件,存入req
-			String url = "/views/chatroom/backgroundchatroom2.jsp";
-			RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 listOneEmp.jsp
-			successView.forward(req, res);
-		}
+	
 		
-		//顯示到CatPage
-		if ("getCatback".equals(action)) {
-			
-			Integer catID = null;
-			String str = req.getParameter("catID");
-			catID = Integer.valueOf(req.getParameter("catID"));
-			System.out.println("catID:" + catID);
-			CatAndShelVO catAndShelVO = catInfoService.getOneAndShel(catID);
-			req.setAttribute("catAndShelVO", catAndShelVO); // 資料庫取出的empVO物件,存入req
-			String url = "/views/chatroom/backgroudChatroom2.jsp";
-			RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 listOneEmp.jsp
-			successView.forward(req, res);
-		}
+
 		
 	}
 
