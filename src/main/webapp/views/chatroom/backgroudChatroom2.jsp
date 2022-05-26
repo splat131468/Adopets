@@ -354,18 +354,18 @@ tr,td {
 	  <div class="card-body table-responsive p-0">
 		<table class="table table-hover text-nowrap">
        <!-- 聊天室 -->
-            <div class="grid-col grid-col_1/3@minLg" style="height:500px margin: 50px;">
-	        <%-- <h1>${catAndShelVO.catName} 的 Chat Room</h1> --%>
-			<h3 id="statusOutput" class="statusOutput"></h3>
-			<textarea id="messagesArea" class="panel message-area" readonly></textarea>
-			<div class="panel input-area">
-			<!-- <input id="userName" class="text-field" type="text" placeholder="User name" /> --> 
-			<input id="message" class="text-field" type="text" placeholder="Message" onkeydown="if (event.keyCode == 13) sendMessage();" /> 
-			<input type="submit" id="sendMessage" class="button" value="送出" onclick="sendMessage();" /> 
-			<!-- 		<input type="button" id="connect" class="button" value="Connect" onclick="connect();" /> 
-						<input type="button" id="disconnect" class="button" value="Disconnect" onclick="disconnect();" /> -->
-			</div>
-            </div>
+          <div class="grid-col grid-col_1/3@minLg" style="height:677px">
+                            	<%-- <h1>${catAndShelVO.catName} 的 Chat Room</h1> --%>
+								<h3 id="statusOutput" class="statusOutput"></h3>
+								<textarea id="messagesArea" class="panel message-area" readonly></textarea>
+								<div class="panel input-area">
+									<!-- <input id="userName" class="text-field" type="text" placeholder="User name" /> --> 
+									<input id="message" class="text-field" type="text" placeholder="Message" onkeydown="if (event.keyCode == 13) sendMessage();" /> 
+									<input type="submit" id="sendMessage" class="button" value="送出" onclick="sendMessage();" /> 
+							<!-- 		<input type="button" id="connect" class="button" value="Connect" onclick="connect();" /> 
+									<input type="button" id="disconnect" class="button" value="Disconnect" onclick="disconnect();" /> -->
+								</div>
+                            </div>
            </tbody> 
         </table>
              
@@ -384,7 +384,8 @@ tr,td {
 	
 		var messagesArea = document.getElementById("messagesArea");
 		var statusOutput = document.getElementById("statusOutput");
-		var self = 'administrator'; //sender改用EL ${userName}
+		var self = "AAAAA"; //sender改用EL ${userName}
+
 		var webSocket;
     
     function connect() {
