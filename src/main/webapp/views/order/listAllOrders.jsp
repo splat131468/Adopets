@@ -429,6 +429,14 @@ pageContext.setAttribute("list", list);
              <%@ include file="page2.file"%>
     </div>
    </div> 
+    <footer class="main-footer">
+      <!-- To the right -->
+      <div class="float-right d-none d-sm-inline">
+        Anything you want
+      </div>
+      <!-- Default to the left -->
+      <strong style="color: #869099;">Copyright &copy; 2022 &nbsp <a href="<%=request.getContextPath()%>/views/background_login/background.jsp">Adopets.io</a>.</strong> All rights reserved.
+    </footer>
    </div> 
 <script src="<%=request.getContextPath()%>/resources/jquery-3.6.0.min.js"></script>
     

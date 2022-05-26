@@ -59,6 +59,10 @@ tr,td {
   height: 50px;
   padding: 5px 0px;
 }
+
+a{
+color:white
+}
 </style>
 
 </head>

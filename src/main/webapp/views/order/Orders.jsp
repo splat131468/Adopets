@@ -264,7 +264,7 @@ tr,td {
             </li>
 
             <li class="nav-item">
-              <a href="checked.html" class="nav-link">
+              <a href="${pageContext.request.contextPath}/views/chatroom/backgroudChatroom.jsp" class="nav-link">
                 <i class="nav-icon fas fa-edit"></i>
                 <p>¼f®ÖºÞ²z</p>
               </a>
@@ -450,7 +450,8 @@ tr,td {
 	</div>
 	
   </div>
-    <footer class="main-footer">
+  
+     <footer class="main-footer">
       <!-- To the right -->
       <div class="float-right d-none d-sm-inline">
         Anything you want
