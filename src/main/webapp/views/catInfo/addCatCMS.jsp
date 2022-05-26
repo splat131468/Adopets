@@ -12,6 +12,7 @@ session.getAttribute("adminVO");
 session.getAttribute("auth");
 
 CatInfoVO catInfoVO = (CatInfoVO) request.getAttribute("catInfoVO");
+
 %>
 
 
@@ -453,7 +454,15 @@ ul>li {
               </div>
 
               <div class="card-body" style="width: 900px;">
-              <FORM METHOD="post" ACTION="${pageContext.request.contextPath}/CatInfoServlet" name="form1" enctype="multipart/form-data">
+              	<c:if test="${not empty errorMsgs}">
+		<font style="color: red">請修正以下錯誤:</font>
+		<ul>
+			<c:forEach var="message" items="${errorMsgs}">
+				<li style="color: red">${message}</li>
+			</c:forEach>
+		</ul>
+	</c:if>
+              <FORM METHOD="post" ACTION="${pageContext.request.contextPath}/CatInfoServletCMS" name="form1" enctype="multipart/form-data">
 		<table>
 			<tr>
 				<td>收容所名稱:</td>

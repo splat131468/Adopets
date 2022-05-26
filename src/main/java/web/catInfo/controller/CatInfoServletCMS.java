@@ -251,7 +251,7 @@ public class CatInfoServletCMS extends HttpServlet {
 					
 					if (!errorMsgs.isEmpty()) {
 						req.setAttribute("catInfoVO", catInfoVO); 
-						RequestDispatcher failureView = req.getRequestDispatcher("/views/catInfo/addCat.jsp");
+						RequestDispatcher failureView = req.getRequestDispatcher("/views/catInfo/addCatCMS.jsp");
 						failureView.forward(req, res);
 						return;
 					}
@@ -264,7 +264,7 @@ public class CatInfoServletCMS extends HttpServlet {
 					RequestDispatcher updatePhoto = req.getRequestDispatcher("/CatPhotoGalleryServlet"); // 新增成功後轉交listAllEmp.jsp
 					updatePhoto.include(req, res);
 					/***************************4.照片新增完成後,準備轉交(Send the Success view)***********/
-					String url = "/views/catInfo/listAllCat.jsp";
+					String url = "/views/catInfo/CatCMS.jsp";
 					RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
 					successView.forward(req, res);				
 					
@@ -406,7 +406,7 @@ public class CatInfoServletCMS extends HttpServlet {
 					catID = Integer.valueOf(req.getParameter("catID"));
 				}
 				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req.getRequestDispatcher("/views/catInfo/select_page.jsp"); 
+					RequestDispatcher failureView = req.getRequestDispatcher("/views/catInfo/CatCMS.jsp"); 
 					failureView.forward(req, res);
 					return;
 				}
