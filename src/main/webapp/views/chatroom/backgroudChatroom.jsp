@@ -366,7 +366,7 @@ tr,td {
 				<td><button class="btn btn-primary btnPurple">
                    <a  href="${pageContext.request.contextPath}/ChatServlet?action=getCatback&catID=${catInfoVO.catID}">ВсЄб
                    </button>
-					
+					 
                 </td>										
 			
 			  </tr>
