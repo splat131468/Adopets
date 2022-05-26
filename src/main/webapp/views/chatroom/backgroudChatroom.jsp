@@ -36,9 +36,7 @@ pageContext.setAttribute("list", list);
 
 <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/background/css/btn.css">
 <!-------------------------------------------cat------------------------------------------------------------------------------------->
-<link rel="stylesheet" href="${pageContext.request.contextPath}/views/catInfo/files/my_favorite_1_1.css">
-<link rel="stylesheet" href="${pageContext.request.contextPath}/views/catInfo/files/my_favorite_2.css">
-<link rel="stylesheet" href="${pageContext.request.contextPath}/views/catInfo/files/my_favorite_3.css">
+
 <!-------------------------------------------------------------------------------------------------------------------------------->
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 
