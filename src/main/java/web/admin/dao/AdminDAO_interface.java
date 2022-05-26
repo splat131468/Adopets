@@ -15,6 +15,7 @@ public interface AdminDAO_interface {
     
     public void findPassword(AdminVO adminVO);
     public AdminVO selectAccount(String account);
+    public AdminVO selectName(Integer adminID);
     //萬用複合查詢(傳入參數型態Map)(回傳 List)
 //  public List<AdminVO> getAll(Map<String, String[]> map); 
 }

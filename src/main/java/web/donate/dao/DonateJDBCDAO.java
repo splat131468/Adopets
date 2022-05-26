@@ -28,8 +28,8 @@ public class DonateJDBCDAO implements DonateDAO_interface {
 	private static final String DELETE = "DELETE FROM DONATE where donateID = ?";
 
 	private static final String UPDATE = "UPDATE DONATE set donateStatus=? where donateID = ?";
-	
-	
+
+	private static final String GET_ONE_MEMBER = "SELECT donateID,memID,catID,shelterName,donateName,donateEmail,phone,donateAddr,donateAmo,donateStatus,donateMes,donateDate FROM DONATE where memID = ?";
 
 	@Override
 	public Integer insert(DonateVO donateVO) {
@@ -38,7 +38,7 @@ public class DonateJDBCDAO implements DonateDAO_interface {
 		try {
 			Class.forName(driver);
 			con = DriverManager.getConnection(url, user, password);
-			pstmt = con.prepareStatement(INSERT_DONATE,Statement.RETURN_GENERATED_KEYS);
+			pstmt = con.prepareStatement(INSERT_DONATE, Statement.RETURN_GENERATED_KEYS);
 
 			pstmt.setInt(1, donateVO.getMemID());
 			pstmt.setInt(2, donateVO.getCatID());
@@ -50,14 +50,12 @@ public class DonateJDBCDAO implements DonateDAO_interface {
 			pstmt.setInt(8, donateVO.getDonateAmo());
 			pstmt.setInt(9, donateVO.getDonateStatus());
 			pstmt.setString(10, donateVO.getDonateMes());
-			
 
 			pstmt.executeUpdate();
-			
 
 			ResultSet generatedKeys = pstmt.getGeneratedKeys();
 			generatedKeys.next();
-			
+
 			return generatedKeys.getInt(1);
 		} catch (ClassNotFoundException e) {
 			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
@@ -242,7 +240,6 @@ public class DonateJDBCDAO implements DonateDAO_interface {
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
-				// donateVO 銋迂� Domain objects
 				donateVO = new DonateVO();
 				donateVO.setDonateID(rs.getInt("donateID"));
 				donateVO.setMemID(rs.getInt("memID"));
@@ -289,23 +286,88 @@ public class DonateJDBCDAO implements DonateDAO_interface {
 		return list;
 	}
 
+	@Override
+	public List<DonateVO> findByMember(Integer memID) {
+		List<DonateVO> list = new ArrayList<DonateVO>();
+		DonateVO donateVO = null;
+
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, user, password);
+			pstmt = con.prepareStatement(GET_ONE_MEMBER);
+			pstmt.setInt(1, memID);
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				donateVO = new DonateVO();
+				donateVO.setDonateID(rs.getInt("donateID"));
+				donateVO.setMemID(rs.getInt("memID"));
+				donateVO.setCatID(rs.getInt("catID"));
+				donateVO.setShelterName(rs.getString("shelterName"));
+				donateVO.setDonateName(rs.getString("donateName"));
+				donateVO.setDonateEmail(rs.getString("donateEmail"));
+				donateVO.setPhone(rs.getString("phone"));
+				donateVO.setDonateAddr(rs.getString("donateAddr"));
+				donateVO.setDonateAmo(rs.getInt("donateAmo"));
+				donateVO.setDonateStatus(rs.getInt("donateStatus"));
+				donateVO.setDonateMes(rs.getString("donateMes"));
+				donateVO.setDonateDate(rs.getTimestamp("donateDate"));
+				list.add(donateVO); // Store the row in the list
+			}
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return list;
+
+	}
+
 	public static void main(String[] args) {
 
 		DonateJDBCDAO dao = new DonateJDBCDAO();
 
-		// 新增
-		DonateVO donateVO1 = new DonateVO();
-		donateVO1.setMemID(1);
-		donateVO1.setCatID(1);
-		donateVO1.setShelterName("1");
-		donateVO1.setDonateName("POJO");
-		donateVO1.setDonateEmail("POJO@gmail.com");
-		donateVO1.setPhone("0909897281");
-		donateVO1.setDonateAddr("新北勢三重");
-		donateVO1.setDonateAmo(5000);
-		donateVO1.setDonateStatus(1);
-		donateVO1.setDonateMes("好好生活");
-		dao.insert(donateVO1);
+//		// 新增
+//		DonateVO donateVO1 = new DonateVO();
+//		donateVO1.setMemID(1);
+//		donateVO1.setCatID(1);
+//		donateVO1.setShelterName("1");
+//		donateVO1.setDonateName("POJO");
+//		donateVO1.setDonateEmail("POJO@gmail.com");
+//		donateVO1.setPhone("0909897281");
+//		donateVO1.setDonateAddr("新北勢三重");
+//		donateVO1.setDonateAmo(5000);
+//		donateVO1.setDonateStatus(1);
+//		donateVO1.setDonateMes("好好生活");
+//		dao.insert(donateVO1);
 
 		// 修改
 //		DonateVO donateVO2 = new DonateVO();
@@ -348,7 +410,24 @@ public class DonateJDBCDAO implements DonateDAO_interface {
 //			System.out.print(donate1.getDonateMes() + ",");
 //			System.out.println(donate1.getDonateDate());
 //		}
+		
+		List<DonateVO> list = dao.findByMember(1);
+		for (DonateVO donate1 : list) {
+			System.out.print(donate1.getDonateID() + ",");
+			System.out.print(donate1.getMemID() + ",");
+			System.out.print(donate1.getCatID() + ",");
+			System.out.print(donate1.getShelterName() + ",");
+			System.out.print(donate1.getDonateName() + ",");
+			System.out.print(donate1.getDonateEmail() + ",");
+			System.out.print(donate1.getPhone() + ",");
+			System.out.print(donate1.getDonateAddr() + ",");
+			System.out.print(donate1.getDonateAmo() + ",");
+			System.out.print(donate1.getDonateStatus() + ",");
+			System.out.print(donate1.getDonateMes() + ",");
+			System.out.println(donate1.getDonateDate());
+		}
+		
+		
 	}
 
-	
 }

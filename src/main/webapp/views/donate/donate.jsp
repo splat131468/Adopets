@@ -488,7 +488,7 @@ DonateVO donVO = (DonateVO) request.getAttribute("donVO");
 									</fieldset>
 										<input type="hidden" id="memID" name="memID" value="1" /> 
 										<input type="hidden" id="catID" name="catID" value="1" /> 
-										<input type="hidden" id="shelterName" name="shelterName" value="新北市中和區公立動物之家" /> 
+										<input type="hidden" id="shelterName" name="shelterName" value="桃園市收容所" /> 
 										<input type="hidden" id="donateStatus" name="donateStatus" value="0" />
 									</form>	
 								</div>

@@ -139,7 +139,7 @@
 </c:forEach>
 	<c:if test="${money_m == true}">
             <li class="nav-item">
-              <a href="<%=request.getContextPath()%>/views/donate/donateBackground.jsp" class="nav-link">
+              <a href="<%=request.getContextPath()%>/views/donate/donateBackground.jsp" class="nav-link active">
                 <i class="nav-icon fa-solid fa-sack-dollar"></i>
                 <p>捐款管理</p>
               </a>
