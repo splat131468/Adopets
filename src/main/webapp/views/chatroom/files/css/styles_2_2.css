@@ -26,7 +26,7 @@
 	box-sizing: border-box;
 	overflow: auto;
 	padding: 10px 0px 0px 20px;
-	font-size: 12px;
+	font-size: 26px;
 	margin: 0px 0px 0px 100px;
 	width:800px
 	/* border-radius: 10px 10px 0px 0px;
@@ -62,8 +62,8 @@ h1 {
 }
 
 #message {
-	min-width: 70%;
-	max-width: 80%;
+	min-width: 86%;
+	max-width: 100%;
 	border-radius: 2px;
 }
 
@@ -88,5 +88,6 @@ h1 {
 	box-shadow: 0 1px 3px rgba(77, 71, 81, .2);
 	background: #6504b5;
 	margin: 0px 0px 0px 100px;
-	width:800px
+	width:800px;
+	padding: 0.5em;
 }
