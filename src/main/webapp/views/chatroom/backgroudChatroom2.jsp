@@ -8,6 +8,7 @@
 	CatAndShelVO catAndShelVO = (CatAndShelVO) request.getAttribute("catAndShelVO");
 %>
 
+
 <html>
 <head>
 <!-- Google Font: Source Sans Pro -->
@@ -118,7 +119,7 @@ tr,td {
 	
 		var messagesArea = document.getElementById("messagesArea");
 		var statusOutput = document.getElementById("statusOutput");
-		var self = "AAAAA"; //sender改用EL ${userName}
+		var self = `管理員${adminVO.adminID}號`; //sender改用EL ${userName}
 
 		var webSocket;
     
