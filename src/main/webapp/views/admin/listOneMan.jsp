@@ -278,7 +278,7 @@ src="<%=request.getContextPath()%>/resources/background/js/system.js"></script>
 
 <!----------------------- 左側邊欄 Menu ------------------------------->
             <li class="nav-item">
-              <a href="member.html" class="nav-link">
+              <a href="<%=request.getContextPath()%>/views/backgroundMember/backgroundMember.jsp" class="nav-link">
                 <i class="nav-icon fa-solid fa-user"></i>
                 <p>會員管理</p>
               </a>
@@ -299,7 +299,7 @@ src="<%=request.getContextPath()%>/resources/background/js/system.js"></script>
             </li>
 
             <li class="nav-item">
-              <a href="lists.html" class="nav-link">
+              <a href="<%=request.getContextPath()%>/views/order/Orders.jsp" class="nav-link">
                 <i class="nav-icon fa-solid fa-clipboard-list"></i>
                 <p>訂單管理</p>
               </a>

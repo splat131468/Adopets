@@ -108,6 +108,12 @@ $(document).ready(function(){
 });
 
 
+
+
+
+
+
+
 function validate_phone(phone) {
     console.log("AAA");
     var phoneReg = /^[0-9]{10}$/g;
@@ -151,20 +157,16 @@ $(document).ready(function () {
         console.log(val);
         console.log(value);
         if (value == "" || val == "") {
-            document.getElementById("errorN").innerHTML = "<font>【電子信箱、電話為必填欄位，請勿留空。】</font>";
+            document.getElementById("errorN").innerHTML = "<font>【電子信箱、姓名、電話為必填欄位，請勿留空。】</font>";
             $(".btn_next").attr("disabled", "true");
         } else if (val > 0 || value > 0) {
             document.getElementById("errorN").innerHTML = ""
             $(".btn_next").removeAttr("disabled");
-            $('#content-main2').show();
-            $('#content-main1').hide();
-            $('#content-main').hide();
+           
         }
     });
 
 });
-
-
 
  
 

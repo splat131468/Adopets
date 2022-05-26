@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,15 +28,17 @@ public class DonateJDBCDAO implements DonateDAO_interface {
 	private static final String DELETE = "DELETE FROM DONATE where donateID = ?";
 
 	private static final String UPDATE = "UPDATE DONATE set donateStatus=? where donateID = ?";
+	
+	
 
 	@Override
-	public void insert(DonateVO donateVO) {
+	public Integer insert(DonateVO donateVO) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		try {
 			Class.forName(driver);
 			con = DriverManager.getConnection(url, user, password);
-			pstmt = con.prepareStatement(INSERT_DONATE);
+			pstmt = con.prepareStatement(INSERT_DONATE,Statement.RETURN_GENERATED_KEYS);
 
 			pstmt.setInt(1, donateVO.getMemID());
 			pstmt.setInt(2, donateVO.getCatID());
@@ -50,6 +53,12 @@ public class DonateJDBCDAO implements DonateDAO_interface {
 			
 
 			pstmt.executeUpdate();
+			
+
+			ResultSet generatedKeys = pstmt.getGeneratedKeys();
+			generatedKeys.next();
+			
+			return generatedKeys.getInt(1);
 		} catch (ClassNotFoundException e) {
 			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
 
@@ -340,4 +349,6 @@ public class DonateJDBCDAO implements DonateDAO_interface {
 //			System.out.println(donate1.getDonateDate());
 //		}
 	}
+
+	
 }

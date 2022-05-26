@@ -1,6 +1,9 @@
 package web.donate.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -11,7 +14,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.gson.Gson;
 
+import ecpay.payment.integration.AllInOne;
+import ecpay.payment.integration.domain.AioCheckOutALL;
 import web.donate.entity.DonateVO;
 import web.donate.service.DonateService;
 
@@ -20,7 +26,9 @@ import web.donate.service.DonateService;
  */
 @WebServlet("/NewDonate")
 public class NewDonate extends HttpServlet {
-
+	
+	public static AllInOne allInOne;
+	
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		doPost(req, res);
 	}
@@ -52,8 +60,9 @@ public class NewDonate extends HttpServlet {
 				
 				System.out.println(shelterName);
 
-				String donateName = req.getParameter("donateName").trim();
-				
+				String last_name = req.getParameter("last_name").trim();
+				String first_name = req.getParameter("first_name").trim();
+				String donateName = last_name + first_name;
 				System.out.println(donateName);
 
 				String donateEmail = req.getParameter("donateEmail").trim();
@@ -133,10 +142,35 @@ public class NewDonate extends HttpServlet {
 				donVO = donSvc.addDonate(memID, catID, shelterName, donateName, donateEmail,phone,donateAddr,donateAmo,donateStatus,donateMes);
 				req.setAttribute("donVO", donVO);
 				System.out.println("CCCC");
-				String url = "/views/donate/donate.jsp";
-				RequestDispatcher successView = req.getRequestDispatcher(url);
-				successView.forward(req, res);
+//				String url = "/views/donate/donate.jsp";
+//				RequestDispatcher successView = req.getRequestDispatcher(url);
+//				successView.forward(req, res);
+				
+				
+				
+//===========================================綠界金流=================================================
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+				String Donatedate = sdf.format(new Date());
+				String itemName ="Adopets平台-貓咪愛心援助捐款";
+				allInOne = new AllInOne("");
 
+				AioCheckOutALL aCheckOut = new AioCheckOutALL();
+				aCheckOut.setMerchantTradeNo(donVO.getDonateID() + "tga101");
+				aCheckOut.setMerchantTradeDate(Donatedate);
+				aCheckOut.setTotalAmount(donateAmo + "");
+				aCheckOut.setTradeDesc("test");
+				aCheckOut.setItemName(itemName);
+				aCheckOut.setClientBackURL("http://localhost:8080/Adopets/views/donate/donate.jsp");
+				aCheckOut.setReturnURL("http://localhost:8081/Adopets//epayCheckOrder");
+
+//				aCheckOut.setReturnURL("http://211.23.128.214:5000/");
+				aCheckOut.setNeedExtraPaidInfo("N");
+				String outStr= allInOne.aioCheckOut(aCheckOut, null);
+				PrintWriter out = res.getWriter();
+				out.println(outStr);
+				System.out.println(outStr);
+				out.close();
+				
 			} catch (Exception e) {
 				System.out.println("BBBB");
 				errorMsgs.add("修改資料失敗:" + e.getMessage());

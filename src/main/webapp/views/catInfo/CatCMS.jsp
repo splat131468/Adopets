@@ -1,20 +1,20 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
-<%@ page import="web.admin.entity.*"%>
-<%@ page import="web.auth.entity.*"%>
-<%@ page import="web.authconfigure.entity.*"%>
+<%@ page import="web.catInfo.service.*"%>
+<%@ page import="web.catInfo.entity.*"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
 <%
 
-
-AdminVO admVO = (AdminVO) request.getAttribute("admVO");
-session.getAttribute("adminVO");
-session.getAttribute("auth");
-	
+CatInfoService catInfoService = new CatInfoService();
+List<CatInfoVO> list = catInfoService.getAll();
+pageContext.setAttribute("list",list);
 	
 %>
-	
+
+
+
 
 <!DOCTYPE html>
 
@@ -95,7 +95,7 @@ src="<%=request.getContextPath()%>/resources/background/js/system.js"></script>
           <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
         </li>
         <li class="nav-item d-none d-sm-inline-block">
-            <a href="<%=request.getContextPath()%>/views/background_login/background.jsp" class="nav-link">Home</a>
+           <a href="<%=request.getContextPath()%>/views/background_login/background.jsp" class="nav-link">Home</a>
         </li>
         <li class="nav-item d-none d-sm-inline-block">
           <a href="#" class="nav-link">Contact</a>
@@ -276,8 +276,9 @@ src="<%=request.getContextPath()%>/resources/background/js/system.js"></script>
             <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
 
+
             <li class="nav-item">
-              <a href="<%=request.getContextPath()%>/views/backgroundMember/backgroundMember.jsp" class="nav-link">
+              <a href="member.html" class="nav-link">
                 <i class="nav-icon fa-solid fa-user"></i>
                 <p>會員管理</p>
               </a>
@@ -298,23 +299,29 @@ src="<%=request.getContextPath()%>/resources/background/js/system.js"></script>
             </li>
 
             <li class="nav-item">
-              <a href="<%=request.getContextPath()%>/views/order/Orders.jsp" class="nav-link">
+              <a href="lists.html" class="nav-link">
                 <i class="nav-icon fa-solid fa-clipboard-list"></i>
                 <p>訂單管理</p>
               </a>
             </li>
 
             <li class="nav-item">
-       		    <a href="<%=request.getContextPath()%>/views/donate/donateBackground.jsp" class="nav-link">
+             <a href="<%=request.getContextPath()%>/views/donate/donateBackground.jsp" class="nav-link">
                 <i class="nav-icon fa-solid fa-sack-dollar"></i>
                 <p>捐款管理</p>
               </a>
             </li>
-
+            
+             <li class="nav-item">
+             <a href="<%=request.getContextPath()%>/views/catInfo/select_page.jsp" class="nav-link">
+                <i class="nav-icon fa-solid fa-sack-dollar"></i>
+                <p>貓咪管理</p>
+              </a>
+            </li>
 
 
             <li class="nav-item">
-              <a href="#" class="nav-link active">
+              <a href="#" class="nav-link">
                 <i class="nav-icon fa-solid fa-gear"></i>
                 <p>
                   系統管理
@@ -323,22 +330,19 @@ src="<%=request.getContextPath()%>/resources/background/js/system.js"></script>
               </a>
               <ul class="nav nav-treeview">
                 <li class="nav-item">
-                    <a href="<%=request.getContextPath()%>/views/admin/system.jsp" class="nav-link">
-                    <i style="margin-left: 33px;"></i>
+                  <a href="<%=request.getContextPath()%>/views/admin/system.jsp" class="nav-link">
+                    <i class="nav-icon fas"></i>
                     <p>使用者管理</p>
                   </a>
                 </li>
-
                 <li class="nav-item">
-                    <a href="<%=request.getContextPath()%>/views/admin/systemAuth.jsp" class="nav-link">
+                  <a href="<%=request.getContextPath()%>/views/admin/systemAuth.jsp" class="nav-link">
                     <i style="margin-left: 33px;"></i>
                     <p>權限管理</p>
                   </a>
                 </li>
-
               </ul>
             </li>
-
           </ul>
         </nav>
         <!-- /.sidebar-menu -->
@@ -359,13 +363,12 @@ src="<%=request.getContextPath()%>/resources/background/js/system.js"></script>
         <div class="container-fluid">
           <div class="row mb-2">
             <div class="col-sm-6">
-              <h1>權限管理</h1>
-
+              <h1>貓咪管理</h1>
             </div>
             <div class="col-sm-6">
               <ol class="breadcrumb float-sm-right">
-                <li class="breadcrumb-item"><a href="<%=request.getContextPath()%>/views/admin/systemAuth.jsp">權限管理</a></li>
-                <li class="breadcrumb-item active">修改管理員</li>
+                <li class="breadcrumb-item"><a href="<%=request.getContextPath()%>/views/background_login/background.jsp">Home</a></li>
+                <li class="breadcrumb-item active">貓咪管理</li>
               </ol>
             </div>
           </div>
@@ -373,115 +376,100 @@ src="<%=request.getContextPath()%>/resources/background/js/system.js"></script>
       </section>
 
 
-
-
-
       <div class="row">
         <div class="col-12">
           <div class="card">
-            <!-- -----------------------------------------修改管理員----------------------------------------- -->
-            <div class="overlay-edit" style="border: 1px solid white;">
-              <article class="article-user" style="margin-left: 35px;">
-                <fieldset>
-					<FORM METHOD="post" style="float: left;" enctype="multipart/form-data" ACTION="<%=request.getContextPath()%>/AuthConfigureServlet">	
-                 		 <legend>管理員資訊</legend>
-                 
-			                  <p style="margin-top: 10px;">
-			                    <label for="email">帳號:</label>
-			                    <input type="email" id="email" name="account" value="${admVO.account}" disabled="disabled">
-			                    <input type="hidden" id="account" name="account" value="${admVO.account}" />
-			                  </p>
-			
-			                  <p>
-			                    <label for="password">密碼:</label>
-			                    <input type="current-password" id="password" name="password" value="${admVO.password}" onblur="validate_password(this.value)">
-			                  </p>
-			                  
-			                  <label for="pwd" generated="true" class="error" id="error"></label>
-			
-			                  <p>
-			                    <label for="input">員工姓名:</label>
-			                    <input type="text" id="name" name="name" value="${admVO.name}" onblur="validate_name(this.value)">
-			                  </p>
-			                  
-			                  <label for="name" generated="true" class="error" id="error1"></label>
-			
-			                  <p>
-			                   <label for="file">員工大頭貼:</label> 
-								<input type="file" id="personImg" name="personImg" value="${admVO.personImg}"  multiple="multiple">
-			                  </p>
-			
+            <div class="card-header">
+              <h3 class="card-title"></h3>
 
-		                  
-			                  <div class="status-1">
-			                    <label>狀態：</label><br>
-			                    <input type="radio" name="accStatus" value="true" id="status1" ${(admVO.accStatus=='true')?'checked' : ''}>
-			                    <label for="status1">啟用</label>
-			                    <input type="radio" name="accStatus" value="false" id="status2" style="margin-left: 12px;" ${(admVO.accStatus=='false')?'checked' : ''}>
-			                    <label for="status2">禁用</label>
-			                  </div>
-			                  
-				           <jsp:useBean id="authSvc" scope="page" class="web.auth.service.AuthService" />
-		
-						   <jsp:useBean id="authConfigureSvc" scope="page" class="web.authconfigure.service.AuthConfigureService" />
-					     
-			     	    								
-
-						
-			            <div class="checkbox_sys" style="margin-top: 5px;">
-		                    <label>權限設置:</label>
-		                    <br>
-		                    <input type="checkbox" id="allcheck" onclick="demo()"   }/>
-		                    <label for="allcheck">全選</label>
-		
-		                    <br>
-
-							
-							
-		                    <input id="chk_1" type="checkbox" name="choice" class="checknum" onclick="setAll()" value="1"  ${authConfigureSvc.getOneAuthConfigure(admVO.adminID).toString().indexOf('1')!=-1 ?'checked':''} /><label
-		                      for="chk_1">會員管理</label>
-		                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		                    <input id="chk_2" type="checkbox" name="choice" class="checknum" onclick="setAll()"  value="2" ${authConfigureSvc.getOneAuthConfigure(admVO.adminID).toString().indexOf('2')!=-1 ?'checked':''} /><label
-		                      for="chk_2">商品管理</label>
-		                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		                    <input id="chk_3" type="checkbox" name="choice" class="checknum" onclick="setAll()"  value="3" ${authConfigureSvc.getOneAuthConfigure(admVO.adminID).toString().indexOf('3')!=-1 ?'checked':''} /><label
-		                      for="chk_3">訂單管理</label>
-		                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		                    <input id="chk_4" type="checkbox" name="choice" class="checknum" onclick="setAll()"  value="4" ${authConfigureSvc.getOneAuthConfigure(admVO.adminID).toString().indexOf('4')!=-1 ?'checked':''}/><label
-		                      for="chk_4">貓咪管理</label>
-		
-		                    <br>
-		
-		                    <input id="chk_5" type="checkbox" name="choice" class="checknum" onclick="setAll()"  value="5" ${authConfigureSvc.getOneAuthConfigure(admVO.adminID).toString().indexOf('5')!=-1 ?'checked':''}/><label
-		                      for="chk_5">捐款管理</label>
-		                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		                    <input id="chk_6" type="checkbox" name="choice" class="checknum" onclick="setAll()"  value="6" ${authConfigureSvc.getOneAuthConfigure(admVO.adminID).toString().indexOf('6')!=-1 ?'checked':''}/><label
-		                      for="chk_6">使用者管理</label>
-		                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		                    <input id="chk_7" type="checkbox" name="choice" class="checknum" onclick="setAll()"  value="7" ${authConfigureSvc.getOneAuthConfigure(admVO.adminID).toString().indexOf('7')!=-1 ?'checked':''}><label
-		                      for="chk_7">權限管理</label>
-
-		                  </div>
-
-			                  <p style="margin-top: 25px;">
-			                    <button type="submit" class="btn_sub1" >送出修改</button>
-			                    <button type="button" class="btn_modal_close" onclick="window.location='<%=request.getContextPath()%>/views/admin/systemAuth.jsp'">關閉</button>
-			                  </p>
-						
-								<input type="hidden" name="action" value="Manager_Edit_Emp">
-								<input type="hidden" name="adminID" value="${admVO.adminID}">
-				   		</FORM>
-				   		
-                </fieldset>
-              </article>
+              <div class="card-tools">
+              	<form METHOD="post" class="bd-example" action="<%=request.getContextPath() %>/CatInfoServletCMS">
+	                <div class="input-group input-group-sm" style="width: 150px;">
+	                    <input type="text" name="catID" class="form-control float-right" placeholder="Search CatID">
+	                  <div class="input-group-append">
+	                    <button type="submit" class="btn btn-default">
+	                      <i class="fas fa-search"></i>
+	                    </button>
+	                     <input type="hidden" name="action" value="getOne_For_Display">
+	                   </div>
+	                </div>
+                 </form>
+              </div>
+            <a href='${pageContext.request.contextPath}/views/catInfo/addCat.jsp'>新增貓咪</a>
             </div>
+            
+            <!-- /.card-header -->
+            <div class="card-body table-responsive p-0">
+              <table class="table table-hover text-nowrap">
+                <thead>
+                  <tr>
+					<th>Cat ID</th>
+					<th>Member ID</th>
+					<th>Shelter Name</th>
+					<th>Cat Name</th>
+					<th>Age</th>
+					<th>Breed</th>
+					<th>Size</th>
+					<th>Sex</th>
+					<th>Coat Color</th>
+					<th>Eye Color</th>
+					<th>Health</th>
+					<th>Adopt Cost</th>
+					<th>Create Date</th>
+					<th>Have Vaccine</th>
+					<th>Adopt</th>
+					<th>modify</th>
+		<!-- 			<th>delete</th> -->
+                  </tr>
+                </thead>
+                <tbody>
+                <%@ include file="pages/page1.file" %> 
+                <c:forEach var="catInfoVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
+		
+		<tr>
+			<td>${catInfoVO.catID}</td>
+ 			<td>${catInfoVO.memID}</td>
+			<td>${catInfoVO.shelterName}</td>
+			<td>${catInfoVO.catName}</td>
+			<td>${catInfoVO.age}</td>
+			<td>${catInfoVO.breed}</td> 
+			<td>${catInfoVO.size}</td>
+			<td>${catInfoVO.sex}</td>
+			<td>${catInfoVO.coatColor}</td>
+			<td>${catInfoVO.eyeColor}</td>
+			<td>${catInfoVO.health}</td>	
+			<td>${catInfoVO.adoptCost}</td>
+			<td>${catInfoVO.createDate}</td>
+			<td>${catInfoVO.haveVaccine}</td>
+			<td>${catInfoVO.adopt}</td>
+			<td>
+			  <FORM METHOD="post" ACTION="${pageContext.request.contextPath}/CatInfoServletCMS" style="margin-bottom: 0px;">
+			     <input type="submit" value="修改">
+			     <input type="hidden" name="catID"  value="${catInfoVO.catID}">
+			     <input type="hidden" name="action"	value="getOne_For_Update">
+		     </FORM>
+			</td>
+<%-- 			<td>
+			  <FORM METHOD="post" ACTION="catInfo" style="margin-bottom: 0px;">
+			     <input type="submit" value="刪除">
+			     <input type="hidden" name="catID"  value="${catInfoVO.catID}">
+			     <input type="hidden" name="action" value="delete">
+			     </FORM>
+			</td> --%>
+		</tr>
+	</c:forEach>
+				 
+                </tbody>
+              </table>
+            </div>
+            <!-- /.card-body -->
           </div>
-
-
-
-
+          <%@ include file="pages/page2.file" %>
+          <!-- /.card -->
+          
         </div>
       </div>
+      <!-- /.content -->
     </div>
     <!-- Control Sidebar -->
     <aside class="control-sidebar control-sidebar-dark">
@@ -500,14 +488,11 @@ src="<%=request.getContextPath()%>/resources/background/js/system.js"></script>
         Anything you want
       </div>
       <!-- Default to the left -->
-      <strong style="color: #869099;">Copyright &copy; 2022 &nbsp <a href="<%=request.getContextPath()%>/views/background_login/background.jsp">Adopets.io</a>.</strong> All rights reserved.
+      <strong>Copyright &copy; 2022 &nbsp <a href="<%=request.getContextPath()%>/views/background_login/background.jsp">Adopets.io</a>.</strong> All rights reserved.
     </footer>
+    <!-- /.content-wrapper -->
   </div>
 
 </body>
-
-<script>
-
-</script>
 
 </html>

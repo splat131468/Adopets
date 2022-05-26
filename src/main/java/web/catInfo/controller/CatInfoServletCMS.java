@@ -27,15 +27,13 @@ import com.mysql.cj.Session;
 import web.catInfo.entity.CatAndShelVO;
 import web.catInfo.entity.CatInfoVO;
 import web.catInfo.service.CatInfoService;
-import web.order.entity.OrdersVO;
-import web.order.service.OrdersService;
 
 
 
 
-@WebServlet("/CatInfoServlet")
+@WebServlet("/CatInfoServletCMS")
 @MultipartConfig(fileSizeThreshold = 1024 * 1024, maxFileSize = 5 * 1024 * 1024, maxRequestSize = 5 * 5 * 1024 * 1024)
-public class CatInfoServlet extends HttpServlet {
+public class CatInfoServletCMS extends HttpServlet {
 
 
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) 
@@ -447,9 +445,18 @@ public class CatInfoServlet extends HttpServlet {
 			RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 listOneEmp.jsp
 			successView.forward(req, res);
 		}
-	
-		
-
+		if ("getCatback".equals(action)) {
+			
+			Integer catID = null;
+			String str = req.getParameter("catID");
+			catID = Integer.valueOf(req.getParameter("catID"));
+			System.out.println("catID:" + catID);
+			CatAndShelVO catAndShelVO = catInfoService.getOneAndShel(catID);
+			req.setAttribute("catAndShelVO", catAndShelVO); // 資料庫取出的empVO物件,存入req
+			String url = "/views/chatroom/backgroundchatroom2.jsp";
+			RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 listOneEmp.jsp
+			successView.forward(req, res);
+		}
 		
 	}
 
