@@ -124,8 +124,8 @@
 </c:if> 
 </c:forEach>
 		<c:if test="${lists == true}">
-            <li class="${pageContext.request.contextPath}/views/catInfo/CatCMS.jsp">
-              <a href="lists.html" class="nav-link">
+            <li class="nav-item">
+              <a href="${pageContext.request.contextPath}/views/catInfo/CatCMS.jsp" class="nav-link">
                 <i class="nav-icon fa-solid fa-clipboard-list"></i>
                 <p>貓咪管理</p>
               </a>
