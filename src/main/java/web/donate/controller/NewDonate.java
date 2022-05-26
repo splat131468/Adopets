@@ -47,7 +47,7 @@ public class NewDonate extends HttpServlet {
 			// send the ErrorPage view.
 			req.setAttribute("errorMsgs", errorMsgs);
 
-			try {
+//			try {
 				System.out.println(req.getParameter("memID"));
 				Integer memID = new Integer(req.getParameter("memID"));
 				
@@ -160,7 +160,7 @@ public class NewDonate extends HttpServlet {
 				aCheckOut.setTotalAmount(donateAmo + "");
 				aCheckOut.setTradeDesc("test");
 				aCheckOut.setItemName(itemName);
-				aCheckOut.setClientBackURL("http://localhost:8080/Adopets/views/donate/donate.jsp");
+				aCheckOut.setClientBackURL("http://localhost:8081/Adopets/views/catInfo/My_home.jsp");
 				aCheckOut.setReturnURL("http://localhost:8081/Adopets//epayCheckOrder");
 
 //				aCheckOut.setReturnURL("http://211.23.128.214:5000/");
@@ -171,12 +171,12 @@ public class NewDonate extends HttpServlet {
 				System.out.println(outStr);
 				out.close();
 				
-			} catch (Exception e) {
-				System.out.println("BBBB");
-				errorMsgs.add("修改資料失敗:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/views/donate/donate.jsp");
-				failureView.forward(req, res);
-			}
+//			} catch (Exception e) {
+//				System.out.println("BBBB");
+//				errorMsgs.add("修改資料失敗:" + e.getMessage());
+//				RequestDispatcher failureView = req.getRequestDispatcher("/views/donate/donate.jsp");
+//				failureView.forward(req, res);
+//			}
 		}
 
 	}

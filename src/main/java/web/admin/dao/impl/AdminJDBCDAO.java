@@ -42,6 +42,8 @@ public class AdminJDBCDAO implements AdminDAO_interface {
 	
 	private static final String SELECT_ACCOUNT = "SELECT adminID,account,password,name,personImg,accStatus,createDate FROM ADMIN where account = ?";
 	
+	private static final String SELECT_NAME = "SELECT name from ADMIN where adminID = ?";
+	
 	@Override
 	public Integer insert(AdminVO adminVO) {
 		Connection con = null;
@@ -467,6 +469,58 @@ public class AdminJDBCDAO implements AdminDAO_interface {
 		return adminVO;
 	}
 	
+	@Override
+	public AdminVO selectName(Integer adminID) {
+		AdminVO adminVO = null;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, user, pwd);
+			pstmt = con.prepareStatement(SELECT_NAME);
+			pstmt.setInt(1, adminID);
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				adminVO = new AdminVO();
+				adminVO.setName(rs.getString("name"));
+				
+			}
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return adminVO;
+	}
+	
+	
 	public static void main(String[] args) {
 
 		AdminJDBCDAO dao = new AdminJDBCDAO();
@@ -554,6 +608,8 @@ public class AdminJDBCDAO implements AdminDAO_interface {
 
 		
 	}
+
+
 
 
 
