@@ -220,7 +220,7 @@ public class OrdersDAO implements OrdersDAO_interface {
 	}
 	
 	@Override
-	public OrdersVO findMemberOrder(Integer memID) {
+	public List<OrdersVO> findMemberOrder(Integer memID) {
 		List<OrdersVO> list = new ArrayList<OrdersVO>();
 		OrdersVO ordersVO = null;
 		Connection con = null;

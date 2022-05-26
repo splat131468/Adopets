@@ -27,6 +27,8 @@ import com.mysql.cj.Session;
 import web.catInfo.entity.CatAndShelVO;
 import web.catInfo.entity.CatInfoVO;
 import web.catInfo.service.CatInfoService;
+import web.order.entity.OrdersVO;
+import web.order.service.OrdersService;
 
 
 
@@ -70,12 +72,16 @@ public class CatInfoServlet extends HttpServlet {
 		
 		//從FoviriteServlet過來的,來找出對應的cat
 		if("getRedisListFav".equals(action)) {
-			List<String> catList = (ArrayList) req.getAttribute("catList");
+			try {
+				List<String> catList = (ArrayList) req.getAttribute("catList");
+				List<CatInfoVO> lists = catInfoService.getFavList(catList);
+				req.getSession().setAttribute("lists", lists);
+				
+			}catch (Exception e) {
+			}
 //			catList = req.getAttribute("catList");
 //			System.out.println("catList in servlet = " + catList);
 //			System.out.println(catInfoService.getFavList(catList));
-			List<CatInfoVO> lists = catInfoService.getFavList(catList);
-			req.getSession().setAttribute("lists", lists);
 			req.getRequestDispatcher("/views/catInfo/My_favorite.jsp").forward(req, res);
 //			req.getSession().setAttribute("catInfoVO", catInfoVO);
 		}
@@ -378,7 +384,10 @@ public class CatInfoServlet extends HttpServlet {
 		}
 
 		//顯示全部顯示全部顯示全部顯示全部顯示全部顯示全部顯示全部顯示全部顯示全部
-//		List<CatInfoVO> lists = catInfoService.getAll();
+//		if ("getAll".equals(action)) {
+//			List<CatInfoVO> getAllList = catInfoService.getAll();
+//			req.setAttribute("getAllList", getAllList);
+//		}
 //		
 //		for (CatInfoVO list : lists) {
 //			PrintWriter out = res.getWriter();
@@ -438,6 +447,9 @@ public class CatInfoServlet extends HttpServlet {
 			RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 listOneEmp.jsp
 			successView.forward(req, res);
 		}
+	
+		
+
 		
 	}
 

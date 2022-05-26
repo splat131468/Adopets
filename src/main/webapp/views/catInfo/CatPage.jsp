@@ -1213,7 +1213,12 @@
                                 <svg role="img" focusable="false">
                                     <use xlink:href="#icon-account"></use>
                                 </svg>
-                                <span class="header-inner-profile-accountBtn-title">會員ID</span>
+                                  <c:if test="${empty memberVO.name}">
+                                	<span class="header-inner-profile-accountBtn-title">會員ID</span>
+                                </c:if>
+                                 <c:if test="${not empty memberVO.name}">
+                                	<span class="header-inner-profile-accountBtn-title">Hi ~ ${memberVO.name}</span>
+                                </c:if>
                             </button>
                             <div class="header-inner-profile-wrapper">
                                 <ul pfdc-header-profiledropdown="" bind-active-class-to="[pfdc-header-profilemenu]"
@@ -2489,7 +2494,7 @@
                                                 </div>
                                             </div>
                                             <div class="actionCard-footer">
-                                                <button type="button"
+                                                <button onclick="location.href='<%=request.getContextPath()%>/views/donate/donate.jsp?catid=${catAndShelVO.catID}&memid=${memberVO.memID}&catname=${catAndShelVO.catName}&sheltername=${catAndShelVO.shelterName}'" type="button"
                                                     class="actionCard-footer-cta m-actionCard-footer-cta_1/2">
                                                     <span>助養貓咪</span>
                                                 </button>
@@ -4132,7 +4137,8 @@
 	
 		var messagesArea = document.getElementById("messagesArea");
 		var statusOutput = document.getElementById("statusOutput");
-		var self = 'USER1'; //sender改用EL ${userName}
+		var self = `${memberVO.name}`; //sender改用EL ${userName}
+
 		var webSocket;
     
     function connect() {

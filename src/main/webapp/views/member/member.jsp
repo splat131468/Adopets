@@ -41,7 +41,7 @@ MemberVO memberVO = (MemberVO) session.getAttribute("memberVO");
 				<div class="main-navigation">
 					<!--這裡是logo-->
 					<div iclass="logo">
-						<a href="#" rel="home" class="site-logo"> <img
+						<a href="${pageContext.request.contextPath}/views/catInfo/My_home.jsp" rel="home" class="site-logo"> <img
 							src="${pageContext.request.contextPath}/views/catInfo/img/Adopets.svg"
 							alt="Home">
 						</a>
@@ -151,7 +151,7 @@ MemberVO memberVO = (MemberVO) session.getAttribute("memberVO");
 				<!--我的最愛+購物車+登入+登出-->
 				<div class="profile-navigation">
 					<!--我的最愛-->
-					<a href="#" class="nav-favorites-btn"> <svg role="img"
+					<a href="${pageContext.request.contextPath}/Favorite?action=getRedisListFav" class="nav-favorites-btn"> <svg role="img"
 							focusable="false">
           <use xmlns:xlink="http://www.w3.org/1999/xlink"
 								xlink:href="#icon-favorite"></use>
@@ -177,8 +177,13 @@ MemberVO memberVO = (MemberVO) session.getAttribute("memberVO");
 
 					<div class="header-inner-profile__container">
 						<ul class="header-inner-profile">
-							<li><a href="#" class="header-inner-profile-btn">註冊</a></li>
-							<li><a href="#" class="header-inner-profile-btn">登入</a></li>
+							<c:if test="${empty memberVO.memID}">
+                  				<li><a href="${pageContext.request.contextPath}/views/signIn/register.jsp" class="header-inner-profile-btn">註冊</a></li>
+                  				<li><a href="${pageContext.request.contextPath}/views/signIn/signIn.jsp" class="header-inner-profile-btn ">登入</a></li>
+                 			</c:if>
+                  			<c:if test="${not empty memberVO.memID}">
+                  				<li><a href="${pageContext.request.contextPath}/views/member/member.jsp" class="header-inner-profile-btn ">Hi ~ ${memberVO.name}</a></li>
+                  			</c:if>
 						</ul>
 					</div>
 				</div>
@@ -238,7 +243,8 @@ MemberVO memberVO = (MemberVO) session.getAttribute("memberVO");
 							class="">訂單紀錄</a>
 					</div>
 					<div class="col-md-2 col-sm-4">
-						<a href="#" class="">我想登出</a>
+<!-- 						<a href="#" class="">我想登出</a> -->
+						<a href="${pageContext.request.contextPath}/views/signIn/signIn?action=signOut">我想登出</a>
 					</div>
 				</div>
 			</div>

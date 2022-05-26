@@ -9,3 +9,9 @@ buildNumber.properties
 .mvn/timing.properties
 # https://github.com/takari/maven-wrapper#usage-without-binary-jar
 .mvn/wrapper/maven-wrapper.jar
+.classpath
+<<<<<<< HEAD
+=======
+.factorypath
+>>>>>>> 635cd886ff3485d472cf47dd7015fa49eeec3344
+.settings/org.eclipse.wst.common.component

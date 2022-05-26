@@ -1,0 +1,192 @@
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<jsp:useBean id="AdminService" scope="page" class="web.admin.service.AdminService" />
+<nav class="main-header navbar navbar-expand navbar-white navbar-light">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+        </li>
+        <li class="nav-item d-none d-sm-inline-block">
+          <a href="<%=request.getContextPath()%>/views/background_login/background.jsp" class="nav-link">Home</a>
+        </li>
+      </ul>
+
+
+      <ul class="navbar-nav ml-auto">
+        
+
+        <li class="nav-item">
+          <a class="nav-link" data-widget="fullscreen" href="#" role="button">
+            <i class="fas fa-expand-arrows-alt"></i>
+          </a>
+        </li>
+
+        <!-- 右上角管理員資訊 -->
+        <li class="nav-item dropdown">
+          <a class="nav-link" data-toggle="dropdown" href="#">
+            <i class="fa-solid fa-circle-user"></i>
+          </a>
+          <div class="dropdown-menu dropdown-menu-sm dropdown-menu-right">
+            <a href="<%=request.getContextPath()%>/views/admin/system.jsp" class="dropdown-item">
+              <i class="fas fa-key mr-2" style="margin-left: 2.5px;"></i>修改密碼
+            </a>
+            <div class="dropdown-divider"></div>
+            
+            <a href="<%=request.getContextPath()%>/LogoutServlet" class="dropdown-item">
+              <i class="fas fa-sign-out mr-2"></i>登出
+            </a>
+      
+          </div>
+        </li>
+      </ul>
+    </nav>
+
+
+    <!-- Main Sidebar Container -->
+    <aside class="main-sidebar sidebar-dark-primary elevation-4">
+      <!-- 首頁 Logo -->
+      <a href="<%=request.getContextPath()%>/views/background_login/background.jsp" class="brand-link">
+        <span class="brand-text font-weight-light"><img src="<%=request.getContextPath()%>/resources/background/img/Adopets.svg" width="55%"></span>
+      </a>
+
+      <!-- Sidebar -->
+      <div class="sidebar">
+        <!-- Sidebar user panel (optional) -->
+        <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+          <div class="image">
+            <img src="${pageContext.request.contextPath}/UploadAdmImg?adminID=${adminVO.adminID}" class="img-circle elevation-2" alt="User Image">
+          </div>
+          <div class="info">
+            <a href="#" class="d-block">${AdminService.selectName(adminVO.adminID).getName()}</a>
+          </div>
+        </div>
+
+        
+
+        <!-- Sidebar Menu -->
+        <nav class="mt-2">
+          <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+            <!-- Add icons to the links using the .nav-icon class
+               with font-awesome or any other icon font library -->
+               
+<c:set var="member" value="false" /> 
+<c:forEach items="${auth}" var="item" >   
+<c:if test="${item eq 1}">     
+<c:set var="member" value="true" />  
+</c:if> 
+</c:forEach>
+		<c:if test="${member == true}">
+            <li class="nav-item">
+              <a href="<%=request.getContextPath()%>/views/backgroundMember/backgroundMember.jsp" class="nav-link">
+                <i class="nav-icon fa-solid fa-user"></i>
+                <p>會員管理</p>
+              </a>
+            </li>
+		 </c:if>
+
+
+<c:set var="checked" value="false" /> 
+<c:forEach items="${auth}" var="item" >   
+<c:if test="${item eq 2}">     
+<c:set var="checked" value="true" />  
+</c:if> 
+</c:forEach>
+		<c:if test="${checked == true}">
+            <li class="nav-item">
+              <a href="${pageContext.request.contextPath}/prodManage?action=prodList" class="nav-link">
+                <i class="nav-icon fas fa-edit"></i>
+                <p>商品管理</p>
+              </a>
+            </li>
+		</c:if>
+		
+		
+<c:set var="goods" value="false" /> 
+<c:forEach items="${auth}" var="item" >   
+<c:if test="${item eq 3}">     
+<c:set var="goods" value="true" />  
+</c:if> 
+</c:forEach>	
+		<c:if test="${goods == true}">
+            <li class="nav-item">
+              <a href="<%=request.getContextPath()%>/views/order/Orders.jsp" class="nav-link">
+                <i class="nav-icon fa-solid fa-store"></i>
+                <p>訂單管理</p>
+              </a>
+            </li>
+		</c:if>
+		
+		
+<c:set var="lists" value="false" /> 
+<c:forEach items="${auth}" var="item" >   
+<c:if test="${item eq 4}">     
+<c:set var="lists" value="true" />  
+</c:if> 
+</c:forEach>
+		<c:if test="${lists == true}">
+            <li class="nav-item">
+              <a href="${pageContext.request.contextPath}/views/catInfo/CatCMS.jsp" class="nav-link">
+                <i class="nav-icon fa-solid fa-clipboard-list"></i>
+                <p>貓咪管理</p>
+              </a>
+            </li>
+		</c:if>
+		
+<c:set var="money_m" value="false" /> 
+<c:forEach items="${auth}" var="item" >   
+<c:if test="${item eq 5}">     
+<c:set var="money_m" value="true" />  
+</c:if> 
+</c:forEach>
+	<c:if test="${money_m == true}">
+            <li class="nav-item">
+              <a href="<%=request.getContextPath()%>/views/donate/donateBackground.jsp" class="nav-link">
+                <i class="nav-icon fa-solid fa-sack-dollar"></i>
+                <p>捐款管理</p>
+              </a>
+            </li>
+	 </c:if>
+	
+            <li class="nav-item">
+              <a href="#" class="nav-link">
+                <i class="nav-icon fa-solid fa-gear"></i>
+                <p>
+                  系統管理
+                  <i class="right fas fa-angle-left"></i>
+                </p>
+              </a>
+              <ul class="nav nav-treeview">
+<c:set var="users" value="false" /> 
+<c:forEach items="${auth}" var="item" >   
+<c:if test="${item eq 6}">     
+<c:set var="users" value="true" />  
+</c:if> 
+</c:forEach>
+<c:if test="${users == true}">
+                <li class="nav-item">
+                    <a href="<%=request.getContextPath()%>/views/admin/system.jsp" class="nav-link">
+                    <i style="margin-left: 33px;"></i>
+                    <p>使用者管理</p>
+                  </a>
+                </li>
+</c:if>
+<c:set var="auths" value="false" /> 
+<c:forEach items="${auth}" var="item" >   
+<c:if test="${item eq 7}">     
+<c:set var="auths" value="true" />  
+</c:if> 
+</c:forEach>
+<c:if test="${auths == true}">
+                <li class="nav-item">
+                    <a href="<%=request.getContextPath()%>/views/admin/systemAuth.jsp" class="nav-link">
+                    <i style="margin-left: 33px;"></i>
+                    <p>權限管理</p>
+                  </a>
+                </li>
+</c:if>
+              </ul>
+            </li>
+
+          </ul>
+        </nav>
+      </div>
+    </aside>

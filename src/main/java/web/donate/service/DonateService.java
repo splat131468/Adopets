@@ -1,5 +1,6 @@
 package web.donate.service;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 import web.donate.dao.DonateDAO;
@@ -32,8 +33,8 @@ public class DonateService {
 		donateVO.setDonateAmo(donateAmo);
 		donateVO.setDonateStatus(donateStatus);
 		donateVO.setDonateMes(donateMes);
-		dao.insert(donateVO);
-
+		Integer DonateID = dao.insert(donateVO);
+		donateVO.setDonateID(DonateID);
 		return donateVO;
 	}
 
@@ -58,5 +59,9 @@ public class DonateService {
 
 	public List<DonateVO> getAll() {
 		return dao.getAll();
+	}
+	
+	public List<DonateVO> getDonateMember(Integer memID) {
+		return dao.findByMember(memID);
 	}
 }

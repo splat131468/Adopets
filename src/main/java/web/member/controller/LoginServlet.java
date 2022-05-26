@@ -41,8 +41,9 @@ public class LoginServlet extends HttpServlet {
 		
 		//如果點登出進來這  前端畫面尚未完成!
 		if("signOut".equals(action)) {
+			System.out.println("try action : " + action);
 			req.getSession().invalidate();
-			String url = "/signIn.jsp";
+			String url = "/views/catInfo/My_home.jsp";
 			RequestDispatcher successView = req.getRequestDispatcher(url);
 			successView.forward(req, res);
 			return;
@@ -83,7 +84,7 @@ public class LoginServlet extends HttpServlet {
 	            return;
 	        }else {
 	            session.removeAttribute("preURL");   
-	            res.sendRedirect("");      //想導入位置尚未確定，需驗證      
+	            res.sendRedirect("/Adopets/views/catInfo/My_home.jsp");      //想導入位置尚未確定，需驗證      
 	            return;
 	        }
 			/*************************** 其他可能的錯誤處理 **********************************/

@@ -22,6 +22,7 @@ import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import web.catInfo.dao.impl.CatInfoRedisimpl;
 import web.catInfo.util.JedisUtil;
+import web.member.entity.MemberVO;
 
 
 @WebServlet("/Favorite")
@@ -36,7 +37,15 @@ public class Favorite extends HttpServlet {
 		res.setContentType("text/html; charset=UTF-8");
 		
 		JedisPool jedisPool = JedisUtil.getJedisPool();
-		
+		Integer memID = null;
+		MemberVO memberVO  = null;
+		try {
+			
+			memberVO = (MemberVO) req.getSession().getAttribute("memberVO");
+		}catch (Exception e) {
+
+		}
+		memID = memberVO.getMemID();
 		PrintWriter out = res.getWriter();
 		String action = req.getParameter("action");
 //		System.out.println(action);
@@ -44,9 +53,9 @@ public class Favorite extends HttpServlet {
 		if("getRedis".equals(action)) {
 //			System.out.println(action);
 			Jedis jedis = jedisPool.getResource();
-			String memID = req.getParameter("key");
-//			System.out.println(memID);
-			List<String> catList = jedis.lrange(memID, 0, -1);
+//			String memID = req.getParameter("key");
+			System.out.println(memID);
+			List<String> catList = jedis.lrange("member:" + memID + ":favorite", 0, -1);
 			
 //			System.out.println(catList);
 			out.println(catList);
@@ -58,13 +67,14 @@ public class Favorite extends HttpServlet {
 		if("addRedis".equals(action)){
 			Jedis jedis = jedisPool.getResource();
 	
-			String catID = req.getParameter("member:1:favorite");
-			if (jedis.lrem("member:1:favorite",1,catID) == 0) {
-				new CatInfoRedisimpl().jedisAdd(1, Integer.parseInt(catID));				
+			String catID = req.getParameter("catID");
+			if (jedis.lrem("member:" + memID + ":favorite",1,catID) == 0) {
+				System.out.println("this is catID =" + catID);
+				new CatInfoRedisimpl().jedisAdd(memID, Integer.parseInt(catID));				
 			}
 			
-			List<String> catList1 = jedis.lrange("member:1:favorite", 0, -1);
-	 		String str = jedis.lindex("member:1:favorite",0);
+			List<String> catList1 = jedis.lrange("member:" + memID + ":favorite", 0, -1);
+	 		String str = jedis.lindex("member:" + memID + ":favorite",0);
 //			List<String> catList2 = jedis.lrange("member:2:favorite", 0, -1);
 			out.println(catList1);
 			
@@ -77,16 +87,21 @@ public class Favorite extends HttpServlet {
 		}
 		//這是給列出我的最愛用的
 		if("getRedisListFav".equals(action)) {
+			Jedis jedis = jedisPool.getResource();
+			
+			try {
+				List<String> catList = jedis.lrange("member:" + memID + ":favorite", 0, -1);
+				System.out.println("cat List in favorite = " + catList.size());
+				req.setAttribute("catList", catList);
+				
+			}
+			catch (Exception e) {
+			}
 			
 //			System.out.println(action);
-			Jedis jedis = jedisPool.getResource();
-			String memID = req.getParameter("key");
-//			System.out.println(memID);
+//		
 			//現在redis取得會員的favorite list
-			List<String> catList = jedis.lrange(memID, 0, -1);
-			System.out.println("cat List in favorite = " + catList.size());
 			//再F/w到catInfoServlet做查詢
-			req.setAttribute("catList", catList);
 //			System.out.println(catList);
 			req.getRequestDispatcher("/CatInfoServlet").forward(req, res);
 //			out.println(catList);
