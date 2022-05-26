@@ -179,9 +179,8 @@ public class CartServiceImp implements CartService {
 
 		// 新增訂單
 		int gk = orderService.insertOrderGk(ordersVO);
-		//
+		
 		Integer orderPrice = ordersVO.getOrderPrice();
-
 		// 建立明細
 		orderDetailService.addDetails(sellList, memID, gk, cart);
 
@@ -189,11 +188,7 @@ public class CartServiceImp implements CartService {
 		// 時間
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 		String orderDate = sdf.format(new Date());
-
 		allInOne = new AllInOne("");
-
-		System.out.println();
-
 		AioCheckOutALL aCheckOut = new AioCheckOutALL();
 		aCheckOut.setMerchantTradeNo(gk + "tga101");
 		aCheckOut.setMerchantTradeDate(orderDate);
@@ -201,16 +196,9 @@ public class CartServiceImp implements CartService {
 		aCheckOut.setTradeDesc("test");
 		aCheckOut.setItemName(itemName);
 		aCheckOut.setClientBackURL("http://localhost:8081/Adopets/comAction?action=ecoMainP");
-
 		aCheckOut.setReturnURL("http://localhost:8081/Adopets//epayCheckOrder");
-
-//		aCheckOut.setReturnURL("http://211.23.128.214:5000/");
 		aCheckOut.setNeedExtraPaidInfo("N");
-//		System.out.println(allInOne.aioCheckOut(aCheckOut, null));
 
-
-		// 這個部分要等有domain才能夠做下去
-		// 移除庫存
 		skuService.takeOrder(sellList);
 
 		// 移除購物車

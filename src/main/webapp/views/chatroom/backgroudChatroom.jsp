@@ -4,24 +4,9 @@
 <%@ page import="web.catInfo.service.*"%>
 <%@ page import="web.catInfo.entity.*"%>
 <%
-	CatInfoService catInfoService = new CatInfoService();
-	/* CatInfoVO catInfoVO = new CatInfoVO(); */
-	CatInfoVO catInfoVO = (CatInfoVO) request.getSession().getAttribute("catInfoVO");
-	/* List<CatInfoVO> list = catInfoService.getMulti(catInfoVO); */
-	
-	/* int listn = (Integer) request.getSession().getAttribute("size"); */
-	/* List<CatInfoVO> list = catInfoService.getAll(); */
-	//多值查詢過來的
- 	List<CatInfoVO> lists = (ArrayList) request.getSession().getAttribute("lists");
- 	/* pageContext.setAttribute("list",list); */
-  	pageContext.setAttribute("lists",request.getSession().getAttribute("lists"));
- 	/* pageContext.setAttribute("list",request.getSession().getAttribute("list")); */
- /* 	if (!request.getSession().isNew()) {
-	 	Integer n = (Integer) request.getSession().getAttribute("size");
- 		
- 	} */
-    
-  
+CatInfoService catSvc = new CatInfoService();
+List<CatInfoVO> list = catSvc.getAll();
+pageContext.setAttribute("list", list);
 %>
 
 <html>
@@ -304,6 +289,13 @@ tr,td {
                 <p>捐款管理</p>
               </a>
             </li>
+            
+             <li class="nav-item">
+               <a href="<%=request.getContextPath()%>/views/catInfo/select_page.jsp" class="nav-link">
+                <i class="nav-icon fa-solid fa-sack-dollar"></i>
+                <p>貓咪管理</p>
+              </a>
+            </li>
 
             <li class="nav-item">
               <a href="#" class="nav-link ">
@@ -337,16 +329,7 @@ tr,td {
       <!-- /.sidebar -->
     </aside>
 
-<!-- --------------------------------------------------------------------------------------- -->
-	<%-- 錯誤表列 --%>
-	<c:if test="${not empty errorMsgs}">
-		<font style="color: red">請修正以下錯誤:</font>
-		<ul>
-			<c:forEach var="message" items="${errorMsgs}">
-				<li style="color: red">${message}</li>
-			</c:forEach>
-		</ul>
-	</c:if>
+
 <!----------------------- Content Header (Page header)-------------------------------------- -->
 <div class="content-wrapper">
 <section class="content-header">
@@ -372,19 +355,20 @@ tr,td {
               <tr>
             	<th>貓咪編號</th>
 				<th>貓咪姓名</th>
-				<th>聊天</th>
+				<th>查看</th>
               </tr>
             </thead>
             <tbody >
-	
-	<c:forEach var="catInfoVO" items="${lists}" >
+	<%@ include file="page1.file"%>
+	<c:forEach var="catInfoVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
 			  <tr>
 				<td>${catInfoVO.catID}</td>
 				<td>${catInfoVO.catName}</td>
 				
-				<td>
-                   <a class="petCard-link" href="${pageContext.request.contextPath}/CatInfoServlet?action=getCatback&catID=${catInfoVO.catID}">聊天</button>
-
+				<td><button class="btn btn-primary btnPurple">
+                   <a  href="${pageContext.request.contextPath}/ChatServlet?action=getCatback&catID=${catInfoVO.catID}">聊天
+                   </button>
+					
                 </td>										
 			
 			  </tr>
@@ -392,7 +376,7 @@ tr,td {
             </c:forEach>
            </tbody> 
         </table>
-             
+             <%@ include file="page2.file"%> 
     </div>
    </div> 
    </div> 
