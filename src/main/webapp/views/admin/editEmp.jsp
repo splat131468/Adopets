@@ -186,13 +186,16 @@ src="<%=request.getContextPath()%>/resources/background/js/system.js"></script>
 		                    <br>
 		
 		                    <input id="chk_5" type="checkbox" name="choice" class="checknum" onclick="setAll()"  value="5" ${authConfigureSvc.getOneAuthConfigure(admVO.adminID).toString().indexOf('5')!=-1 ?'checked':''}/><label
-		                      for="chk_5">捐款管理</label>
+		                      for="chk_5">審核管理</label>
 		                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 		                    <input id="chk_6" type="checkbox" name="choice" class="checknum" onclick="setAll()"  value="6" ${authConfigureSvc.getOneAuthConfigure(admVO.adminID).toString().indexOf('6')!=-1 ?'checked':''}/><label
-		                      for="chk_6">使用者管理</label>
+		                      for="chk_6">捐款管理</label>
 		                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 		                    <input id="chk_7" type="checkbox" name="choice" class="checknum" onclick="setAll()"  value="7" ${authConfigureSvc.getOneAuthConfigure(admVO.adminID).toString().indexOf('7')!=-1 ?'checked':''}><label
-		                      for="chk_7">權限管理</label>
+		                      for="chk_7">使用者管理</label>
+		                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		                    <input id="chk_8" type="checkbox" name="choice" class="checknum" onclick="setAll()"  value="8" ${authConfigureSvc.getOneAuthConfigure(admVO.adminID).toString().indexOf('8')!=-1 ?'checked':''}><label
+		                      for="chk_8">權限管理</label>
 
 		                  </div>
 

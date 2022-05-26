@@ -131,9 +131,24 @@
             </li>
 		</c:if>
 		
-<c:set var="money_m" value="false" /> 
+<c:set var="chat" value="false" /> 
 <c:forEach items="${auth}" var="item" >   
 <c:if test="${item eq 5}">     
+<c:set var="chat" value="true" />  
+</c:if> 
+</c:forEach>
+		<c:if test="${chat == true}">
+            <li class="nav-item">
+              <a href="${pageContext.request.contextPath}/views/chatroom/backgroudChatroom.jsp" class="nav-link">
+                <i class="nav-icon fas fa-edit"></i>
+                <p>審核管理</p>
+              </a>
+            </li>
+		</c:if>
+		
+<c:set var="money_m" value="false" /> 
+<c:forEach items="${auth}" var="item" >   
+<c:if test="${item eq 6}">     
 <c:set var="money_m" value="true" />  
 </c:if> 
 </c:forEach>
@@ -157,7 +172,7 @@
               <ul class="nav nav-treeview">
 <c:set var="users" value="false" /> 
 <c:forEach items="${auth}" var="item" >   
-<c:if test="${item eq 6}">     
+<c:if test="${item eq 7}">     
 <c:set var="users" value="true" />  
 </c:if> 
 </c:forEach>
@@ -171,7 +186,7 @@
 </c:if>
 <c:set var="auths" value="false" /> 
 <c:forEach items="${auth}" var="item" >   
-<c:if test="${item eq 7}">     
+<c:if test="${item eq 8}">     
 <c:set var="auths" value="true" />  
 </c:if> 
 </c:forEach>
