@@ -28,7 +28,7 @@ public class EpayCheckOrder extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		
-		System.out.println("here");
+		
 		response.getWriter().append("1");
 		
 		
