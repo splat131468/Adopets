@@ -61,7 +61,7 @@
       <a href="<%=request.getContextPath()%>/views/signIn/register.jsp" class="merber_click">成為會員</a>
     </div>
   </div>
-  <button class="homepage">登入</button>
+<!--   <button class="homepage">登入</button> -->
   <script href="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
   <script src="<%=request.getContextPath()%>/views/member/js/jquery-3.6.0.min.js"></script>
   <script src="<%=request.getContextPath()%>/views/member/js/signIn.js">  </script>

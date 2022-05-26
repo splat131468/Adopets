@@ -34,6 +34,7 @@ MemberVO memberVO = (MemberVO) session.getAttribute("memberVO");
 	<div class="container">
 
 		<!-- 	header開始 -->
+
 		<!-- 阿德header -->
 		<div class="region region-navigation">
 			<div class="region--inner">
@@ -220,7 +221,7 @@ MemberVO memberVO = (MemberVO) session.getAttribute("memberVO");
 					</div>
 					<div class="col-md-2 col-sm-4">
 						<a
-							href="${pageContext.request.contextPath}/views/catInfo/My_favorite.jsp"
+							href="<%=request.getContextPath()%>/views/member/myFavorite.jsp"
 							class="">我的最愛</a>
 					</div>
 					<div class="col-md-2 col-sm-4">
@@ -237,7 +238,7 @@ MemberVO memberVO = (MemberVO) session.getAttribute("memberVO");
 							class="">訂單紀錄</a>
 					</div>
 					<div class="col-md-2 col-sm-4">
-						<a href="${pageContext.request.contextPath}/views/catInfo/My_home.jsp" class="">我想登出</a>
+						<a href="#" class="">我想登出</a>
 					</div>
 				</div>
 			</div>
