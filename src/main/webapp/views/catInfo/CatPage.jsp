@@ -2494,7 +2494,7 @@
                                                 </div>
                                             </div>
                                             <div class="actionCard-footer">
-                                                <button onclick="location.href='<%=request.getContextPath()%>/views/donate/donate.jsp?memid=${memberVO.memID}&catname=${catAndShelVO.catName}&sheltername=${catAndShelVO.shelterName}'" type="button"
+                                                <button onclick="location.href='<%=request.getContextPath()%>/views/donate/donate.jsp?catid=${catAndShelVO.catID}&memid=${memberVO.memID}&catname=${catAndShelVO.catName}&sheltername=${catAndShelVO.shelterName}'" type="button"
                                                     class="actionCard-footer-cta m-actionCard-footer-cta_1/2">
                                                     <span>助養貓咪</span>
                                                 </button>
