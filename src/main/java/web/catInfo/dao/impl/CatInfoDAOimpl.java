@@ -94,7 +94,9 @@ public class CatInfoDAOimpl implements CatInfoDAO {
 			ps.setInt(8, catInfoVO.getCatID());
 			rowCount = ps.executeUpdate();
 		} catch (SQLException e) {
-			throw new RuntimeException();
+//			throw new RuntimeException();
+			throw new RuntimeException("資料庫發生錯誤" + e.getMessage());
+	
 		}
 		return rowCount != 0;
 	}
@@ -110,8 +112,7 @@ public class CatInfoDAOimpl implements CatInfoDAO {
 			rowCount = ps.executeUpdate();
 //			System.out.println("hello dao 2--------------" + catID);
 		} catch (Exception e) {
-			
-//			throw new RuntimeException("資料庫發生錯誤" + e.getMessage());
+			throw new RuntimeException("資料庫發生錯誤" + e.getMessage());
 		} 
 		
 		return rowCount != 0;

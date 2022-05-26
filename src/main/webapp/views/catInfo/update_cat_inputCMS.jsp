@@ -79,37 +79,55 @@ src="<%=request.getContextPath()%>/resources/background/js/system.js"></script>
 <script src="<%=request.getContextPath()%>/resources/background/js/adminlte.min.js"></script>
 
 <style>
-table {
-	width: 550px;
+  table#table-1 {
+	background-color: #CCCCFF;
+    border: 2px solid black;
+    text-align: center;
+  }
+  table#table-1 h4 {
+    color: red;
+    display: block;
+    margin-bottom: 1px;
+  }
+  h4 {
+    color: blue;
+    display: inline;
+  }
+</style>
+
+<style>
+ table {
+	width: 600px;
 	background-color: white;
 	margin-top: 1px;
 	margin-bottom: 1px;
-}
-
-table, th, td {
-	border: 0px solid #CCCCFF;
-}
-
-th, td {
-	padding: 1px;
-}
-
-img.preview {
-	width: 200px;
-}
-
-ul {
-	list-style: none;
-	margin: 0;
-	padding: 0;
-}
-
-ul>li {
-	display: inline-block;
-	vertical-align: top;
-}
-</style>
-
+  }
+  table, th, td {
+    border: 0px solid #CCCCFF;
+  }
+  th, td {
+    padding: 1px;
+  }
+  
+  img {
+  	width: 200px;
+  }
+ .pic {
+  	display: inline-block;
+  	margin: 10px;
+  }
+  img.preview{
+    width: 200px;
+  }
+  ul{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  ul > li{
+    display: inline-block;
+    vertical-align: top;
+  }
 </style>
 
 </head>
@@ -150,7 +168,7 @@ ul>li {
         <div class="container-fluid">
           <div class="row mb-2">
             <div class="col-sm-6">
-              <h1>新增貓咪</h1>
+              <h1>貓咪資料修改</h1>
             </div>
             <div class="col-sm-6">
               <ol class="breadcrumb float-sm-right">
@@ -172,7 +190,7 @@ ul>li {
             <div class="card card-primary">
               <!-- /.card-header -->
               <div class="card-header" >
-                <h3 class="card-title">新增貓咪資料</h3>
+                <h3 class="card-title">資料修改</h3>
 
                 <div class="card-tools">
                   <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
@@ -181,7 +199,7 @@ ul>li {
                 </div>
               </div>
 
-              <div class="card-body" style="width: 900px;">
+              <div class="card-body">
               	<c:if test="${not empty errorMsgs}">
 		<font style="color: red">請修正以下錯誤:</font>
 		<ul>
@@ -190,125 +208,106 @@ ul>li {
 			</c:forEach>
 		</ul>
 	</c:if>
-              <FORM METHOD="post" ACTION="${pageContext.request.contextPath}/CatInfoServletCMS" name="form1" enctype="multipart/form-data">
-		<table>
-			<tr>
-				<td>收容所名稱:</td>
-				<td><input type="TEXT" name="shelterName" size="45"
-					value="<%=(catInfoVO == null) ? "" : catInfoVO.getShelterName()%>" /></td>
-			</tr>
-			<tr>
-				<td>貓咪名字:</td>
-				<td><input type="TEXT" name="catName" size="45"
-					value="<%=(catInfoVO == null) ? "" : catInfoVO.getCatName()%>" /></td>
-			</tr>
-			<tr>
-				<td>貓咪年齡:</td>
-				<td><select name="age" size="1">
-						<option value="0" ${(catInfoVO.age == 0) ? 'selected' : ''}>幼貓</option>
-						<option value="1" ${(catInfoVO.age == 1) ? 'selected' : ''}>小貓</option>
-						<option value="2" ${(catInfoVO.age == 2) ? 'selected' : ''}>成貓</option>
-						<option value="3" ${(catInfoVO.age == 3) ? 'selected' : ''}>老貓</option>
-				</select></td>
-			</tr>
-			<tr>
-				<td>貓咪品種:</td>
-				<td><select name="breed" size="1">
-						<option value="米克斯" ${(catInfoVO.breed == "米克斯") ? 'selected' : ''}>米克斯</option>
-						<option value="美國短毛貓" ${(catInfoVO.breed == "美國短毛貓") ? 'selected' : ''}>美國短毛貓</option>
-						<option value="英國短毛貓" ${(catInfoVO.breed == "英國短毛貓") ? 'selected' : ''}>英國短毛貓</option>
-						<option value="金吉拉" ${(catInfoVO.breed == "金吉拉") ? 'selected' : ''}>金吉拉</option>
-						<option value="布偶貓" ${(catInfoVO.breed == "布偶貓") ? 'selected' : ''}>布偶貓</option>
-				</select></td>
-			</tr>
-			<tr>
-				<td>貓咪性別:</td>
-				<td><select name="sex" size="1">
-						<option value="公" ${(catInfoVO.sex == '公') ? 'selected' : ''}>公</option>
-						<option value="母" ${(catInfoVO.sex == '母') ? 'selected' : ''}>母</option>
-				</select></td>
-			</tr>
-			<tr>
-				<td>貓咪大小:</td>
-				<td><select name="size" size="1">
-						<option value="小型" ${(catInfoVO.size == "小型") ? 'selected' : ''}>小型</option>
-						<option value="中型" ${(catInfoVO.size == "中型") ? 'selected' : ''}>中型</option>
-						<option value="大型" ${(catInfoVO.size == "大型") ? 'selected' : ''}>大型</option>
-				</select></td>
-			</tr>
-			<tr>
-				<td>貓咪毛色:</td>
-				<td><select name="coatColor" size="1">
-						<option value="黑色" ${(catInfoVO.coatColor == "黑色") ? 'selected' : ''}>黑色</option>
-						<option value="白色" ${(catInfoVO.coatColor == "白色") ? 'selected' : ''}>白色</option>
-						<option value="虎斑" ${(catInfoVO.coatColor == "虎斑") ? 'selected' : ''}>虎斑</option>
-						<option value="橘色" ${(catInfoVO.coatColor == "橘色") ? 'selected' : ''}>橘色</option>
-						<option value="三花" ${(catInfoVO.coatColor == "三花") ? 'selected' : ''}>三花</option>
-						<option value="藍色" ${(catInfoVO.coatColor == "藍色") ? 'selected' : ''}>藍色</option>
-						<option value="玳瑁" ${(catInfoVO.coatColor == "玳瑁") ? 'selected' : ''}>玳瑁</option>
-						<option value="豹紋" ${(catInfoVO.coatColor == "豹紋") ? 'selected' : ''}>豹紋</option>
-				</select></td>
-			</tr>
-			<tr>
-				<td>貓咪眼睛顏色:</td>
-				<td><select name="eyeColor" size="1">
-						<option value="黃色" ${(catInfoVO.eyeColor == "黃色") ? 'selected' : ''}>黃色</option>
-						<option value="綠色" ${(catInfoVO.eyeColor == "綠色") ? 'selected' : ''}>綠色</option>
-				</select></td>
-			</tr>
-			<tr>
-				<td>貓咪健康情況:</td>
-				<td><input type="TEXT" name="health" size="45"
-					value="<%=(catInfoVO == null) ? "" : catInfoVO.getHealth()%>" /></td>
-			</tr>
-			<tr>
-				<td>貓咪認養花費:</td>
-				<td><input type="TEXT" name="adoptCost" size="45"
-					value="<%=(catInfoVO == null) ? 0 : catInfoVO.getAdoptCost()%>" /></td>
-			</tr>
-			<tr>
-				<td>貓咪是否施打疫苗:</td>
-				<td><select name="haveVaccine" size="1">
-						<option value="false"
-							${(catInfoVO.haveVaccine == "false") ? 'selected' : ''}>否</option>
-						<option value="true"
-							${(catInfoVO.haveVaccine == "true") ? 'selected' : ''}>是</option>
-				</select></td>
-			</tr>
-			<tr>
-				<td>貓咪是否被認養:</td>
-				<td><select name="adopt" size="1">
-						<option value="false"
-							${(catInfoVO.adopt == "false") ? 'selected' : ''}>否</option>
-						<option value="true"
-							${(catInfoVO.adopt == "true") ? 'selected' : ''}>是</option>
-				</select></td>
-			</tr>
-			<tr>
-				<td>新增日期:</td>
-				<td><input type="TEXT" name="createDate" size="45" id="f_date1" /></td>
-			</tr>
-			<tr>
-				<td>新增貓咪照片:</td>
-				<td><input type="file" id="the_file" name="upfile1" multiple></td>
-			</tr>
-<%-- 			<jsp:useBean id="shelterInfoService" scope="page"
-				class="web.catInfo.service.ShelterInfoService" /> --%>
-			<%-- 	<tr>
-		<td>部門:<font color=red><b>*</b></font></td>
-		<td><select size="1" name="deptno">
-			<c:forEach var="deptVO" items="${deptSvc.all}">
-				<option value="${deptVO.deptno}" ${(catInfoVO.deptno==deptVO.deptno)? 'selected':'' } >${deptVO.dname}
-			</c:forEach>
-		</select></td>
-	</tr> --%>
+              <jsp:useBean id="catPhotoGalleryService" scope="page" class="web.catInfo.service.CatPhotoGalleryService" />
+		<p>目前貓咪照片:</p>
+		<c:forEach var="catPhotoGalleryVO" items="${catPhotoGalleryService.getOneCat(catInfoVO.catID)}">
+			<div class="pic">
+				<!-- 暫時先用這隻讀檔 -->
+				<img src="${pageContext.request.contextPath}/DBGifReader?id=${catPhotoGalleryVO.imgID}">
+			</div>
+		</c:forEach> 
 
-		</table>
-		<ul class="picture_list"></ul> <!-- 貓照片 -->
-		<br> 
-		<input type="hidden" name="action" value="insert"> 
-		<input type="submit" value="送出新增">
-	</FORM>
+<FORM METHOD="post" ACTION="CatInfoServletCMS" name="form1" enctype="multipart/form-data">
+<table>
+	<tr>
+		<td>貓咪編號:<font color=red><b>*</b></font></td>
+		<td><%=catInfoVO.getCatID()%></td>
+	</tr>
+	<tr>
+		<td>貓咪品種:<font color=red><b>*</b></font></td>
+		<td><%=catInfoVO.getBreed()%></td>
+	</tr>
+	<tr>
+		<td>貓咪年齡:<font color=red><b>*</b></font></td>
+		
+		<c:choose>
+		   <c:when	 test="${catInfoVO.age == 0}">
+		   	<td>幼貓</td>
+		   </c:when>
+		   <c:when	 test="${catInfoVO.age == 1}">
+		   	<td>小貓</td>
+		   </c:when>
+		   <c:when	 test="${catInfoVO.age == 2}">
+		   	<td>成貓</td>
+		   </c:when>
+		   <c:otherwise>
+			<td>老貓</td>		   	
+		   </c:otherwise>
+		</c:choose>
+	</tr>
+	<tr>
+		<td>貓咪大小:<font color=red><b>*</b></font></td>
+		<td><%=catInfoVO.getSize()%></td>
+	</tr>
+	<tr>
+		<td>貓咪性別:<font color=red><b>*</b></font></td>
+		<td><%=catInfoVO.getSex()%></td>
+	</tr>
+	<tr>
+		<td>貓咪毛色:<font color=red><b>*</b></font></td>
+		<td><%=catInfoVO.getCoatColor()%></td>
+	</tr>
+	<tr>
+		<td>貓咪眼睛顏色:<font color=red><b>*</b></font></td>
+		<td><%=catInfoVO.getEyeColor()%></td>
+	</tr>
+	<tr>
+		<td>認養人會員編號:</td>
+		<c:choose>
+		   <c:when	 test="${catInfoVO.memID == 0}">
+		   	<td><input type="TEXT" name="memID" size="50" value='' placeholder="請填入會員編號	"/></td>
+		   </c:when>
+		   <c:otherwise>
+			<td><input type="TEXT" name="memID" size="30" value="${catInfoVO.memID}" /></td>		   	
+		   </c:otherwise>
+		</c:choose>
+
+	</tr>
+	<tr>
+		<td>收容所名稱:</td>
+		<td><input type="TEXT" name="shelterName" size="45"	value="<%=catInfoVO.getShelterName()%>" /></td>
+	</tr>
+	<tr>
+		<td>貓咪名稱:</td>
+		<td><input type="TEXT" name="catName" size="45"	value="<%=catInfoVO.getCatName()%>" /></td>
+	</tr>
+	<tr>
+		<td>是否有打疫苗:</td>
+		<td><input type="TEXT" name="haveCaccine" size="45"	value="<%=catInfoVO.getHaveVaccine()%>" /></td>
+	</tr>
+	<tr>
+		<td>健康情況:</td>
+		<td><input type="TEXT" name="health" size="45" value="<%=catInfoVO.getHealth()%>" /></td>
+	</tr>
+	<tr>
+		<td>認養金額:</td>
+		<td><input type="TEXT" name="adoptCost" size="45" value="<%=catInfoVO.getAdoptCost()%>" /></td>
+	</tr>
+	<tr>
+		<td>是否認養:</td>
+		<td><input type="TEXT" name="adopt" size="45" value="<%=catInfoVO.getAdopt()%>" /></td>
+	</tr>
+	<tr>
+		<td>新增貓咪照片:</td>
+		<td><input type="file" id="the_file" name="upfile1" multiple></td>
+	</tr>
+</table>
+<ul class="picture_list"></ul> <!-- 貓照片 -->
+<br>
+<input type="hidden" name="action" value="update">
+<input type="hidden" name="catID" value="<%=catInfoVO.getCatID()%>">
+<input type="submit" value="送出修改">
+</FORM>
 				
 			 
               </div>
