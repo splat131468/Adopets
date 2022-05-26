@@ -497,12 +497,23 @@ scratch. This page gets rid of all links and provides the needed markup only.
                           </tr>
                         </c:forEach>
 
-
+                        
                       </tbody>
+
+  
                     </table>
                     <div style="height: 150px;width: 10px; ">
 
                     </div>
+                    <footer class="main-footer">
+                      <!-- To the right -->
+                      <div class="float-right d-none d-sm-inline">
+                        Anything you want
+                      </div>
+                      <!-- Default to the left -->
+                      <strong>Copyright &copy; 2022 &nbsp <a href="<%=request.getContextPath()%>/views/background_login/background.jsp">Adopets.io</a>.</strong> All rights reserved.
+                    </footer>
+                    
                   </div>
                   <!-- /.card-body -->
                 </div>
@@ -518,6 +529,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 </nav> -->
               </div>
             </div>
+            
             <!-- /.content -->
           </div>
         </div>
