@@ -242,6 +242,7 @@ MemberVO memberVO = (MemberVO) session.getAttribute("memberVO");
 							class="">訂單紀錄</a>
 					</div>
 					<div class="col-md-2 col-sm-4">
+
 						<a href="${pageContext.request.contextPath}/views/signIn/signIn?action=signOut">我想登出</a>
 					</div>
 				</div>
