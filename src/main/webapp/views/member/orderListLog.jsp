@@ -252,7 +252,7 @@
                   <a href="<%=request.getContextPath()%>/views/member/member.jsp" class="">會員資料</a>
                 </div>
                 <div class="col-2">
-                  <a href="<%=request.getContextPath()%>/views/member/myFavorite.jsp" class="">我的最愛</a>
+                  <a href="${pageContext.request.contextPath}/views/catInfo/My_favorite.jsp" class="">我的最愛</a>
                 </div>
                 <div class="col-2">
                   <a href="<%=request.getContextPath()%>/views/member/adoptLog.jsp" class="">認養紀錄</a>
