@@ -58,15 +58,16 @@ public class CatInfoService {
 		catInfoVO.setAdoptCost(adoptCost);
 		catInfoVO.setAdopt(adopt);
 		catInfoVO.setCatID(catID);
-		try {
+//		try {
 			dao.update(catInfoVO);
-			return catInfoVO;
-		}catch (Exception e) {
-			throw new RuntimeException("資料庫發生錯誤 : 沒有這個會員");
+//		}catch (Exception e) {
+//			throw new RuntimeException("資料庫發生錯誤 : 沒有這個會員");
+//			e.printStackTrace();
 //			System.out.println("service 抓到dao 的sql error");
-		}finally {			
-//			return catInfoVO;
-		}
+//		}finally {			
+			return catInfoVO;
+//		}
+//		return catInfoVO;
 	}
 	
 	

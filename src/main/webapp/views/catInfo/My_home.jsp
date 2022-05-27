@@ -153,7 +153,7 @@
                         </li>
                         <!--捐款-->
                         <li class="menu-item menu-item--expanded">
-                          <a href="#">捐款</a>
+                          <a href="<%=request.getContextPath()%>/views/donate/donate.jsp">捐款</a>
                         </li>
                         <!--購物/二手商城-->
                         <li class="menu-item menu-item--expanded">
