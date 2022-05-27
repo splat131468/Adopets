@@ -18,9 +18,8 @@ import javax.servlet.http.HttpSession;
 /**
  * Servlet implementation class LoginFilter
  */
-@WebFilter(urlPatterns = {"/views/background_login/background.jsp","/views/admin/editEmp.jsp","/views/admin/listOneAdm.jsp",
-"/views/admin/listOneMan.jsp","/views/admin/newEmp.jsp","/views/admin/system.jsp","/views/admin/systemAuth.jsp",
-"/views/donate/donateBackground.jsp","/views/donate/donateEdit.jsp","/views/donate/donateListOne.jsp"
+@WebFilter(urlPatterns = {"/views/background_login/background.jsp"
+
 })
 public class BackgroundLoginFilter implements Filter {
 	private FilterConfig config;
