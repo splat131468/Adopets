@@ -196,13 +196,14 @@ public class CartServiceImp implements CartService {
 		aCheckOut.setTradeDesc("test");
 		aCheckOut.setItemName(itemName);
 		aCheckOut.setClientBackURL("http://localhost:8081/Adopets/comAction?action=ecoMainP");
-		aCheckOut.setReturnURL("http://localhost:8081/Adopets//epayCheckOrder");
+		aCheckOut.setReturnURL("http://localhost:8081/Adopets/epayCheckOrder");
 		aCheckOut.setNeedExtraPaidInfo("N");
 
 		skuService.takeOrder(sellList);
 
 		// 移除購物車
 		cartService.delMulItem(memID, cart);
+	
 		
 		return allInOne.aioCheckOut(aCheckOut, null);
 
