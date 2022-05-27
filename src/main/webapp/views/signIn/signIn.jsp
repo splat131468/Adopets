@@ -16,9 +16,9 @@
 <body>
   <div class="mask">  </div>
   <div class="login-box">
-    <div class="close">
+    <a href="${pageContext.request.contextPath}/views/catInfo/My_home.jsp" class="close">
       <i class="fa fa-times" aria-hidden="true"></i>
-    </div>
+    </a>
     <div class="lb-header">
       <p class="active" id="login-box-link">Adopet會員登入</p>
     </div>
