@@ -5,6 +5,8 @@
 <%@ page import="web.donate.entity.*"%>
 <%@ page import="web.donate.service.*"%>
 <%
+request.setCharacterEncoding("UTF-8");
+
 DonateVO donVO = (DonateVO) request.getAttribute("donVO");
 %>
 
