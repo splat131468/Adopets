@@ -8,6 +8,7 @@
 	CatAndShelVO catAndShelVO = (CatAndShelVO) request.getAttribute("catAndShelVO");
 %>
 
+
 <html>
 <head>
 <!-- Google Font: Source Sans Pro -->
@@ -35,10 +36,10 @@
 
 <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/background/css/btn.css">
 <!-------------------------------------------cat------------------------------------------------------------------------------------->
-<link rel="stylesheet" href="${pageContext.request.contextPath}/views/catInfo/files/CatPage_1_4.css">
-<link rel="stylesheet" href="${pageContext.request.contextPath}/views/catInfo/files/CatPage_2_2.css">
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css">
-<link rel="stylesheet" href="${pageContext.request.contextPath}/views/chatroom/files/css/styles_2.css" type="text/css" />
+<%-- <link rel="stylesheet" href="${pageContext.request.contextPath}/views/catInfo/files/CatPage_1_4.css"> --%>
+<%-- <link rel="stylesheet" href="${pageContext.request.contextPath}/views/catInfo/files/CatPage_2_2.css"> --%>
+<!-- <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"> -->
+<link rel="stylesheet" href="${pageContext.request.contextPath}/views/chatroom/files/css/styles_2_2.css" type="text/css" />
 <!-------------------------------------------------------------------------------------------------------------------------------->
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 
@@ -64,279 +65,13 @@ tr,td {
 </style>
 
 </head>
-<body class="hold-transition sidebar-mini">
+<body class="hold-transition sidebar-mini" onload="connect();" onunload="disconnect();">
 <div class="wrapper">
-    <!-- Navbar -->
-    <nav class="main-header navbar navbar-expand navbar-white navbar-light">
-      <!-- Left navbar links -->
-      <ul class="navbar-nav">
-        <li class="nav-item">
-          <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
-        </li>
-        <li class="nav-item d-none d-sm-inline-block">
-          <a href="<%=request.getContextPath()%>/views/background_login/background.jsp" class="nav-link">Home</a>
-        </li>
-        <li class="nav-item d-none d-sm-inline-block">
-          <a href="#" class="nav-link">Contact</a>
-        </li>
-      </ul>
-
-      <!-- Right navbar links -->
-      <ul class="navbar-nav ml-auto">
-        <!-- Navbar Search -->
-        <li class="nav-item">
-          <a class="nav-link" data-widget="navbar-search" href="#" role="button">
-            <i class="fas fa-search"></i>
-          </a>
-          <div class="navbar-search-block">
-            <form class="form-inline">
-              <div class="input-group input-group-sm">
-                <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
-                <div class="input-group-append">
-                  <button class="btn btn-navbar" type="submit">
-                    <i class="fas fa-search"></i>
-                  </button>
-                  <button class="btn btn-navbar" type="button" data-widget="navbar-search">
-                    <i class="fas fa-times"></i>
-                  </button>
-                </div>
-              </div>
-            </form>
-          </div>
-        </li>
-
-        <!-- Messages Dropdown Menu -->
-        <li class="nav-item dropdown">
-          <a class="nav-link" data-toggle="dropdown" href="#">
-            <i class="far fa-comments"></i>
-            <span class="badge badge-danger navbar-badge">3</span>
-          </a>
-          <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-            <a href="#" class="dropdown-item">
-              <!-- Message Start -->
-              <div class="media">
-                <img src="dist/img/user1-128x128.jpg" alt="User Avatar" class="img-size-50 mr-3 img-circle">
-                <div class="media-body">
-                  <h3 class="dropdown-item-title">
-                    Brad Diesel
-                    <span class="float-right text-sm text-danger"><i class="fas fa-star"></i></span>
-                  </h3>
-                  <p class="text-sm">Call me whenever you can...</p>
-                  <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
-                </div>
-              </div>
-              <!-- Message End -->
-            </a>
-            <div class="dropdown-divider"></div>
-            <a href="#" class="dropdown-item">
-              <!-- Message Start -->
-              <div class="media">
-                <img src="dist/img/user8-128x128.jpg" alt="User Avatar" class="img-size-50 img-circle mr-3">
-                <div class="media-body">
-                  <h3 class="dropdown-item-title">
-                    John Pierce
-                    <span class="float-right text-sm text-muted"><i class="fas fa-star"></i></span>
-                  </h3>
-                  <p class="text-sm">I got your message bro</p>
-                  <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
-                </div>
-              </div>
-              <!-- Message End -->
-            </a>
-            <div class="dropdown-divider"></div>
-            <a href="#" class="dropdown-item">
-              <!-- Message Start -->
-              <div class="media">
-                <img src="dist/img/user3-128x128.jpg" alt="User Avatar" class="img-size-50 img-circle mr-3">
-                <div class="media-body">
-                  <h3 class="dropdown-item-title">
-                    Nora Silvester
-                    <span class="float-right text-sm text-warning"><i class="fas fa-star"></i></span>
-                  </h3>
-                  <p class="text-sm">The subject goes here</p>
-                  <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
-                </div>
-              </div>
-              <!-- Message End -->
-            </a>
-            <div class="dropdown-divider"></div>
-            <a href="#" class="dropdown-item dropdown-footer">See All Messages</a>
-          </div>
-        </li>
-        <!-- Notifications Dropdown Menu -->
-        <li class="nav-item dropdown">
-          <a class="nav-link" data-toggle="dropdown" href="#">
-            <i class="far fa-bell"></i>
-            <span class="badge badge-warning navbar-badge">15</span>
-          </a>
-          <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-            <span class="dropdown-header">15 Notifications</span>
-            <div class="dropdown-divider"></div>
-            <a href="#" class="dropdown-item">
-              <i class="fas fa-envelope mr-2"></i> 4 new messages
-              <span class="float-right text-muted text-sm">3 mins</span>
-            </a>
-            <div class="dropdown-divider"></div>
-            <a href="#" class="dropdown-item">
-              <i class="fas fa-users mr-2"></i> 8 friend requests
-              <span class="float-right text-muted text-sm">12 hours</span>
-            </a>
-            <div class="dropdown-divider"></div>
-            <a href="#" class="dropdown-item">
-              <i class="fas fa-file mr-2"></i> 3 new reports
-              <span class="float-right text-muted text-sm">2 days</span>
-            </a>
-            <div class="dropdown-divider"></div>
-            <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
-          </div>
-        </li>
-
-        <li class="nav-item">
-          <a class="nav-link" data-widget="fullscreen" href="#" role="button">
-            <i class="fas fa-expand-arrows-alt"></i>
-          </a>
-        </li>
-
-        <!-- 右上角管理員資訊 -->
-        <li class="nav-item dropdown">
-          <a class="nav-link" data-toggle="dropdown" href="#">
-            <i class="fa-solid fa-circle-user"></i>
-          </a>
-          <div class="dropdown-menu dropdown-menu-sm dropdown-menu-right">
-            <a href="<%=request.getContextPath()%>/views/admin/system.jsp" class="dropdown-item">
-              <i class="fas fa-key mr-2" style="margin-left: 2.5px;"></i>修改密碼
-            </a>
-            <div class="dropdown-divider"></div>
-            
-            <a href="<%=request.getContextPath()%>/LogoutServlet" class="dropdown-item">
-              <i class="fas fa-sign-out mr-2"></i>登出
-            </a>
-      
-          </div>
-        </li>
-      </ul>
-    </nav>
-    <!-- /.navbar -->
-
-     <!-- Main Sidebar Container -->
-    <aside class="main-sidebar sidebar-dark-primary elevation-4">
-      <!-- 首頁 Logo -->
-      <a  href="<%=request.getContextPath()%>/views/background_login/background.jsp" class="brand-link">
-        <span class="brand-text font-weight-light"><img src="<%=request.getContextPath()%>/resources/background/img/Adopets.svg" width="55%"></span>
-      </a>
-
-      <!-- Sidebar -->
-      <div class="sidebar">
-        <!-- Sidebar user panel (optional) -->
-        <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-          <div class="image">
-            <img src="${pageContext.request.contextPath}/UploadAdmImg?adminID=${adminVO.adminID}" class="img-circle elevation-2" alt="User Image">
-          </div>
-          <div class="info">
-            <a href="#" class="d-block">${adminVO.name}</a>
-          </div>
-        </div>
-
-        <!-- SidebarSearch Form -->
-        <div class="form-inline">
-          <div class="input-group" data-widget="sidebar-search">
-            <input class="form-control form-control-sidebar" type="search" placeholder="Search" aria-label="Search">
-            <div class="input-group-append">
-              <button class="btn btn-sidebar">
-                <i class="fas fa-search fa-fw"></i>
-              </button>
-            </div>
-          </div>
-        </div>
-
-        <!-- Sidebar Menu -->
-        <nav class="mt-2">
-          <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-            <!-- Add icons to the links using the .nav-icon class
-               with font-awesome or any other icon font library -->
-
-            <li class="nav-item">
-              <a href="<%=request.getContextPath()%>/views/backgroundMember/backgroundMember.jsp" class="nav-link">
-                <i class="nav-icon fa-solid fa-user"></i>
-                <p>會員管理</p>
-              </a>
-            </li>
-
-            <li class="nav-item">
-              <a href="<%=request.getContextPath()%>/views/chatroom/backgroudChatroom.jsp" class="nav-link active">
-                <i class="nav-icon fas fa-edit"></i>
-                <p>審核管理</p>
-              </a>
-            </li>
-
-            <li class="nav-item">
-                <a href="${pageContext.request.contextPath}/prodManage?action=prodList" class="nav-link" >
-                <i class="nav-icon fa-solid fa-store"></i>
-                <p>商品管理</p>
-              </a>
-            </li>
-
-            <li class="nav-item">
-              <a href="<%=request.getContextPath()%>/views/order/Orders.jsp" class="nav-link ">
-                <i class="nav-icon fa-solid fa-clipboard-list"></i>
-                <p>訂單管理</p>
-              </a>
-            </li>
-
-            <li class="nav-item">
-               <a href="<%=request.getContextPath()%>/views/donate/donateBackground.jsp" class="nav-link">
-                <i class="nav-icon fa-solid fa-sack-dollar"></i>
-                <p>捐款管理</p>
-              </a>
-            </li>
-
-            <li class="nav-item">
-              <a href="#" class="nav-link ">
-                <i class="nav-icon fa-solid fa-gear"></i>
-                <p>
-                  系統管理
-                  <i class="right fas fa-angle-left"></i>
-                </p>
-              </a>
-              <ul class="nav nav-treeview">
-                <li class="nav-item">
-                   <a href="<%=request.getContextPath()%>/views/admin/system.jsp" class="nav-link">
-                    <i style="margin-left: 33px;"></i>
-                    <p>使用者管理</p>
-                  </a>
-                </li>
-
-                <li class="nav-item">
-                  <a href="<%=request.getContextPath()%>/views/admin/systemAuth.jsp" class="nav-link">
-                    <i style="margin-left: 33px;"></i>
-                    <p>權限管理</p>
-                  </a>
-                </li>
-
-              </ul>
-            </li>
-          </ul>
-        </nav>
-        <!-- /.sidebar-menu -->
-      </div>
-      <!-- /.sidebar -->
-    </aside>
-
-<!-- --------------------------------------------------------------------------------------- -->
-	<%-- 錯誤表列 --%>
-	<c:if test="${not empty errorMsgs}">
-		<font style="color: red">請修正以下錯誤:</font>
-		<ul>
-			<c:forEach var="message" items="${errorMsgs}">
-				<li style="color: red">${message}</li>
-			</c:forEach>
-		</ul>
-	</c:if>
-<!----------------------- Content Header (Page header)-------------------------------------- -->
+<%@ include file="/views/chatroom/pages/background.file" %>
 <div class="content-wrapper">
 <section class="content-header">
 	<div class="container-fluid">
-   		<h1>所有貓咪</h1>
+   		<h1>${catAndShelVO.catName} 的管理員聊天室</h1>
   	</div>
 </section>
   	<div class="row">
@@ -384,7 +119,7 @@ tr,td {
 	
 		var messagesArea = document.getElementById("messagesArea");
 		var statusOutput = document.getElementById("statusOutput");
-		var self = "AAAAA"; //sender改用EL ${userName}
+		var self = `管理員${adminVO.adminID}號`; //sender改用EL ${userName}
 
 		var webSocket;
     

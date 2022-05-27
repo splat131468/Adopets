@@ -251,7 +251,7 @@ public class CatInfoServletCMS extends HttpServlet {
 					
 					if (!errorMsgs.isEmpty()) {
 						req.setAttribute("catInfoVO", catInfoVO); 
-						RequestDispatcher failureView = req.getRequestDispatcher("/views/catInfo/addCat.jsp");
+						RequestDispatcher failureView = req.getRequestDispatcher("/views/catInfo/addCatCMS.jsp");
 						failureView.forward(req, res);
 						return;
 					}
@@ -264,14 +264,14 @@ public class CatInfoServletCMS extends HttpServlet {
 					RequestDispatcher updatePhoto = req.getRequestDispatcher("/CatPhotoGalleryServlet"); // 新增成功後轉交listAllEmp.jsp
 					updatePhoto.include(req, res);
 					/***************************4.照片新增完成後,準備轉交(Send the Success view)***********/
-					String url = "/views/catInfo/listAllCat.jsp";
+					String url = "/views/catInfo/CatCMS.jsp";
 					RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
 					successView.forward(req, res);				
 					
 					/***************************其他可能的錯誤處理**********************************/
 				} catch (Exception e) {
 					errorMsgs.add("直接跳到最後面的錯:" + e.getMessage());
-					RequestDispatcher failureView = req.getRequestDispatcher("/views/catInfo/addCat.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/views/catInfo/addCatCMS.jsp");
 					failureView.forward(req, res);
 				}
 			}
@@ -279,20 +279,20 @@ public class CatInfoServletCMS extends HttpServlet {
 		
 		//修改修改修改修改修改修改修改修改修改修改	
 		if ("getOne_For_Update".equals(action)) { // 來自listAllCat.jsp的請求
-//			System.out.println("AAAAAAAA");
+//			System.out.println("getOne_For_Update");
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
 			try {
 				Integer catID = Integer.valueOf(req.getParameter("catID"));
 				CatInfoVO catInfoVO = catInfoService.getOne(catID);
 				req.setAttribute("catInfoVO", catInfoVO);
-				String url = "/views/catInfo/update_cat_input.jsp"; //有拿到資料就FW到新增貓咪資料頁面～
+				String url = "/views/catInfo/update_cat_inputCMS.jsp"; //有拿到資料就FW到新增貓咪資料頁面～
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
 				
 			} catch (Exception e) {
 				errorMsgs.add("無法取得要修改的資料:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/views/catInfo/listAllCat.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/views/catInfo/CatCMS.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -309,8 +309,6 @@ public class CatInfoServletCMS extends HttpServlet {
 					memID = 0;
 				}else {					
 					memID = Integer.valueOf(req.getParameter("memID").trim());	//			
-//					memID = new Integer(req.getParameter("memID"));	//			
-//					memID = 1;	//			
 				}
 //				System.out.println(memID);
 				String shelterName = req.getParameter("shelterName");
@@ -320,7 +318,8 @@ public class CatInfoServletCMS extends HttpServlet {
 				Integer adoptCost = Integer.valueOf(req.getParameter("adoptCost"));
 				Boolean adopt = Boolean.valueOf(req.getParameter("adopt"));
 				Integer catID = Integer.valueOf(req.getParameter("catID"));
-				CatInfoVO catInfoVO = new CatInfoVO();
+				CatInfoVO catInfoVO = catInfoService.getOne(catID);;
+				
 				catInfoVO.setCatID(catID);
 				catInfoVO.setMemID(memID);
 				catInfoVO.setShelterName(shelterName);
@@ -331,7 +330,7 @@ public class CatInfoServletCMS extends HttpServlet {
 				catInfoVO.setAdopt(adopt);
 
 				/*************2.給service update資料****************/
-				try {					
+				try {
 					catInfoService.updateCat(memID, shelterName, catName, haveVaccine, health, adoptCost, adopt, catID);
 					/***************************3.修改成功才include 照片**************************************/
 					req.setAttribute("catID", catID);
@@ -340,27 +339,25 @@ public class CatInfoServletCMS extends HttpServlet {
 					/*************3.如果include照片完成,抓出完整貓咪資料，準備轉交(Send the Success view)**********/
 					catInfoVO = catInfoService.getOne(catID);
 					req.setAttribute("catInfoVO", catInfoVO);
-					String url = "/views/catInfo/listOneCat.jsp";
+					String url = "/views/catInfo/CatCMS.jsp";
 					RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交listOneCat.jsp印出一筆貓
 					successView.forward(req, res);
 				} catch (Exception e) {
 					errorMsgs.add("修改失敗 : " + e.getMessage());
 					req.setAttribute("catInfoVO", catInfoVO);
-					RequestDispatcher failureView = req.getRequestDispatcher("/views/home/update_cat_input.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/views/catInfo/update_cat_inputCMS.jsp");
 					failureView.forward(req, res);	
+					return;
 				}
 				
 				/*捕捉其他例外，f/w到listAllCat.jsp*/
 			} catch (Exception e) {
 				errorMsgs.add("修改失敗 : " + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/views/catInfo/listAllCat.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/views/catInfo/update_cat_inputCMS.jsp");
 				failureView.forward(req, res);
 			}
 
 		}
-		
-
-		
 		
 		//刪除刪除刪除刪除刪除刪除刪除刪除刪除刪除刪除刪除刪除刪除
 		if ("delete".equals(action)) {	
@@ -406,7 +403,7 @@ public class CatInfoServletCMS extends HttpServlet {
 					catID = Integer.valueOf(req.getParameter("catID"));
 				}
 				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req.getRequestDispatcher("/views/catInfo/select_page.jsp"); 
+					RequestDispatcher failureView = req.getRequestDispatcher("/views/catInfo/CatCMS.jsp"); 
 					failureView.forward(req, res);
 					return;
 				}
@@ -422,7 +419,7 @@ public class CatInfoServletCMS extends HttpServlet {
 				}
 				/***************************3.查詢完成,準備轉交(Send the Success view)*************/
 				req.setAttribute("catInfoVO", catInfoVO); // 資料庫取出的empVO物件,存入req
-				String url = "/views/catInfo/listOneCat.jsp";
+				String url = "/views/catInfo/CatCMS.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 listOneEmp.jsp
 				successView.forward(req, res);
 				

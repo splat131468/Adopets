@@ -18,7 +18,7 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/views/catInfo/files/CatPage_1_4.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/views/catInfo/files/CatPage_2_2.css">
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/views/chatroom/files/css/styles_1.css" type="text/css" />
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/views/chatroom/files/css/styles_1_2.css" type="text/css" />
     <style>
         body {
             font-family: helvetica, arial, sans-serif;
