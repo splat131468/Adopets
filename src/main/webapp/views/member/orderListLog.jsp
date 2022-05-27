@@ -342,7 +342,7 @@
 <!-- Footer Section Begin -->
 
 	<div>
-		<div id="Site" class="site js-LockPageScroll-site" aria-hidden="false">
+<%-- 		<div id="Site" class="site js-LockPageScroll-site" aria-hidden="false">
 			<!--這是footer這是footer這是footer這是footer這是footer這是footer這是footer這是footer這是footer-->
 			<footer class="site-footer" role="contentinfo">
 				<div style="background-color: #410078;" class="footer">
@@ -359,7 +359,7 @@
 					</div>
 				</div>
 			</footer>
-		</div>
+		</div> --%>
 	</div>
 
 	<!-- Footer Section End -->
