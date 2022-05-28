@@ -6,9 +6,11 @@ import java.sql.*;
 import javax.naming.Context;
 import javax.naming.NamingException;
 import javax.servlet.*;
+import javax.servlet.annotation.WebListener;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 import javax.sql.DataSource;
-
+@WebServlet("/personImg")
 public class DBGifReader4 extends HttpServlet {
 	
 
@@ -22,9 +24,9 @@ public class DBGifReader4 extends HttpServlet {
 
 		try {
 			Statement stmt = con.createStatement();
-			String personImg = req.getParameter("personImg").trim();
+			String memID = req.getParameter("memID").trim();
 			ResultSet rs = stmt.executeQuery(
-				"SELECT personImg From MEMBER where personImg = "+personImg);
+				"SELECT personImg From MEMBER where memID = "+memID);
 
 			if (rs.next()) {
 				BufferedInputStream in = new BufferedInputStream(rs.getBinaryStream("personImg"));
@@ -36,6 +38,7 @@ public class DBGifReader4 extends HttpServlet {
 				in.close();
 			} else {
 //				res.sendError(HttpServletResponse.SC_NOT_FOUND);
+				System.out.println("跑到else內");
 				InputStream in = getServletContext().getResourceAsStream("/views/member/image/none.jpg");
 				byte[] b = new byte[in.available()];
 				in.read(b);
@@ -45,7 +48,7 @@ public class DBGifReader4 extends HttpServlet {
 			rs.close();
 			stmt.close();
 		} catch (Exception e) {
-//			System.out.println(e);
+			System.out.println(e);
 			InputStream in = getServletContext().getResourceAsStream("/views/member/image/none.jpg");
 			byte[] b = new byte[in.available()];
 			in.read(b);
@@ -55,7 +58,7 @@ public class DBGifReader4 extends HttpServlet {
 	}
 
 	public void init() throws ServletException {
-	      try {
+	    try {
 			Context ctx = new javax.naming.InitialContext();
 			DataSource ds = (DataSource) ctx.lookup("java:comp/env/jdbc/jndi");
 			con = ds.getConnection();

@@ -16,9 +16,9 @@
 <body>
   <div class="mask">  </div>
   <div class="login-box">
-    <div class="close">
+    <a href="${pageContext.request.contextPath}/views/catInfo/My_home.jsp" class="close">
       <i class="fa fa-times" aria-hidden="true"></i>
-    </div>
+    </a>
     <div class="lb-header">
       <p class="active" id="login-box-link">Adopet會員登入</p>
     </div>
@@ -47,11 +47,11 @@
     </form>
     <p class="text_align_center active">或使用以下登入</p>
     <div class="social-login">
-      <a href="#">
+      <a href="${pageContext.request.contextPath}/views/catInfo/My_home.jsp">
         <i class="fa-brands fa-facebook-square"></i>
         Facebook登入
       </a>
-      <a href="#">
+      <a href="${pageContext.request.contextPath}/views/catInfo/My_home.jsp">
         <i class="fa-brands fa-google"></i>
         Google登入
       </a>

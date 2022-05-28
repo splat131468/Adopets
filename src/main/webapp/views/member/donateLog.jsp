@@ -103,7 +103,7 @@ pageContext.setAttribute("list", list);
 
 											</ul></li>
 										<!--幫助貓咪-->
-										<li class="menu-item menu-item--expanded"><a href="#">捐款</a>
+										<li class="menu-item menu-item--expanded"><a href="<%=request.getContextPath()%>/views/donate/donate.jsp">捐款</a>
 
 											<button
 												class="visually-hidden-unless-focused hidden-btn open-sub-menu"
@@ -113,7 +113,7 @@ pageContext.setAttribute("list", list);
 
 											<ul class="menu menu-level-2">
 
-												<li class="menu-item"><a href="#">捐款</a></li>
+												<li class="menu-item"><a href="">捐款</a></li>
 
 
 											</ul></li>
@@ -299,9 +299,9 @@ pageContext.setAttribute("list", list);
 		</table>
 		<%@ include file="page2.file"%>
 
-		<p class="text-end">
-			共<span class="donateCount"></span>筆資料
-		</p>
+<!-- 		<p class="text-end"> -->
+<!-- 			共<span class="donateCount"></span>筆資料 -->
+<!-- 		</p> -->
 		<!-- 這裡還要寫SPAN標籤內的數字 -->
 	</div>
 	<!-- Footer Section Begin -->
