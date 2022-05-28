@@ -99,7 +99,7 @@ MemberVO memberVO = (MemberVO) session.getAttribute("memberVO");
 
 											</ul></li>
 										<!--幫助貓咪-->
-										<li class="menu-item menu-item--expanded"><a href="#">捐款</a>
+										<li class="menu-item menu-item--expanded"><a href="<%=request.getContextPath()%>/views/donate/donate.jsp">捐款</a>
 
 											<button
 												class="visually-hidden-unless-focused hidden-btn open-sub-menu"
@@ -259,18 +259,32 @@ MemberVO memberVO = (MemberVO) session.getAttribute("memberVO");
 					</c:forEach>
 				</ul>
 			</c:if>
+<%-- 			<c:if test="${MemberVO.* == null }"> --%>
 			<form action="<%=request.getContextPath()%>/member/member"
 				method="post" enctype="multipart/form-data">
 				<input type="hidden" name="action" value="updateMember">
 				<div class="row">
 					<div class="col-3">
 						<div class="userImg mb-4" id="preview">
-							<img
-								src="<%=request.getContextPath()%>/views/member/image/user.png"
-								alt="">
+						<c:choose>
+						    <c:when test="${memberVO.personImg!= null}">
+						        <img
+								src="/Adopets/personImg?memID=${memberVO.memID}"
+								alt="" >
+						    </c:when>
+						    <c:otherwise>
+						        <img
+								src="/Adopets/views/member/image/user.png"
+								alt="" >
+						    </c:otherwise>
+						</c:choose>
+<!-- 							<img -->
+<%-- 								src="${(memberVO.personImg!= null)? '/Adopets/personImg?memID='memberVO.memID : '/Adopets/views/member/image/user.png'}" --%>
+<!-- 								alt="" > -->
+								
 						</div>
 						<label class="btn btnFile"> <span>修改圖片</span> <input
-							class="form-control " type="file" id="p_file" name="p_file">
+							class="form-control " type="file" id="p_file" name="p_file" value="<%=memberVO.getPersonImg()%>">
 						</label>
 					</div>
 					<div class="col-9">
@@ -302,14 +316,14 @@ MemberVO memberVO = (MemberVO) session.getAttribute("memberVO");
 							<label for="" class="col-sm-2 col-form-label text-end">手機</label>
 							<div class="col-sm-10">
 								<input type="number" class="form-control" id="inputPhone"
-									name="inputPhone">
+									name="inputPhone" value="<%=memberVO.getPhone()%>">
 							</div>
 						</div>
 						<div class="mb-3 row">
 							<label for="" class="col-sm-2 col-form-label text-end">年齡</label>
 							<div class="col-sm-10">
 								<select class="form-select" aria-label="Default select example"
-									id="inputAge" name="inputAge">
+									id="inputAge" name="inputAge" value="<%=memberVO.getAge()%>">
 									<option selected>請選擇</option>
 									<option value="20歲以下">20歲以下</option>
 									<option value="20歲~40歲">20歲~40歲</option>
@@ -327,7 +341,7 @@ MemberVO memberVO = (MemberVO) session.getAttribute("memberVO");
 								<div class="row mt-2">
 									<div class="addressbox">
 										<input class="form-control" type="text" id="inputAddress"
-											name="inputAddress">
+											name="inputAddress" value="<%=memberVO.getAddress()%>">
 									</div>
 								</div>
 							</div>
@@ -337,11 +351,8 @@ MemberVO memberVO = (MemberVO) session.getAttribute("memberVO");
 							<div class="col-sm-10">
 								<div class="creditCardList">
 									<input type="text" disabled class="form-control-plaintext"
-										id="" value="**** **** **** 1234"> <span
-										class="form-control-plaintext">${param.creditCard}</span>
-									<!-- 									<button -->
-									<!-- 										class="btn btn-outline-primary btn-sm btnPurple-outline">刪除信用卡</button> -->
-									<!--to do list 範例修改  -->
+										id="" value="<%=memberVO.getCreditCard()%>"> 
+<%-- 										<span class="form-control-plaintext">${param.creditCard}</span> --%>
 								</div>
 								<div class="">
 									<a
@@ -359,6 +370,7 @@ MemberVO memberVO = (MemberVO) session.getAttribute("memberVO");
 					</div>
 				</div>
 			</form>
+<%-- 			</c:if> --%>
 		</div>
 
 

@@ -47,11 +47,11 @@
     </form>
     <p class="text_align_center active">或使用以下登入</p>
     <div class="social-login">
-      <a href="#">
+      <a href="${pageContext.request.contextPath}/views/catInfo/My_home.jsp">
         <i class="fa-brands fa-facebook-square"></i>
         Facebook登入
       </a>
-      <a href="#">
+      <a href="${pageContext.request.contextPath}/views/catInfo/My_home.jsp">
         <i class="fa-brands fa-google"></i>
         Google登入
       </a>

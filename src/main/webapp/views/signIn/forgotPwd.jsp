@@ -91,7 +91,7 @@
 
 											</ul></li>
 										<!--幫助貓咪-->
-										<li class="menu-item menu-item--expanded"><a href="#">捐款</a>
+										<li class="menu-item menu-item--expanded"><a href="<%=request.getContextPath()%>/views/donate/donate.jsp">捐款</a>
 
 											<button
 												class="visually-hidden-unless-focused hidden-btn open-sub-menu"

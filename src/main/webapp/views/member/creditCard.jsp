@@ -88,7 +88,7 @@
 							</ul>
 						  </li>
 						  <!--幫助貓咪-->
-						  <li class="menu-item menu-item--expanded"><a href="#">捐款</a>
+						  <li class="menu-item menu-item--expanded"><a href="<%=request.getContextPath()%>/views/donate/donate.jsp">捐款</a>
 
 							<button class="visually-hidden-unless-focused hidden-btn open-sub-menu" role="button"
 							  aria-haspopup="true" aria-expanded="false" aria-label="All Pet Care">Open
@@ -214,7 +214,7 @@
 							</c:forEach>
 						</ul>
 					</c:if>
-	<form class="" METHOD="post" ACTION="<%=request.getContextPath()%>/member/member">
+	<form class="" METHOD="post" ACTION="<%=request.getContextPath()%>/CreditCardServlet">
 		<div class="creditCard">
 			<div class="container preload">
 				<div class="creditcard">
@@ -389,6 +389,7 @@
 				<div class="btnBox">
 					<a href="<%=request.getContextPath()%>/views/member/member.jsp"
 						class="btnPurple-outline">取消</a>
+						<input type="hidden" name="action" value="insertCardNumber">
 					<button type="submit" class="btnPurple" name="action" value="insertCardNumber">儲存</button>
 				</div>
 			</div>
