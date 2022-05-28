@@ -30,7 +30,7 @@ $(function () {
   /// 換iframe函數
   function chgIframe() {
     //路徑
-    $("#insert").replaceWith('<iframe id="addProductPage" src="/Adopets/views/ecommerce/addItem.jsp" frameborder="0" scrolling="yes" name="ifm" width="100%" height="700px" ></iframe>');
+    $("#insert").replaceWith('<iframe id="addProductPage" src="/Adopets/views/ecommerce/addItem.jsp" frameborder="0" scrolling="yes" name="ifm" width="100%" height="1200px" ></iframe>');
 
     return true;
   }
@@ -99,6 +99,7 @@ $(function () {
 
   // 資料回填編輯表
   $(document).on("click", "#rs", function () {
+    console.log("點擊????");
     let price = $(this).closest("tr").find(".price").text();
     let name = $(this).closest("tr").find(".name").text();
     let stock = $(this).closest("tr").find(".stock").text();
@@ -142,7 +143,7 @@ $(function () {
 // 送出編輯商品請求 路徑
 $("#updateProd").on("click", function () {
   // 抓資料
-
+ 
   let skuPrice = $("#itemPrice").val();
   let stock = $("#itemStock").val();
   let skuID = $("#itemID").val();

@@ -43,27 +43,27 @@ public class CreditCardServlet extends HttpServlet {
 			// send the ErrorPage view.
 			request.setAttribute("errorMsgs", errorMsgs);
 			HttpSession session = request.getSession();
-			MemberVO memberVO = (MemberVO)session.getAttribute("MemberVO");
+			MemberVO memberVO = (MemberVO)session.getAttribute("memberVO");
 			try {
 				/*********************** 1.接收請求參數 - 輸入格式的錯誤處理 *************************/
 				String inputNumber = request.getParameter("inputNumber");
-
+//System.out.println(inputNumber);
 				MemberVO updateVO = new MemberVO();
 				updateVO.setAccount(memberVO.getAccount());
 				updateVO.setCreditCard(inputNumber);
-
+//System.out.println(updateVO);
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
-					request.setAttribute("MemberVO", updateVO); // 含有輸入格式錯誤的VO物件,也存入request
-					RequestDispatcher failureView = request.getRequestDispatcher("/views/member/member.jsp");
+					request.setAttribute("memberVO", updateVO); // 含有輸入格式錯誤的VO物件,也存入request
+					RequestDispatcher failureView = request.getRequestDispatcher("/views/member/creditCard.jsp");
 					failureView.forward(request, response);
 					return;
 				}
 
 				/*************************** 2.開始新增資料 ***************************************/
 				MemberService memberService = new MemberService();
-				memberService.updateCreditcard(inputNumber);
-				session.setAttribute("MemberVO", updateVO);
+				memberService.updateCreditcard(inputNumber,memberVO.getAccount());
+				session.setAttribute("memberVO", updateVO);
 				/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
 				String url = "/views/member/member.jsp";
 				RequestDispatcher successView = request.getRequestDispatcher(url); // 新增成功後轉交jsp

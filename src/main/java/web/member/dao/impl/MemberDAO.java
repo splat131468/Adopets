@@ -202,6 +202,8 @@ public class MemberDAO implements MemberDAO_interface {
 			pstmt.setString(1,memberVO.getCreditCard());
 			pstmt.setString(2,memberVO.getAccount());
 			
+			System.out.println("DAO:"+memberVO.getAccount());
+			
 			pstmt.executeUpdate();
 
 			// Handle any SQL errors
@@ -285,6 +287,7 @@ public class MemberDAO implements MemberDAO_interface {
 			while (rs.next()) {
 				// VO 也稱為 Domain objects
 				memberVO = new MemberVO();
+				memberVO.setMemID(rs.getInt(memID));
 				memberVO.setAccount(rs.getString("account"));
 				memberVO.setPassword(rs.getString("password"));
 				memberVO.setName(rs.getString("name"));

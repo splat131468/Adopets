@@ -44,10 +44,13 @@ public class MemberService {
 		return memberVO;
 	}
 	
-	public MemberVO updateCreditcard(String creditCard) {
+	public MemberVO updateCreditcard(String creditCard ,String account) {
 		
 		MemberVO memberVO = new MemberVO();
+		
+		memberVO.setAccount(account);
 		memberVO.setCreditCard(creditCard);
+		dao.updateCreditCard(memberVO);
 		return memberVO;
 	}
 
