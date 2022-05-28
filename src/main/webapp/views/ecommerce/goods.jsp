@@ -14,6 +14,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
       <title>管理員後台</title>
 
 
+
+
+
      
       <!-- Google Font: Source Sans Pro -->
       <link rel="stylesheet"
@@ -52,13 +55,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
       <!-- AdminLTE App -->
       <script src="${pageContext.request.contextPath}/views/ecommerce/dist/js/adminlte.min.js"></script>
 
-      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+      <script src="${pageContext.request.contextPath}/views/ecommerce//goodEdit/jQuery.js"></script>
       <!-- good的js檔案 -->
       <script src="${pageContext.request.contextPath}/views/ecommerce/goodEdit/goodPage.js"></script>
-
+<!-- 
       <script src="<%=request.getContextPath()%>/resources/background/js/btn.js"></script>
 
-      <script src="<%=request.getContextPath()%>/resources/background/js/system.js"></script>
+      <script src="<%=request.getContextPath()%>/resources/background/js/system.js"></script> -->
       
       <script src="https://kit.fontawesome.com/f944d9625b.js" crossorigin="anonymous"></script>
 <!-- kurt -->
@@ -69,27 +72,19 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <!-- kurt -->
       <script>
       
+$(function(){
+// 資料回填編輯表
+$(document).on("click", "#rs", function () {
+    console.log("點擊")
+
+  })
+})
 
 
 
 
 
-
-
-
-
-
-          // 取得商品資料 放進js檔案怪怪的
-          // function chkProd(url) {
-          //   $.ajax({
-          //     type: "GET",
-          //     url: url,
-          //     dataType: "text",
-          //     success: function () {
-          //       $("body").load("/Adopets/views/ecommerce/goods.jsp", "#tb");
-          //     }
-          //   })
-          // }
+  
 
           
 
@@ -136,7 +131,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
 
         <!-- Content Wrapper. Contains page content -->
-        <div class="content-wrapper">
+        <div class="content-wrapper" >
           <div id="insert">
             <!-- Content Header (Page header) -->
             <section class="content-header">
@@ -248,17 +243,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
   
                     </table>
-                    <div style="height: 150px;width: 10px; ">
+                    <div style="height: 350px;width: 10px; ">
 
                     </div>
-                    <footer class="main-footer">
-                      <!-- To the right -->
-                      <div class="float-right d-none d-sm-inline">
-                        Anything you want
-                      </div>
-                      <!-- Default to the left -->
-                      <strong>Copyright &copy; 2022 &nbsp <a href="<%=request.getContextPath()%>/views/background_login/background.jsp">Adopets.io</a>.</strong> All rights reserved.
-                    </footer>
+                  
                     
                   </div>
                   <!-- /.card-body -->
