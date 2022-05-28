@@ -440,7 +440,7 @@
 
 
 
-                  <input id="prodName" style="margin-left: 20px; width: 120px;" type="text" placeholder="請輸入你需要什麼?">
+                  <input id="prodName" style="margin-left: 20px; width: 120px;" type="text" placeholder="商品名稱?">
                   <p class="site-btn pg" style="margin-left: 20px;">Search</p>
 
 
