@@ -205,7 +205,7 @@
                               </ul>
                             </li>
                             <!--幫助貓咪-->
-                            <li class="menu-item menu-item--expanded"><a href="#">捐款</a>
+                            <li class="menu-item menu-item--expanded"><a href="<%=request.getContextPath()%>/views/donate/donate.jsp">捐款</a>
 
                               <button class="visually-hidden-unless-focused hidden-btn open-sub-menu" role="button"
                                 aria-haspopup="true" aria-expanded="false" aria-label="All Pet Care">Open
@@ -214,7 +214,7 @@
 
                               <ul class="menu menu-level-2">
 
-                                <li class="menu-item"><a href="#">捐款</a></li>
+                                <li class="menu-item"><a href="<%=request.getContextPath()%>/views/donate/donate.jsp">捐款</a></li>
 
 
                               </ul>
@@ -435,12 +435,12 @@
 
 
 
-                  <input id="lowC" style="margin-left: 20px;" type="number" placeholder="最低價格">
-                  <input id="highC" style="margin-left: 20px;" type="number" placeholder="最高價格">
+                  <input id="lowC" style="margin-left: 20px; width: 120px;" type="number" placeholder="最低價格">
+                  <input id="highC" style="margin-left: 20px; width: 120px;" type="number" placeholder="最高價格">
 
 
 
-                  <input id="prodName" style="margin-left: 20px;" type="text" placeholder="請輸入你需要什麼?">
+                  <input id="prodName" style="margin-left: 20px; width: 120px;" type="text" placeholder="商品名稱?">
                   <p class="site-btn pg" style="margin-left: 20px;">Search</p>
 
 
@@ -481,7 +481,7 @@
                         <a href="#" class="latest-product__item">
                           <div class="latest-product__item__pic">
 
-                            <img src="${pageContext.request.contextPath}/views/ecommerce/img_ecommerce/廣告1.jpeg" alt="">
+                            <img src="${pageContext.request.contextPath}/views/ecommerce/img_ecommerce/c1.jpg" alt="">
                           </div>
                           <div class="latest-product__item__text">
                             <h6>優質貓罐頭</h6>
@@ -490,7 +490,7 @@
                         </a>
                         <a href="#" class="latest-product__item">
                           <div class="latest-product__item__pic">
-                            <img src="${pageContext.request.contextPath}/views/ecommerce/img_ecommerce/廣告2.jpeg" alt="">
+                            <img src="${pageContext.request.contextPath}/views/ecommerce/img_ecommerce/c2.jpg" alt="">
                           </div>
                           <div class="latest-product__item__text">
                             <h6>優質貓罐頭</h6>
@@ -499,18 +499,18 @@
                         </a>
                         <a href="#" class="latest-product__item">
                           <div class="latest-product__item__pic">
-                            <img src="${pageContext.request.contextPath}/views/ecommerce/img_ecommerce/廣告3.jpeg" alt="">
+                            <img src="${pageContext.request.contextPath}/views/ecommerce/img_ecommerce/c3.jpg" alt="">
                           </div>
                           <div class="latest-product__item__text">
-                            <h6>貓罐頭廣告</h6>
-                            <span>$30.00</span>
+                            <h6>優質貓罐頭</h6>
+        
                           </div>
                         </a>
                       </div>
                       <div class="latest-prdouct__slider__item">
                         <a href="#" class="latest-product__item">
                           <div class="latest-product__item__pic">
-                            <img src="${pageContext.request.contextPath}/views/ecommerce/img_ecommerce/廣告1.jpeg" alt="">
+                            <img src="${pageContext.request.contextPath}/views/ecommerce/img_ecommerce/c1.jpg" alt="">
                           </div>
                           <div class="latest-product__item__text">
                             <h6>優質貓罐頭</h6>
@@ -519,7 +519,7 @@
                         </a>
                         <a href="#" class="latest-product__item">
                           <div class="latest-product__item__pic">
-                            <img src="${pageContext.request.contextPath}/views/ecommerce/img_ecommerce/廣告2.jpeg" alt="">
+                            <img src="${pageContext.request.contextPath}/views/ecommerce/img_ecommerce/c2.jpg" alt="">
                           </div>
                           <div class="latest-product__item__text">
                             <h6>優質貓罐頭</h6>
@@ -528,7 +528,7 @@
                         </a>
                         <a href="#" class="latest-product__item">
                           <div class="latest-product__item__pic">
-                            <img src="${pageContext.request.contextPath}/views/ecommerce/img_ecommerce/廣告3.jpeg" alt="">
+                            <img src="${pageContext.request.contextPath}/views/ecommerce/img_ecommerce/c3.jpg" alt="">
                           </div>
                           <div class="latest-product__item__text">
                             <h6>優質貓罐頭</h6>

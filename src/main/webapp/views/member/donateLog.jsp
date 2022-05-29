@@ -1,17 +1,31 @@
+<%@page import="web.member.entity.MemberVO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ page import="web.member.*" %>
+<%@ page import="java.util.*"%>
+<%@ page import="web.member.*"%>
+<%@page import="web.donate.service.*"%>
+<%@page import="web.donate.entity.*"%>
+<%
+MemberVO memID = (MemberVO) session.getAttribute("memberVO");
+%>
+<%
+DonateService donateService = new DonateService();
+List<DonateVO> list = donateService.getDonateMember(memID.getMemID());
+pageContext.setAttribute("list", list);
+%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>捐款紀錄</title>
-    <link rel="stylesheet" href="<%=request.getContextPath()%>/views/member/css/bootstrap.css">
-    <link rel="stylesheet" href="<%=request.getContextPath()%>/views/member/css/member.css">
-    <!-- index -->
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>捐款紀錄</title>
+<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/views/member/css/bootstrap.css">
+<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/views/member/css/member.css">
+<!-- index -->
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/views/catInfo/files/homepage.css">
 <link rel="stylesheet"
@@ -20,256 +34,277 @@
 	href="${pageContext.request.contextPath}/views/catInfo/files/css_48il_hUScvaXu5Lky-fqRm9LjbUTybcek-Dq368IMAI.css">
 </head>
 <body>
-    <div class="container">
-    	<!-- 	header開始 -->
-		 <!-- 阿德header -->
-
-
-
-
-		 <div class="region region-navigation">
+	<div class="container">
+		<!-- 	header開始 -->
+		<!-- 阿德header -->
+		<div class="region region-navigation">
 			<div class="region--inner">
-			  <div class="main-navigation">
-				<!--這裡是logo-->
-				<div iclass="logo">
-				  <a href="${pageContext.request.contextPath}/views/catInfo/My_home.jsp" rel="home" class="site-logo">
-					<img src="${pageContext.request.contextPath}/views/catInfo/img/Adopets.svg" alt="Home">
-				  </a>
+				<div class="main-navigation">
+					<!--這裡是logo-->
+					<div iclass="logo">
+						<a
+							href="${pageContext.request.contextPath}/views/catInfo/My_home.jsp"
+							rel="home" class="site-logo"> <img
+							src="${pageContext.request.contextPath}/views/catInfo/img/Adopets.svg"
+							alt="Home">
+						</a>
+					</div>
+					<nav role="navigation"
+						aria-labelledby="block-consumer-react-main-menu-menu"
+						id="block-consumer-react-main-menu"
+						class="block block-menu navigation menu--main">
+						<h2 class="visually-hidden"
+							id="block-consumer-react-main-menu-menu">Main navigation</h2>
+						<ul class="menu menu-level-0">
+
+							<li class="menu-item menu-item--expanded">
+								<button aria-expanded="false" type="button"></button>
+								<div class="menu-inner menu-level-1">
+									<ul class="menu">
+									</ul>
+								</div>
+							</li>
+							<li class="menu-item menu-item--expanded">
+								<button class="active" aria-expanded="true" type="button"></button>
+								<div class="menu-inner menu-level-1">
+									<ul class="menu">
+										<!--關於我們-->
+										<li class="menu-item menu-item--expanded"><a href="#">關於我們</a>
+
+											<button
+												class="visually-hidden-unless-focused hidden-btn open-sub-menu"
+												role="button" aria-haspopup="true" aria-expanded="false"
+												aria-label="About Pet Adoption">Open Submenu</button>
+											<ul class="menu menu-level-2">
+
+												<li class="menu-item"><a href="#">網站願景</a></li>
+											</ul></li>
+										<!--貓咪照顧-->
+										<li class="menu-item menu-item--expanded"><a href="#">貓咪照顧</a>
+											<button
+												class="visually-hidden-unless-focused hidden-btn open-sub-menu"
+												role="button" aria-haspopup="true" aria-expanded="false"
+												aria-label="Dog Care">Open Submenu</button>
+											<ul class="menu menu-level-2">
+												<li class="menu-item"><a href="#">如何照顧貓咪</a></li>
+											</ul></li>
+										<!--收容中心-->
+										<li class="menu-item menu-item--expanded"><a href="#"
+											data-eventtype="EVENT TYPE" data-category="global-nav"
+											data-action="cat-care">收容中心</a>
+											<button
+												class="visually-hidden-unless-focused hidden-btn open-sub-menu"
+												role="button" aria-haspopup="true" aria-expanded="false"
+												aria-label="Cat Care">Open Submenu</button>
+											<ul class="menu menu-level-2">
+
+												<li class="menu-item"><a href="">收容所資訊</a></li>
+
+
+											</ul></li>
+										<!--幫助貓咪-->
+										<li class="menu-item menu-item--expanded"><a href="<%=request.getContextPath()%>/views/donate/donate.jsp">捐款</a>
+
+											<button
+												class="visually-hidden-unless-focused hidden-btn open-sub-menu"
+												role="button" aria-haspopup="true" aria-expanded="false"
+												aria-label="All Pet Care">Open Submenu</button>
+
+
+											<ul class="menu menu-level-2">
+
+												<li class="menu-item"><a href="">捐款</a></li>
+
+
+											</ul></li>
+										<!--購物/二手商城-->
+										<li class="menu-item menu-item--expanded"><a
+											href="${pageContext.request.contextPath}/comAction?action=ecoMainP">購物商城</a>
+
+											<button
+												class="visually-hidden-unless-focused hidden-btn open-sub-menu"
+												role="button" aria-haspopup="true" aria-expanded="false"
+												aria-label="Shelters &amp; Rescues">Open Submenu</button>
+
+
+											<ul class="menu menu-level-2">
+
+												<li class="menu-item"><a
+													href="${pageContext.request.contextPath}/comAction?action=ecoMainP">購物商城</a></li>
+
+
+											</ul></li>
+										<!--會員資料-->
+										<li class="menu-item menu-item--expanded"><a
+											href="${pageContext.request.contextPath}/views/member/member.jsp">會員資料</a>
+											<ul class="menu menu-level-2">
+												<li class="menu-item"><a
+													href="${pageContext.request.contextPath}/views/member/member.jsp">會員中心</a></li>
+											</ul></li>
+										<!--開發團隊-->
+										<li class="menu-item"><a href="#">開發團隊</a></li>
+									</ul>
+								</div>
+							</li>
+						</ul>
+					</nav>
+
+
 				</div>
-				<nav role="navigation" aria-labelledby="block-consumer-react-main-menu-menu"
-				  id="block-consumer-react-main-menu" class="block block-menu navigation menu--main">
-				  <h2 class="visually-hidden" id="block-consumer-react-main-menu-menu">Main navigation</h2>
-				  <ul class="menu menu-level-0">
-
-					<li class="menu-item menu-item--expanded">
-					  <button aria-expanded="false" type="button"></button>
-					  <div class="menu-inner menu-level-1">
-						<ul class="menu">
-						</ul>
-					  </div>
-					</li>
-					<li class="menu-item menu-item--expanded">
-					  <button class="active" aria-expanded="true" type="button"></button>
-					  <div class="menu-inner menu-level-1">
-						<ul class="menu">
-						  <!--關於我們-->
-						  <li class="menu-item menu-item--expanded"><a href="#">關於我們</a>
-
-							<button class="visually-hidden-unless-focused hidden-btn open-sub-menu" role="button"
-							  aria-haspopup="true" aria-expanded="false" aria-label="About Pet Adoption">Open
-							  Submenu</button>
-							<ul class="menu menu-level-2">
-
-							  <li class="menu-item"><a href="#">網站願景</a></li>
-							</ul>
-						  </li>
-						  <!--貓咪照顧-->
-						  <li class="menu-item menu-item--expanded"><a href="#">貓咪照顧</a>
-							<button class="visually-hidden-unless-focused hidden-btn open-sub-menu" role="button"
-							  aria-haspopup="true" aria-expanded="false" aria-label="Dog Care">Open Submenu</button>
-							<ul class="menu menu-level-2">
-							  <li class="menu-item"><a href="#">如何照顧貓咪</a></li>
-							</ul>
-						  </li>
-						  <!--收容中心-->
-						  <li class="menu-item menu-item--expanded"><a href="#" data-eventtype="EVENT TYPE"
-							  data-category="global-nav" data-action="cat-care">收容中心</a>
-							<button class="visually-hidden-unless-focused hidden-btn open-sub-menu" role="button"
-							  aria-haspopup="true" aria-expanded="false" aria-label="Cat Care">Open Submenu</button>
-							<ul class="menu menu-level-2">
-
-							  <li class="menu-item"><a href="">收容所資訊</a></li>
-
-
-							</ul>
-						  </li>
-						  <!--幫助貓咪-->
-						  <li class="menu-item menu-item--expanded"><a href="#">捐款</a>
-
-							<button class="visually-hidden-unless-focused hidden-btn open-sub-menu" role="button"
-							  aria-haspopup="true" aria-expanded="false" aria-label="All Pet Care">Open
-							  Submenu</button>
-
-
-							<ul class="menu menu-level-2">
-
-							  <li class="menu-item"><a href="#">捐款</a></li>
-
-
-							</ul>
-						  </li>
-						  <!--購物/二手商城-->
-						  <li class="menu-item menu-item--expanded"><a
-							  href="${pageContext.request.contextPath}/comAction?action=ecoMainP">購物商城</a>
-
-							<button class="visually-hidden-unless-focused hidden-btn open-sub-menu" role="button"
-							  aria-haspopup="true" aria-expanded="false" aria-label="Shelters &amp; Rescues">Open
-							  Submenu</button>
-
-
-							<ul class="menu menu-level-2">
-
-							  <li class="menu-item"><a
-								  href="${pageContext.request.contextPath}/comAction?action=ecoMainP">購物商城</a></li>
-
-
-							</ul>
-						  </li>
-						  <!--會員資料-->
-						  <li class="menu-item menu-item--expanded"><a
-							  href="${pageContext.request.contextPath}/views/member/member.jsp">會員資料</a>
-							<ul class="menu menu-level-2">
-							  <li class="menu-item"><a
-								  href="${pageContext.request.contextPath}/views/member/member.jsp">會員中心</a></li>
-							</ul>
-						  </li>
-						  <!--開發團隊-->
-						  <li class="menu-item"><a href="#">開發團隊</a></li>
-						</ul>
-					  </div>
-					</li>
-				  </ul>
-				</nav>
-
-
-			  </div>
-			  <!--我的最愛+購物車+登入+登出-->
-			  <div class="profile-navigation">
-				<!--我的最愛-->
-				<a href="${pageContext.request.contextPath}/Favorite?action=getRedisListFav"
-				  class="nav-favorites-btn"> <svg role="img" focusable="false">
-					<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-favorite"></use>
+				<!--我的最愛+購物車+登入+登出-->
+				<div class="profile-navigation">
+					<!--我的最愛-->
+					<a
+						href="${pageContext.request.contextPath}/Favorite?action=getRedisListFav"
+						class="nav-favorites-btn"> <svg role="img" focusable="false">
+					<use xmlns:xlink="http://www.w3.org/1999/xlink"
+								xlink:href="#icon-favorite"></use>
 				  </svg> <span class="visually-hidden">Favorites</span>
-				</a>
-				<!--購物車-->
-				<a href="${pageContext.request.contextPath}/shCartAction?action=getCart"
-				  class="nav-favorites-btn nav-cart-btn"> <svg role="img" focusable="false">
-					<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-cart"></use>
+					</a>
+					<!--購物車-->
+					<a
+						href="${pageContext.request.contextPath}/shCartAction?action=getCart"
+						class="nav-favorites-btn nav-cart-btn"> <svg role="img"
+							focusable="false">
+					<use xmlns:xlink="http://www.w3.org/1999/xlink"
+								xlink:href="#icon-cart"></use>
 				  </svg> <span class="visually-hidden">Favorites</span>
-				</a>
-				<button type="button" id="resources-btn" class="nav-resources-btn">
-				  <svg role="img" focusable="false">
-					<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-menu"></use>
+					</a>
+					<button type="button" id="resources-btn" class="nav-resources-btn">
+						<svg role="img" focusable="false">
+					<use xmlns:xlink="http://www.w3.org/1999/xlink"
+								xlink:href="#icon-menu"></use>
 				  </svg>
-				  <span class="visually-hidden">Resources</span>
-				</button>
+						<span class="visually-hidden">Resources</span>
+					</button>
 
 
-				<div class="header-inner-profile__container">
-				  <ul class="header-inner-profile">
-					<c:if test="${empty memberVO.memID}">
-					  <li><a href="${pageContext.request.contextPath}/views/signIn/register.jsp"
-						  class="header-inner-profile-btn">註冊</a></li>
-					  <li><a href="${pageContext.request.contextPath}/views/signIn/signIn.jsp"
-						  class="header-inner-profile-btn ">登入</a></li>
-					</c:if>
-					<c:if test="${not empty memberVO.memID}">
-					  <li><a href="${pageContext.request.contextPath}/views/member/member.jsp"
-						  class="header-inner-profile-btn ">Hi ~ ${memberVO.name}</a></li>
-					</c:if>
-				  </ul>
+					<div class="header-inner-profile__container">
+						<ul class="header-inner-profile">
+							<c:if test="${empty memberVO.memID}">
+								<li><a
+									href="${pageContext.request.contextPath}/views/signIn/register.jsp"
+									class="header-inner-profile-btn">註冊</a></li>
+								<li><a
+									href="${pageContext.request.contextPath}/views/signIn/signIn.jsp"
+									class="header-inner-profile-btn ">登入</a></li>
+							</c:if>
+							<c:if test="${not empty memberVO.memID}">
+								<li><a
+									href="${pageContext.request.contextPath}/views/member/member.jsp"
+									class="header-inner-profile-btn ">Hi ~ ${memberVO.name}</a></li>
+							</c:if>
+						</ul>
+					</div>
 				</div>
-			  </div>
 			</div>
-		  </div>
+		</div>
 
-		  <div id="the_btn">btn buttom</div>
+		<div id="the_btn">btn buttom</div>
 
 
-		  <div id="Svg_Defs" class="u-isHidden hidden">
+		<div id="Svg_Defs" class="u-isHidden hidden">
 			<svg>
 			  <symbol id="icon-favorite" viewBox="0 0 31.98 26.87">
 				<title>icon-favorite</title>
 				<path
-				  d="M29.49,2.59a8.31,8.31,0,0,0-12.06,0,8.78,8.78,0,0,0-1.43,2,8.83,8.83,0,0,0-1.43-2,8.31,8.31,0,0,0-12.06,0,9.09,9.09,0,0,0,0,12.52l9.81,10.18a5.09,5.09,0,0,0,7.36,0l9.81-10.18A9.09,9.09,0,0,0,29.49,2.59Z">
+					d="M29.49,2.59a8.31,8.31,0,0,0-12.06,0,8.78,8.78,0,0,0-1.43,2,8.83,8.83,0,0,0-1.43-2,8.31,8.31,0,0,0-12.06,0,9.09,9.09,0,0,0,0,12.52l9.81,10.18a5.09,5.09,0,0,0,7.36,0l9.81-10.18A9.09,9.09,0,0,0,29.49,2.59Z">
 				</path>
 			  </symbol>
 
 			  <symbol id="icon-cart" viewBox="0 0 50 50">
 				<path
-				  d="M43.9167 14.5833C43.5567 13.9596 43.0412 13.4399 42.4205 13.0747C41.7998 12.7096 41.0951 12.5116 40.375 12.5H13.7084L12.5 7.79167C12.3779 7.33716 12.1056 6.93738 11.7273 6.65744C11.349 6.3775 10.887 6.23389 10.4167 6.25H6.25002C5.69749 6.25 5.16758 6.46949 4.77688 6.8602C4.38618 7.2509 4.16669 7.7808 4.16669 8.33333C4.16669 8.88587 4.38618 9.41577 4.77688 9.80647C5.16758 10.1972 5.69749 10.4167 6.25002 10.4167H8.83335L14.5834 31.7917C14.7054 32.2462 14.9778 32.6459 15.3561 32.9259C15.7344 33.2058 16.1963 33.3494 16.6667 33.3333H35.4167C35.8014 33.3322 36.1783 33.2245 36.5056 33.0222C36.8328 32.82 37.0977 32.5311 37.2709 32.1875L44.1042 18.5208C44.4004 17.9 44.5382 17.2156 44.5055 16.5285C44.4728 15.8415 44.2705 15.1732 43.9167 14.5833Z" />
+					d="M43.9167 14.5833C43.5567 13.9596 43.0412 13.4399 42.4205 13.0747C41.7998 12.7096 41.0951 12.5116 40.375 12.5H13.7084L12.5 7.79167C12.3779 7.33716 12.1056 6.93738 11.7273 6.65744C11.349 6.3775 10.887 6.23389 10.4167 6.25H6.25002C5.69749 6.25 5.16758 6.46949 4.77688 6.8602C4.38618 7.2509 4.16669 7.7808 4.16669 8.33333C4.16669 8.88587 4.38618 9.41577 4.77688 9.80647C5.16758 10.1972 5.69749 10.4167 6.25002 10.4167H8.83335L14.5834 31.7917C14.7054 32.2462 14.9778 32.6459 15.3561 32.9259C15.7344 33.2058 16.1963 33.3494 16.6667 33.3333H35.4167C35.8014 33.3322 36.1783 33.2245 36.5056 33.0222C36.8328 32.82 37.0977 32.5311 37.2709 32.1875L44.1042 18.5208C44.4004 17.9 44.5382 17.2156 44.5055 16.5285C44.4728 15.8415 44.2705 15.1732 43.9167 14.5833Z" />
 				<path
-				  d="M15.625 43.75C17.3509 43.75 18.75 42.3509 18.75 40.625C18.75 38.8991 17.3509 37.5 15.625 37.5C13.8991 37.5 12.5 38.8991 12.5 40.625C12.5 42.3509 13.8991 43.75 15.625 43.75Z" />
+					d="M15.625 43.75C17.3509 43.75 18.75 42.3509 18.75 40.625C18.75 38.8991 17.3509 37.5 15.625 37.5C13.8991 37.5 12.5 38.8991 12.5 40.625C12.5 42.3509 13.8991 43.75 15.625 43.75Z" />
 				<path
-				  d="M36.4583 43.75C38.1842 43.75 39.5833 42.3509 39.5833 40.625C39.5833 38.8991 38.1842 37.5 36.4583 37.5C34.7324 37.5 33.3333 38.8991 33.3333 40.625C33.3333 42.3509 34.7324 43.75 36.4583 43.75Z" />
+					d="M36.4583 43.75C38.1842 43.75 39.5833 42.3509 39.5833 40.625C39.5833 38.8991 38.1842 37.5 36.4583 37.5C34.7324 37.5 33.3333 38.8991 33.3333 40.625C33.3333 42.3509 34.7324 43.75 36.4583 43.75Z" />
 
 			  </symbol>
 
 			</svg>
-		  </div>
+		</div>
 		<!-- 	header結束 -->
-    
-        <div class="row mb-3 justify-content-center mt-5">
-            <div class="col-8 themed-grid-col">
-              <div class="row memberTabBar">
-                <div class="col-2">
-                  <a href="<%=request.getContextPath()%>/views/member/member.jsp" class="">會員資料</a>
-                </div>
-                <div class="col-2">
-                  <a href="./myFavorite.jsp" class="">我的最愛</a>
-                </div>
-                <div class="col-2">
-                  <a href="<%=request.getContextPath()%>/views/member/adoptLog.jsp" class="">認養紀錄</a>
-                </div>
-                <div class="col-2">
-                  <a href="<%=request.getContextPath()%>/views/member/donateLog.jsp" class="active">捐款紀錄</a>
-                </div>
-                <div class="col-2">
-                  <a href="<%=request.getContextPath()%>/OrdersServlet?action=get_Member_Order" class="">訂單紀錄</a>
-                </div>
-                <div class="col-2">
-                  <a href="${pageContext.request.contextPath}/views/signIn/signIn?action=signOut" class="">我想登出</a>
-                </div>
-              </div>
-            </div>
-        </div>
-    </div>
-    <div class="wrap mt-5">
-        <table class="table align-middle">
-            <thead>
-              <tr>
-                <th scope="col">No.</th>
-                <th scope="col">捐款對象</th>
-                <th scope="col">捐款方式</th>
-                <th scope="col">金額</th>
-                <th scope="col">捐款時間</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <th scope="row">1</th>
-                <td>小貓怪</td>
-                <td>信用卡</td>
-                <td>100,000</td>
-                <td>2022/03/08</td>
-              </tr>
-              <tr>
-                <th scope="row">2</th>
-                <td>David</td>
-                <td>轉帳</td>
-                <td>200,000</td>
-                <td>2021/03/08</td>
-              </tr>              
-              <tr>
-                <th scope="row">3</th>
-                <td>Peter</td>
-                <td>現金</td>
-                <td>300,000</td>
-                <td>2020/03/08</td>
-              </tr>
-              <tr>
-                <th scope="row">4</th>
-                <td>Nick</td>
-                <td>信用卡</td>
-                <td>400,000</td>
-                <td>2023/03/08</td>
-              </tr>
-            </tbody>
-          </table>
-          <p class="text-end">共<span class="donateCount"></span>筆資料</p>
-          <!-- 這裡還要寫SPAN標籤內的數字 -->
-    </div>
-    <!-- Footer Section Begin -->
+
+		<div class="row mb-3 justify-content-center mt-5">
+			<div class="col-8 themed-grid-col">
+				<div class="row memberTabBar">
+					<div class="col-2">
+						<a href="<%=request.getContextPath()%>/views/member/member.jsp"
+							class="">會員資料</a>
+					</div>
+					<div class="col-2">
+						<a href="./myFavorite.jsp" class="">我的最愛</a>
+					</div>
+					<div class="col-2">
+						<a href="<%=request.getContextPath()%>/views/member/adoptLog.jsp"
+							class="">認養紀錄</a>
+					</div>
+					<div class="col-2">
+						<a href="<%=request.getContextPath()%>/views/member/donateLog.jsp"
+							class="active">捐款紀錄</a>
+					</div>
+					<div class="col-2">
+						<a
+							href="<%=request.getContextPath()%>/OrdersServlet?action=get_Member_Order"
+							class="">訂單紀錄</a>
+					</div>
+					<div class="col-2">
+						<a
+							href="${pageContext.request.contextPath}/views/signIn/signIn?action=signOut"
+							class="">我想登出</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="wrap mt-5">
+		<table class="table align-middle">
+			<thead>
+				<tr>
+					<th>捐款編號</th>
+					<th>收容所名稱</th>
+					<th>金額</th>
+					<th>捐款狀態</th>
+					<th>捐款時間</th>
+				</tr>
+			</thead>
+			<tbody>
+				<%@ include file="page1.file"%>
+				<c:forEach var="DonateVO" items="${list}" begin="<%=pageIndex%>"
+					end="<%=pageIndex+rowsPerPage-1%>">
+					<tr>
+						<td>${DonateVO.donateID}</td>
+						<td>${DonateVO.shelterName}</td>
+						<td>${DonateVO.donateAmo}</td>
+						
+						<c:if test="${DonateVO.donateStatus == 0}">
+						<td> <c:out value="處理中"/></td>
+						</c:if>
+						
+						
+						<c:if test="${DonateVO.donateStatus == 1}">
+						<td> <c:out value="處理中"/></td>
+						</c:if>	
+						
+						
+						<c:if test="${DonateVO.donateStatus == 2}">
+						<td> <c:out value="處理中"/></td>
+						</c:if>
+
+						<td>${DonateVO.donateDate}</td>
+					</tr>
+				</c:forEach>
+			</tbody>
+		</table>
+		<%@ include file="page2.file"%>
+
+<!-- 		<p class="text-end"> -->
+<!-- 			共<span class="donateCount"></span>筆資料 -->
+<!-- 		</p> -->
+		<!-- 這裡還要寫SPAN標籤內的數字 -->
+	</div>
+	<!-- Footer Section Begin -->
 
 	<div>
 		<div id="Site" class="site js-LockPageScroll-site" aria-hidden="false">
@@ -293,10 +328,12 @@
 	</div>
 
 	<!-- Footer Section End -->
-    
-    <script src="<%=request.getContextPath()%>/views/member/js/address.js"></script>
-    <script src="<%=request.getContextPath()%>/views/member/js/jquery-3.6.0.min.js"></script>
-    <script src="<%=request.getContextPath()%>/views/member/js/memberTabBar.js"></script>
-    <script src="<%=request.getContextPath()%>/views/member/js/member.js"></script>
+
+	<script src="<%=request.getContextPath()%>/views/member/js/address.js"></script>
+	<script
+		src="<%=request.getContextPath()%>/views/member/js/jquery-3.6.0.min.js"></script>
+	<script
+		src="<%=request.getContextPath()%>/views/member/js/memberTabBar.js"></script>
+	<script src="<%=request.getContextPath()%>/views/member/js/member.js"></script>
 </body>
 </html>

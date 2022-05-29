@@ -130,7 +130,7 @@
 							</ul>
 						  </li>
 						  <!--幫助貓咪-->
-						  <li class="menu-item menu-item--expanded"><a href="#">捐款</a>
+						  <li class="menu-item menu-item--expanded"><a href="<%=request.getContextPath()%>/views/donate/donate.jsp">捐款</a>
 
 							<button class="visually-hidden-unless-focused hidden-btn open-sub-menu" role="button"
 							  aria-haspopup="true" aria-expanded="false" aria-label="All Pet Care">Open
@@ -252,7 +252,7 @@
                   <a href="<%=request.getContextPath()%>/views/member/member.jsp" class="">會員資料</a>
                 </div>
                 <div class="col-2">
-                  <a href="<%=request.getContextPath()%>/views/member/myFavorite.jsp" class="">我的最愛</a>
+                  <a href="${pageContext.request.contextPath}/views/catInfo/My_favorite.jsp" class="">我的最愛</a>
                 </div>
                 <div class="col-2">
                   <a href="<%=request.getContextPath()%>/views/member/adoptLog.jsp" class="">認養紀錄</a>
@@ -342,7 +342,7 @@
 <!-- Footer Section Begin -->
 
 	<div>
-		<div id="Site" class="site js-LockPageScroll-site" aria-hidden="false">
+<%-- 		<div id="Site" class="site js-LockPageScroll-site" aria-hidden="false">
 			<!--這是footer這是footer這是footer這是footer這是footer這是footer這是footer這是footer這是footer-->
 			<footer class="site-footer" role="contentinfo">
 				<div style="background-color: #410078;" class="footer">
@@ -359,7 +359,7 @@
 					</div>
 				</div>
 			</footer>
-		</div>
+		</div> --%>
 	</div>
 
 	<!-- Footer Section End -->

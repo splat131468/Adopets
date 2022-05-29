@@ -350,13 +350,13 @@ DonateVO donVO = (DonateVO) request.getAttribute("donVO");
 									<label for="cat_option">援助指定貓咪</label>
 								</div>
 								<div>
-									<p>${param.catname}</p>
+									<p>不指定</p>
 								</div>
 								<div>
 									<label for="cat_option" style="margin-top: 2%; width: 16%;">指定單位</label>
 								</div>
 								<div>
-									<p>${param.sheltername}</p>
+									<p>Adopets平台</p>
 								</div>
 
 							</div>
@@ -502,8 +502,8 @@ DonateVO donVO = (DonateVO) request.getAttribute("donVO");
 
 									</fieldset>
 										<input type="hidden" id="memID" name="memID" value="${param.memid}" /> 
-										<input type="hidden" id="catID" name="catID" value="${param.catid}" /> 
-										<input type="hidden" id="shelterName" name="shelterName" value="${param.sheltername}" /> 
+									<input type="hidden" id="catID" name="catID" value="1" /> 
+										<input type="hidden" id="shelterName" name="shelterName" value="Adopets平台" /> 
 										<input type="hidden" id="donateStatus" name="donateStatus" value="0" />
 									</form>	
 								</div>

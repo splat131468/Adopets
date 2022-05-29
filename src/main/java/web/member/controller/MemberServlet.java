@@ -123,6 +123,8 @@ public class MemberServlet extends HttpServlet {
 //				String inputEmail=  request.getParameter("inputEmail");
 				HttpSession session = request.getSession();
 				String inputEmail = ((MemberVO)session.getAttribute("memberVO")).getAccount();
+				Integer memID = ((MemberVO)session.getAttribute("memberVO")).getMemID();
+				System.out.println(memID);
 				
 				System.out.println(inputEmail);
 				
@@ -139,7 +141,7 @@ public class MemberServlet extends HttpServlet {
 				if (inputName == null || inputName.trim().length() == 0) {
 					errorMsgs.add("姓名請勿空白");
 				} else if (!inputName.trim().matches(inputnameReg)) { // 以下練習正則(規)表示式(regular-expression)
-					errorMsgs.add("只能是中、英文字母、數字和_ , 且長度必需在2到10之間");
+					errorMsgs.add("姓名只能是中、英文字母、數字和_ , 且長度必需在2到10之間");
 				}
 
 				String inputPhone = request.getParameter("inputPhone");
@@ -160,7 +162,7 @@ public class MemberServlet extends HttpServlet {
 				inputPersonImg.read(buffer);// 把圖傳進buffer陣列
 
 				MemberVO memberVO = new MemberVO();
-				
+//				memberVO.setMemID(memID);
 				memberVO.setAccount(inputEmail);
 				memberVO.setPassword(inputPassword);
 				memberVO.setName(inputName);
@@ -173,7 +175,7 @@ public class MemberServlet extends HttpServlet {
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					request.setAttribute("memberVO", memberVO); // 含有輸入格式錯誤的VO物件,也存入request
-					RequestDispatcher failureView = request.getRequestDispatcher("/views/signIn/signIn.jsp");
+					RequestDispatcher failureView = request.getRequestDispatcher("/views/member/member.jsp");
 					failureView.forward(request, response);
 					return; // 程式中斷
 				}
@@ -182,7 +184,8 @@ public class MemberServlet extends HttpServlet {
 				MemberService memberSvc = new MemberService();
 				memberVO = memberSvc.updateMember(inputEmail,inputPassword, inputName, inputAge, inputPhone,
 						inputAddress, buffer);
-
+				memberVO.setMemID(memID);
+System.out.println(memberVO);
 				/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
 				request.setAttribute("memberVO", memberVO); // 資料庫update成功後,正確的的VO物件,存入request
 				String url = "/views/member/member.jsp";
@@ -193,7 +196,7 @@ public class MemberServlet extends HttpServlet {
 			} catch (Exception e) {
 				e.printStackTrace();
 				errorMsgs.add("修改資料失敗:" + e.getMessage());
-				RequestDispatcher failureView = request.getRequestDispatcher("/views/signIn/signIn.jsp");
+				RequestDispatcher failureView = request.getRequestDispatcher("/views/member/member.jsp");
 				failureView.forward(request, response);
 			}
 		}

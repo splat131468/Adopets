@@ -86,7 +86,7 @@
 							</ul>
 						  </li>
 						  <!--幫助貓咪-->
-						  <li class="menu-item menu-item--expanded"><a href="#">捐款</a>
+						  <li class="menu-item menu-item--expanded"><a href="<%=request.getContextPath()%>/views/donate/donate.jsp">捐款</a>
 
 							<button class="visually-hidden-unless-focused hidden-btn open-sub-menu" role="button"
 							  aria-haspopup="true" aria-expanded="false" aria-label="All Pet Care">Open
@@ -208,7 +208,7 @@
             <a href="<%=request.getContextPath()%>/views/member/member.jsp" class="">會員資料</a>
           </div>
           <div class="col-2">
-            <a href="<%=request.getContextPath()%>/views/member/myFavorite.jsp" class="">我的最愛</a>
+            <a href="${pageContext.request.contextPath}/views/catInfo/My_favorite.jsp" class="">我的最愛</a>
           </div>
           <div class="col-2">
             <a href="<%=request.getContextPath()%>/views/member/adoptLog.jsp" class="active">認養紀錄</a>
@@ -250,7 +250,7 @@
           <td class="w-25">
             <img src="<%=request.getContextPath()%>/views/member/image/大吳帥照.jpg" alt="" class="adoptLogImg">
           </td>
-          <td>Peter</td>
+          <td>Alex</td>
           <td>2021/03/08</td>
         </tr>
         <tr>
@@ -258,12 +258,12 @@
           <td class="w-25">
             <img src="<%=request.getContextPath()%>/views/member/image/王彩樺.png" alt="" class="adoptLogImg">
           </td>
-          <td>王彩</td>
+          <td>Boston</td>
           <td>2020/03/08</td>
         </tr>
       </tbody>
     </table>
-    <p class="text-end">共<span class="adoptCount"></span>筆資料</p>
+<!--     <p class="text-end">共<span class="adoptCount"></span>筆資料</p> -->
     <!-- 這裡還要寫SPAN標籤內的數字 -->
   </div>
   <!-- Footer Section Begin -->
