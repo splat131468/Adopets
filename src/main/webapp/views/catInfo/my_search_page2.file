@@ -38,7 +38,7 @@
                     <div class="dropdown">
                       <div class="select">
                         <span>任意</span> 
-                        <i class="fa fa-chevron-left"></i>
+                        
                       </div>
                       <input type="hidden" name="Gender">
                       <ul class="dropdown-menu whichPage">

@@ -15,7 +15,7 @@
 	/* int listn = (Integer) request.getSession().getAttribute("size"); */
 	/* List<CatInfoVO> list = catInfoService.getAll(); */
 	//多值查詢過來的
- 	List<CatInfoVO> lists = (ArrayList) request.getSession().getAttribute("lists");
+ 	List<CatInfoVO> listss = (ArrayList) request.getSession().getAttribute("lists");
  	/* pageContext.setAttribute("list",list); */
   	pageContext.setAttribute("lists",request.getSession().getAttribute("lists"));
  	/* pageContext.setAttribute("list",request.getSession().getAttribute("list")); */
@@ -587,9 +587,7 @@
                                                                                                 </li>
                                                                                             </ul>
                                                                                         </li>
-                                                                                        <li>
-                                                                                            距離?公里
-                                                                                        </li>
+                                                                                        
                                                                                     </ul>
                                                                                 </div>
 

@@ -11,17 +11,14 @@
 	CatInfoService catInfoService = new CatInfoService();
 	/* CatInfoVO catInfoVO = new CatInfoVO(); */
 	CatInfoVO catInfoVO = (CatInfoVO) request.getSession().getAttribute("catInfoVO");
-	CatAndShelVO catAndShelVO = (CatAndShelVO) request.getSession().getAttribute("catAndShelVO");
 	/* List<CatInfoVO> list = catInfoService.getMulti(catInfoVO); */
 	
 	/* int listn = (Integer) request.getSession().getAttribute("size"); */
 	/* List<CatInfoVO> list = catInfoService.getAll(); */
 	//多值查詢過來的
  	List<CatInfoVO> lists = (ArrayList) request.getSession().getAttribute("lists");
- 	List<CatAndShelVO> listss = (ArrayList) request.getSession().getAttribute("listss");
  	/* pageContext.setAttribute("list",list); */
   	pageContext.setAttribute("lists",request.getSession().getAttribute("lists"));
-  	pageContext.setAttribute("listss",request.getSession().getAttribute("listss"));
  	/* pageContext.setAttribute("list",request.getSession().getAttribute("list")); */
  /* 	if (!request.getSession().isNew()) {
 	 	Integer n = (Integer) request.getSession().getAttribute("size");
@@ -45,8 +42,6 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/views/catInfo/files/my_search_1.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/views/catInfo/files/my_search_2_1.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/views/catInfo/files/my_search_3.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <script src="${pageContext.request.contextPath}/views/catInfo/files/jquery.min.js"></script>
     
     <style>
         body {
@@ -307,7 +302,7 @@
                                                                 <%=request.getSession().isNew() %>
                                                                 </div> --%>
                                                                 <span class="count">
-                                                                    共有 ${listss.size()} 隻喵
+                                                                    共有 ${lists.size()} 隻喵
                                                                 </span>
                                                             </button>
                                                         </pf-focus-manager>
@@ -494,26 +489,6 @@
 	                                        <div class="searchContainer-filters">
 	                                            <div class="u-fadeInChildren">
 	                                                <ul class="vrArray m-vrArray_4x">
-	                                                    <!--距離-->
-	                                                    <li>
-	                                                        <div class="txt txt_label m-txt_heavy m-txt_uppercase m-txt_alignCenter u-vr1x">距離</div>
-	                                                        <div class="container">
-	                                                            <div class="dropdown dis">
-	                                                              <div class="select">
-	                                                                <span class="sp1">任意</span> 
-	                                                                <i class="fa fa-chevron-left"></i>
-	                                                              </div>
-	                                                              <input type="hidden" name="dis">
-	                                                              <ul class="dropdown-menu">
-	                                                                <li value="10">10公里</li>
-	                                                                <li value="30">30公里</li>
-	                                                                <li value="50">50公里</li>
-	                                                                <li value="100">100公里</li>
-	                                                                <li value="300">大於100公里</li>
-	                                                              </ul>
-	                                                            </div>
-	                                                        </div>
-	                                                    </li>
 	                                                    <!--品種-->
 	                                                    <li>
 	                                                        <div class="txt txt_label m-txt_heavy m-txt_uppercase m-txt_alignCenter u-vr1x">品種</div>
@@ -690,10 +665,10 @@
 	                                                                  </div>
 	                                                                  <input type="hidden" name="shelter_day">
 	                                                                  <ul class="dropdown-menu">
-	                                                                    <li value="30">1個月</li>
-	                                                                    <li value="90">3個月</li>
-	                                                                    <li value="180">半年</li>
-	                                                                    <li value="1000">超過1年</li>
+	                                                                    <li value="1">1</li>
+	                                                                    <li value="7">7</li>
+	                                                                    <li value="14">14</li>
+	                                                                    <li value="30">30</li>
 	                                                                  </ul>
 	                                                                </div>
 	                                                            </div>
@@ -814,11 +789,11 @@
                                                         <div class="grid grid_gutter grid_gutterLg@minMd m-grid_stretch u-vr6x">
                                                          <%-- <%@ include file="my_search_page1.file" %>  --%>
                                                    
-															<c:forEach var="catAndShelVO" items="${listss}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
+															<c:forEach var="catInfoVO" items="${lists}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
                                                             <!--貓咪資訊貓咪資訊貓咪資訊貓咪資訊貓咪資訊貓咪資訊貓咪資訊貓咪資訊-->
                                                             <div class="grid-col grid-col_1/4@minXl">
                                                                 <div class="petCard">
-                                                                    <a class="petCard-link" href="${pageContext.request.contextPath}/CatInfoServlet?action=getCatPage&catID=${catAndShelVO.catID}">
+                                                                    <a class="petCard-link" href="${pageContext.request.contextPath}/CatInfoServlet?action=getCatPage&catID=${catInfoVO.catID}">
                                                                   
                                                                         <!--貓照片-->
                                                                         <jsp:useBean id="catPhotoGalleryService" scope="page" class="web.catInfo.service.CatPhotoGalleryService" />
@@ -829,48 +804,45 @@
 																			                                                                      
                                                                             <img class="petCard-media-img"
                                                                                 <%-- src="${pageContext.request.contextPath}/DBGifReader?id=${catPhotoGalleryVO.imgID}" --%>
-                                                                                src="${pageContext.request.contextPath}/DBGifReader?id=${catPhotoGalleryService.getOneCat(catAndShelVO.catID)[0].imgID}"
+                                                                                src="${pageContext.request.contextPath}/DBGifReader?id=${catPhotoGalleryService.getOneCat(catInfoVO.catID)[0].imgID}"
                                                                                 sizes="300px">
                                                                         </div>
                                                                         <div class="petCard-body">
                                                                             <div class="petCard-body-details">
                                                                                 <!--名字-->
                                                                                 <div class="petCard-body-details-hdg">
-                                                                                    <span>${catAndShelVO.catName}</span> 
+                                                                                    <span>${catInfoVO.catName}</span> 
                                                                                 </div>
                                                                                 <!--名字下方標籤下方-->
                                                                                 <div class="">
                                                                                     <ul>
                                                                                         <li>
                                                                                             <ul class="hrArray hrArray_bulletDividedSingleLine m-hrArray_center">
-                                                                                                    <span>${catAndShelVO.sex}</span>
+                                                                                                    <span>${catInfoVO.sex}</span>
                                                                                                 <c:choose>
-																								   <c:when test="${catAndShelVO.age == 0}">
+																								   <c:when test="${catInfoVO.age == 0}">
 																								   <li>幼貓</li> 
 																								   </c:when>
-																								   <c:when test="${catAndShelVO.age == 1}">
+																								   <c:when test="${catInfoVO.age == 1}">
 																								   <li>小貓</li> 
 																								   </c:when>
-																								   <c:when test="${catAndShelVO.age == 2}">
+																								   <c:when test="${catInfoVO.age == 2}">
 																								   <li>成貓</li> 
 																								   </c:when>
-																								   <c:when test="${catAndShelVO.age == 3}">
+																								   <c:when test="${catInfoVO.age == 3}">
 																								   <li>老貓</li> 
 																								   </c:when>
 																								   <c:otherwise>
 																								   </c:otherwise>
 																								</c:choose>
                                                                                                <li>
-                                                                                                    <span>${catAndShelVO.breed}</span>
+                                                                                                    <span>${catInfoVO.breed}</span>
                                                                                                     
                                                                                                 </li>
                                                                                             </ul>
                                                                                         </li>
-                                                                                        <li class="loc">
-	                                                                                        <input class="lat" type="hidden" value="${catAndShelVO.latitude}">
-	                                                                                        <input class="log" type="hidden" value="${catAndShelVO.longitude}">
-	                                                                                        <input class="city" type="hidden" value="${catAndShelVO.shelterCity}">
-                                                                                            距離?公里
+                                                                                        <li>
+                                                                                            距離?公里${catAndShelVO.breed}
                                                                                         </li>
                                                                                     </ul>
                                                                                 </div>
@@ -894,7 +866,7 @@
                                                                     </a>
                                                                     <!--我的最愛按鈕-->
                                                                     <div class="petCard-favoriteBtn">
-                                                                        <button class="favoriteBtn favoriteBtn_searchResult" value="${catAndShelVO.catID}">
+                                                                        <button class="favoriteBtn favoriteBtn_searchResult" value="${catInfoVO.catID}">
                                                                             <svg role="img">
                                                                                 <use
                                                                                     xlink:href="#icon-favorite_outline">
@@ -1905,26 +1877,7 @@
 
 
 
-    <%-- <script src="${pageContext.request.contextPath}/views/catInfo/files/jquery.min.js"></script> --%>
-    
-    
- <script>
-
- 
- $(".loc").each(function() {
-	    var text = $(this).text();
-	    var here_lat = 24.7806582;
-	    var here_log = 121.0306231;
-	    var des_lat = $(this).find(".log").val();
-	    var des_log = $(this).find(".lat").val();
-	    var des_city = $(this).find(".city").val();
-	    var dis = Math.round(125 * Math.sqrt(Math.pow((here_lat - des_lat), 2) + Math.pow((here_log - des_log), 2)));
-	  	$(this).text(`\${des_city} - 約\${dis}公里`);
-	});
- 
- 
- </script>   
-    
+    <script src="${pageContext.request.contextPath}/views/catInfo/files/jquery.min.js"></script>
 
 <script>
 
@@ -1960,19 +1913,6 @@
 	});
  	//用js判斷EL有沒有值，有的話再回填標籤
  	$(document).ready(function() {
- 		//距離
- 		var distf = `${catAndShelVO.dis == null}`
-	 	if (distf == "false") {
-	 		console.log(${catAndShelVO.dis});
-	 		if (${catAndShelVO.dis == 300}) {
-	 			$(".dis > .select > span").text(`大於100公里`);
-		 	 	$(".dis > input").attr('value', `${catAndShelVO.dis}`);
-	 		}else {
-		 		$(".dis > .select > span").text(`${catAndShelVO.dis}公里`);
-		 	 	$(".dis > input").attr('value', `${catAndShelVO.dis}`);
-	 		}
-	 		
-	 	}
  		//品種
  		var breedtf = `${catInfoVO.breed == null}`
 	 	if (breedtf == "false") {
@@ -2027,22 +1967,9 @@
 	 		let day = 24 * 3600 * 1000;
 	 		let diff = now - Date.parse(beforeString);
 	 		let diffday = parseInt(diff / day);
-	 		if (diffday == 30) {
-		 		$(".shelter > .select > span").text(`1個月`);
-		 	 	$(".shelter > input").attr('value', diffday);
-	 		}else if (diffday == 90){
-		 		$(".shelter > .select > span").text(`3個月`);
-		 	 	$(".shelter > input").attr('value', diffday);
-	 			
-	 		}else if (diffday == 180){
-		 		$(".shelter > .select > span").text(`半年`);
-		 	 	$(".shelter > input").attr('value', diffday);
-	 		}else if (diffday == 1000){
-		 		$(".shelter > .select > span").text(`超過1年`);
-		 	 	$(".shelter > input").attr('value', diffday);
-	 			
-	 		}
 	 		
+	 		$(".shelter > .select > span").text(diffday);
+	 	 	$(".shelter > input").attr('value', diffday);
 	 	}
 	});
  	//貓咪按我的最愛加上效果並傳到redis

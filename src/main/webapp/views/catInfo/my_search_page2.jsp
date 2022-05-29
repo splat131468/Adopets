@@ -7,7 +7,7 @@
 	                    <div class="droppage">
 	    	                <div class="select">
                             第 <%=whichPage%> 頁
-                            <i class="fa fa-chevron-left"></i>
+                            
                           	</div>
                              <input type="hidden" name="special_care">
 	      		            

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="web.catInfo.dao.CatAndShelDAO">
+
+	<resultMap id="catAndShel" type="web.catInfo.entity.CatAndShelVO">
+
+		<id column="catID" jdbcType="INTEGER" property="catID" />
+		<result column="memID" jdbcType="INTEGER" property="memID" />
+		<result column="shelterName" jdbcType="VARCHAR" property="shelterName" />
+		<result column="catName" jdbcType="VARCHAR" property="catName" />
+		<result column="breed" jdbcType="VARCHAR" property="breed" />
+		<result column="age" jdbcType="TINYINT" property="age" />
+		<result column="size" jdbcType="VARCHAR" property="size" />
+		<result column="sex" jdbcType="VARCHAR" property="sex" />
+		<result column="coatColor" jdbcType="VARCHAR" property="coatColor" />
+		<result column="eyeColor" jdbcType="VARCHAR" property="eyeColor" />
+		<result column="health" jdbcType="VARCHAR" property="health" />
+		<result column="adoptCost" jdbcType="INTEGER" property="adoptCost" />
+		<result column="createDate" jdbcType="DATE" property="createDate" />
+		<result column="haveVaccine" jdbcType="TINYINT" property="haveVaccine" />
+		<result column="adopt" jdbcType="TINYINT" property="adopt" />
+		<result column="latitude" jdbcType="VARCHAR" property="latitude" />
+		<result column="longitude" jdbcType="VARCHAR" property="longitude" />
+		<result column="shelterCity" jdbcType="VARCHAR" property="shelterCity" />
+		<result column="dis" jdbcType="INTEGER" property="dis" />
+	</resultMap>
+
+	<select id="getAll" resultMap="catAndShel">
+		select * from catInfo;
+	</select>
+
+
+
+	<select id="getMulti" 
+	parameterType="web.catInfo.entity.CatAndShelVO"
+	resultMap="catAndShel">
+		SELECT * 
+		FROM(SELECT A.*, B.shelterCity,B.latitude,B.longitude, ROUND(SQRT(power(longitude-24.7806582, 2)+ power(latitude-121.0306231, 2))*125) as 'dis' FROM CATINFO A, SHELTERINFO B
+		WHERE A.SHELTERNAME = B.SHELTERNAME) AA
+		
+		<where>
+				
+			<if test="shelterName !=null and shelterName != ''">
+				and shelterName like '%${shelterName}%'
+			</if>
+			
+			<if test="age !=null">
+				and age = '${age}'
+ 	 		</if>
+ 	 		
+			<if test="breed !=null and breed != ''">
+				and breed like '%${breed}%'
+			</if>
+			
+			<if test="size !=null and size != ''">
+				and size like '%${size}%'
+			</if>
+			
+			<if test="sex !=null and sex != ''">
+				and sex like '%${sex}%'
+			</if>
+			
+			<if test="coatColor !=null and coatColor != ''">
+				and coatColor like '%${coatColor}%'
+			</if>
+			
+			<if test="eyeColor !=null and eyeColor != ''">
+				and eyeColor like '%${eyeColor}%'
+			</if>
+			
+			<if test="createDate !=null">
+				and createDate &gt;= '${createDate}'
+			</if>
+			<if test="dis !=null">
+				and dis &lt;= '${dis}'
+			</if>
+
+
+		</where>
+
+
+	</select>
+
+</mapper>

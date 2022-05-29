@@ -29,6 +29,7 @@
 	<mappers>
 		<mapper resource="web/product/mapper/SpuMapper.xml"></mapper>
 		<mapper resource="web/catInfo/mapper/CatinfoMapper.xml"></mapper>
+		<mapper resource="web/catInfo/mapper/CatAndShelMapper.xml"></mapper>
 	</mappers>
 
 

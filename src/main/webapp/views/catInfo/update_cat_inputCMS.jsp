@@ -104,9 +104,11 @@ src="<%=request.getContextPath()%>/resources/background/js/system.js"></script>
   }
   table, th, td {
     border: 0px solid #CCCCFF;
+    width: 1000px;
   }
   th, td {
     padding: 1px;
+    width: 1000px;
   }
   
   img {
@@ -213,7 +215,10 @@ src="<%=request.getContextPath()%>/resources/background/js/system.js"></script>
 		<c:forEach var="catPhotoGalleryVO" items="${catPhotoGalleryService.getOneCat(catInfoVO.catID)}">
 			<div class="pic">
 				<!-- 暫時先用這隻讀檔 -->
-				<img src="${pageContext.request.contextPath}/DBGifReader?id=${catPhotoGalleryVO.imgID}">
+				<img class="catpic"
+					 src="${pageContext.request.contextPath}/DBGifReader?id=${catPhotoGalleryVO.imgID}" 
+					 value="${catPhotoGalleryVO.imgID}">
+				<input class="catpic cinput" type="hidden" value="${catPhotoGalleryVO.imgID}">
 			</div>
 		</c:forEach> 
 
@@ -341,104 +346,31 @@ src="<%=request.getContextPath()%>/resources/background/js/system.js"></script>
       <strong>Copyright &copy; 2022 &nbsp <a href="<%=request.getContextPath()%>/views/background_login/background.jsp">Adopets.io</a>.</strong> All rights reserved.
     </footer>
   </div>
-  <!-- /.content-wrapper -->
-  </div>
-
+  
+  <script>
+  
+//按貓咪照片就刪除
+	$(".catpic").on("click", function(){
+		let picid = $(this).next().val();
+		$(this).parent().remove();
+		console.log(picid);
+		$.ajax({
+			     url: "${pageContext.request.contextPath}/CatPhotoGalleryServlet",
+			     dataType: "json",
+			     data:{
+			    	 "action":"delPic",
+			         "picid":picid  
+		  		 },
+	              type: "POST",
+	              success: function (result) {
+	            	console.log("remove ok");
+	               }
+		});
+	});
+  
+  </script>
+  
+  
+  
 </body>
-
-</html>
-
-
-</body>
-
-<%
-java.sql.Date hiredate = null;
-try {
-	hiredate = catInfoVO.getCreateDate();
-} catch (Exception e) {
-	hiredate = new java.sql.Date(System.currentTimeMillis());
-}
-%>
-<link rel="stylesheet" type="text/css"
-	href="<%=request.getContextPath()%>/views/catInfo/datetimepicker/jquery.datetimepicker.css" />
-<script src="<%=request.getContextPath()%>/views/catInfo/datetimepicker/jquery.js"></script>
-<script
-	src="<%=request.getContextPath()%>/views/catInfo/datetimepicker/jquery.datetimepicker.full.js"></script>
-
-<style>
-.xdsoft_datetimepicker .xdsoft_datepicker {
-	width: 300px; /* width:  300px; */
-}
-
-.xdsoft_datetimepicker .xdsoft_timepicker .xdsoft_time_box {
-	height: 151px; /* height:  151px; */
-}
-</style>
-
-<script>
-        $.datetimepicker.setLocale('zh');
-        $('#f_date1').datetimepicker({
-	       theme: '',              //theme: 'dark',
-	       timepicker:false,       //timepicker:true,
-	       step: 1,                //step: 60 (這是timepicker的預設間隔60分鐘)
-	       format:'Y-m-d',         //format:'Y-m-d H:i:s',
-		   value: '<%=hiredate%>', // value:   new Date(),
-           //disabledDates:        ['2017/06/08','2017/06/09','2017/06/10'], // 去除特定不含
-           //startDate:	            '2017/07/10',  // 起始日
-           //minDate:               '-1970-01-01', // 去除今日(不含)之前
-           //maxDate:               '+1970-01-01'  // 去除今日(不含)之後
-        });
-        
-        
-   
-        // ----------------------------------------------------------以下用來排定無法選擇的日期-----------------------------------------------------------
-
-        //      1.以下為某一天之前的日期無法選擇
-        //      var somedate1 = new Date('2017-06-15');
-        //      $('#f_date1').datetimepicker({
-        //          beforeShowDay: function(date) {
-        //        	  if (  date.getYear() <  somedate1.getYear() || 
-        //		           (date.getYear() == somedate1.getYear() && date.getMonth() <  somedate1.getMonth()) || 
-        //		           (date.getYear() == somedate1.getYear() && date.getMonth() == somedate1.getMonth() && date.getDate() < somedate1.getDate())
-        //              ) {
-        //                   return [false, ""]
-        //              }
-        //              return [true, ""];
-        //      }});
-
-        
-        //      2.以下為某一天之後的日期無法選擇
-        //      var somedate2 = new Date('2017-06-15');
-        //      $('#f_date1').datetimepicker({
-        //          beforeShowDay: function(date) {
-        //        	  if (  date.getYear() >  somedate2.getYear() || 
-        //		           (date.getYear() == somedate2.getYear() && date.getMonth() >  somedate2.getMonth()) || 
-        //		           (date.getYear() == somedate2.getYear() && date.getMonth() == somedate2.getMonth() && date.getDate() > somedate2.getDate())
-        //              ) {
-        //                   return [false, ""]
-        //              }
-        //              return [true, ""];
-        //      }});
-
-
-        //      3.以下為兩個日期之外的日期無法選擇 (也可按需要換成其他日期)
-        //      var somedate1 = new Date('2017-06-15');
-        //      var somedate2 = new Date('2017-06-25');
-        //      $('#f_date1').datetimepicker({
-        //          beforeShowDay: function(date) {
-        //        	  if (  date.getYear() <  somedate1.getYear() || 
-        //		           (date.getYear() == somedate1.getYear() && date.getMonth() <  somedate1.getMonth()) || 
-        //		           (date.getYear() == somedate1.getYear() && date.getMonth() == somedate1.getMonth() && date.getDate() < somedate1.getDate())
-        //		             ||
-        //		            date.getYear() >  somedate2.getYear() || 
-        //		           (date.getYear() == somedate2.getYear() && date.getMonth() >  somedate2.getMonth()) || 
-        //		           (date.getYear() == somedate2.getYear() && date.getMonth() == somedate2.getMonth() && date.getDate() > somedate2.getDate())
-        //              ) {
-        //                   return [false, ""]
-        //              }
-        //              return [true, ""];
-        //      }});
-        
-</script>
-
 </html>
