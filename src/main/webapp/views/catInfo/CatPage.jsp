@@ -2325,8 +2325,8 @@
                                                 <dl>
                                                     <dt class="txt m-txt_lg m-txt_bold m-txt_uppercase">毛色</dt>
                                                     <dd class="txt u-vr4x">${catAndShelVO.coatColor}</dd>
-                                                    <dt class="txt m-txt_lg m-txt_bold m-txt_uppercase">眼睛顏色</dt>
-                                                    <dd class="txt u-vr4x">${catAndShelVO.eyeColor}</dd>
+                                                    <%-- <dt class="txt m-txt_lg m-txt_bold m-txt_uppercase">眼睛顏色</dt>
+                                                    <dd class="txt u-vr4x">${catAndShelVO.eyeColor}</dd> --%>
                                                     <dt class="txt m-txt_lg m-txt_bold m-txt_uppercase">收容日期</dt>
                                                     <dd class="txt u-vr4x">${catAndShelVO.createDate}</dd>
                                                     <dt class="txt m-txt_lg m-txt_bold m-txt_uppercase">是否施打疫苗</dt>
@@ -2575,18 +2575,30 @@
                                                     <p></p>
                                                     <div class="get-directions">
                                                         <div>
-                                                            <p 
+                                                           <%--  <p 
                                                             	href="#"
                                                             	target="_blank"
                                                            		class="txt txt_link m-txt_bold map"
                                                            		onclick="navigator.geolocation.getCurrentPosition(function(position){
-                                                         	        let log = (position.coords.longitude); // 於 console 中，查看 position
-                                                     	        	let lat = (position.coords.latitude); // 於 console 中，查看 position
+                                                     	        	let lat = (position.coords.latitude);
+                                                         	        let log = (position.coords.longitude);
                                                      	        	let loc = `https://www.google.com.tw/maps/dir/\${lat}%2C\${log}/${catAndShelVO.shelterName}`;
                                                      	        	window.open(loc, '_blank');
                                                      	      		});">
                                                                 帶我到那裡！
-                                                            </p>
+                                                            </p> --%>
+                                                            <%-- <p 
+                                                            	href="#"
+                                                            	target="_blank"
+                                                           		class="txt txt_link m-txt_bold map"
+                                                           		onclick="
+                                                     	        	let lat = 24.78065823761293;
+                                                         	        let log = 121.0306230683903;
+                                                     	        	let loc = `https://www.google.com.tw/maps/dir/\${lat}%2C\${log}/${catAndShelVO.shelterName}`;
+                                                     	        	window.open(loc, '_blank');">
+                                                                帶我到那裡！！
+                                                            </p> --%>
+                                                            <a href="https://www.google.com.tw/maps/dir/24.78065823761293%2C121.0306230683903/${catAndShelVO.shelterName}" target="_blank" style="color: #6504b5;">帶我到那裡！！! </a>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -3844,16 +3856,15 @@
     
   //貓咪按我的最愛加上效果並傳到redis
  	$(".favoriteBtn").on("click", function(){
- 		/* console.log("favorite btn"); */
+ 		console.log("favorite btn");
  		$(".favoriteBtn").toggleClass("s-favoriteBtn_favorited s-favoriteBtn_sessionFavorited");
 		let catID = ${catAndShelVO.catID};
-		
 		  $.ajax({
 			     url: "${pageContext.request.contextPath}/Favorite",
 			     dataType: "json",
 			     data:{
 			    	 "action":"addRedis",
-			         "member:1:favorite":catID  
+			         "catID":catID  
 		  		 },
 	              type: "POST",
 	              success: function (result) {
@@ -3864,7 +3875,6 @@
   					/* console.log(JSON.stringify(result)); */
  	               }
 		  });
- 		
  	});
  	
 
@@ -3895,8 +3905,8 @@
 			     url: "${pageContext.request.contextPath}/Favorite",
 			     dataType: "json",
 			     data:{
-			    	 "action":"getRedis",
-			    	 "key":"member:1:favorite"  
+			    	 "action":"getRedis"
+			    	 /* "key":"member:1:favorite"   */
 		  		 },
 	              type: "POST",
 	              success: function (result) {  
@@ -3922,6 +3932,8 @@
     
     
     </script>
+    
+    
     
  	
     

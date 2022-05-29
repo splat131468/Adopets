@@ -25,7 +25,7 @@ public class CatAndShelVO {
 	private String shelterCity;
 	private String longitude;
 	private String latitude;
-	
+	private Integer dis;
 	
 	
 	
@@ -39,10 +39,12 @@ public class CatAndShelVO {
 	}
 
 
+	
+
 	public CatAndShelVO(Integer catID, Integer memID, String shelterName, String catName, Integer age, String breed,
 			String size, String sex, String coatColor, String eyeColor, String health, Integer adoptCost,
 			Date createDate, Boolean haveVaccine, Boolean adopt, String shelterAddr, String shelterCity,
-			String longitude, String latitude) {
+			String longitude, String latitude, Integer dis) {
 		super();
 		this.catID = catID;
 		this.memID = memID;
@@ -63,7 +65,10 @@ public class CatAndShelVO {
 		this.shelterCity = shelterCity;
 		this.longitude = longitude;
 		this.latitude = latitude;
+		this.dis = dis;
 	}
+
+
 
 
 	@Override
@@ -73,8 +78,10 @@ public class CatAndShelVO {
 				+ coatColor + ", eyeColor=" + eyeColor + ", health=" + health + ", adoptCost=" + adoptCost
 				+ ", createDate=" + createDate + ", haveVaccine=" + haveVaccine + ", adopt=" + adopt + ", shelterAddr="
 				+ shelterAddr + ", shelterCity=" + shelterCity + ", longitude=" + longitude + ", latitude=" + latitude
-				+ "]";
+				+ ", dis=" + dis + "]";
 	}
+
+
 
 
 	public Integer getCatID() {
@@ -264,6 +271,16 @@ public class CatAndShelVO {
 
 	public void setLatitude(String latitude) {
 		this.latitude = latitude;
+	}
+
+
+	public Integer getDis() {
+		return dis;
+	}
+
+
+	public void setDis(Integer dis) {
+		this.dis = dis;
 	}
 	
 	

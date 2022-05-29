@@ -3,6 +3,7 @@ package web.catInfo.controller;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.PrintWriter;
 import java.sql.Timestamp;
 import java.util.Collection;
 
@@ -27,11 +28,22 @@ public class CatPhotoGalleryServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest req, HttpServletResponse res)
 			throws ServletException, IOException {
+		String action = req.getParameter("action");
 
 		req.setCharacterEncoding("UTF-8");
 		res.setContentType("text/html; charset=UTF-8");
-//		PrintWriter out = res.getWriter();
+		PrintWriter out = res.getWriter();
 		CatPhotoGalleryService catPhotoGalleryService = new CatPhotoGalleryService();
+		
+		if ("delPic".equals(action)) {
+			Integer imgID = Integer.parseInt(req.getParameter("picid"));
+			System.out.println("hello" + imgID);
+			
+			catPhotoGalleryService.deletePhoto(imgID);
+			out.println("server ok");
+			
+			return;
+		}
 
 		Integer catID = Integer.valueOf(req.getAttribute("catID").toString());
 

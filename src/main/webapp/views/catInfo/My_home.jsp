@@ -29,6 +29,8 @@
 		  background-color: #fff;
 		  display: inline-block;
 		  border-radius: 10px;
+		  margin-right: 35px;
+		  	
 		}
 		
 		#location {
@@ -39,7 +41,7 @@
 		}
 		
 		#query {
-		  width: 300px;
+		  width: 200px;
 		  height: 40px;
 		}
 		
@@ -60,9 +62,9 @@
 		  border: none;
 		}
 		
-		.search-form button:hover {
-		  color: #63ADF2;
-		}
+	/* 	.search-form button:hover {
+		  color: #65;
+		} */
 		
 		/*Generic CSS*/
 		
@@ -347,14 +349,20 @@
 		<!-- search bar -->
 		<div class="petSearchBar-container container text-center">
 			<form class="search-form">
-			  <input name="search[query]" id="query" placeholder="搜尋貓咪" type="text" value="">
+			  <input name="search[query]" id="query" placeholder="定位你的位置" type="text" value="">
 			  
-			  <input name="search[location]" id="location" placeholder="位置" type="text" value="">
-			 <i class="fa-solid fa-location-arrow"></i>
+			  <input name="search[location]" id="location" placeholder="座標" type="text" value="">
+			 <i class="fa-solid fa-location-arrow" style="color: #6504b5"></i>
+			 
+			 <a class="button primary" href="${pageContext.request.contextPath}/CatInfoServlet?action=listEmps_ByCompositeQuery" style="color: #6504b5">
+			 	<button type="button">
+			 	<i class="fa fa-search" aria-hidden="true"></i>
+			 	</button>
+			 </a>
 			  
-			  <button name="commit" type="submit" class="button primary">
+<%-- 			  <button name="commit" type="button" class="button primary" onclick="location.href='${pageContext.request.contextPath}/CatInfoServlet?action=listEmps_ByCompositeQuery'">
 			     <i class="fa fa-search" aria-hidden="true"></i>
-			  </button>
+			  </button> --%>
 			</form>
 		</div>
 		<!-- search bar -->
@@ -600,7 +608,7 @@
                                           class="grid-col grid-col_1/4 grid-col_1/3@minMd grid-col_1/4@minLg grid-col_1/5@minXl ">
                                           <div class="actionCard m-actionCard_overflowVisible">
                                             <div><a class="actionCard-overlay"
-                                                href="${pageContext.request.contextPath}/views/catInfo/My_search.jsp"
+                                                href="${pageContext.request.contextPath}/CatInfoServlet?action=listEmps_ByCompositeQuery"
                                                 aria-label="8600 more pets available on Petfinder: Meet them"></a></div>
                                             <div class="actionCard-body actionCard-body_split">
                                               <div class="actionCard-body-icon"><span
@@ -1534,7 +1542,7 @@
   <script>
 	$('#query,#location').focusin(  
 	  function(){  
-	    $("#location").css({"width": "320px","padding": "1.5rem"});
+	    $("#location").css({"width": "200px","padding": "1.5rem"});
 	  }).focusout(  
 	  function(){  
 	    $("#location").css({"width": "0px","padding": "0px", "margin": "0px"});
@@ -1549,8 +1557,12 @@
   	$(".fa-location-arrow").on("click", function(){
   		navigator.geolocation.getCurrentPosition(function(position){
   		  // 取得 position 位置資訊，可於 console 中印出來看看
-  		 alert(position);
+  		  let loc = `\${position.coords.latitude.toFixed(4)}, \${position.coords.longitude.toFixed(4)}`
+  		 $("#query").attr('value', "新竹縣");
+  		 $("#location").attr('value', loc);
+  		$("#location").css({"width": "200px","padding": "1.5rem"});
   		});
+
 
   	});
   

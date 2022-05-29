@@ -75,6 +75,7 @@ public class CatInfoServlet extends HttpServlet {
 			try {
 				List<String> catList = (ArrayList) req.getAttribute("catList");
 				List<CatInfoVO> lists = catInfoService.getFavList(catList);
+//				List<CatAndShelVO> listss = catInfoService.getFavList(catList);
 				req.getSession().setAttribute("lists", lists);
 				
 			}catch (Exception e) {
@@ -93,63 +94,80 @@ public class CatInfoServlet extends HttpServlet {
 			Set<String> keys = mapa.keySet();
 //			System.out.println(keys);
 			CatInfoVO catInfoVO = new CatInfoVO();	//把搜尋條件存在catInfoVO		
+			CatAndShelVO catAndShelVO = new CatAndShelVO();	//把搜尋條件存在catInfoVO		
 			for(String key : keys) {
 				String value = mapa.get(key)[0];
 				if(value != null && value.trim().length() != 0 && !"action".equals(key)) {
 //					System.out.println("我在servlet, key: " + key + ", value: " + value);
+					if("dis".equals(key)) {
+						catAndShelVO.setDis(Integer.parseInt(value));
+						}
 					if("breed".equals(key)) {
 						catInfoVO.setBreed(value);
-						}
+						catAndShelVO.setBreed(value);
+					}
 					if("age".equals(key)) {
 						switch (value) {
 							case "幼貓":
 								catInfoVO.setAge(0);
+								catAndShelVO.setAge(0);
 								break;
 							case "小貓":
 								catInfoVO.setAge(1);
+								catAndShelVO.setAge(1);
 								break;
 							case "成貓":
 								catInfoVO.setAge(2);
+								catAndShelVO.setAge(2);
 								break;
 							case "老貓":
 								catInfoVO.setAge(3);
+								catAndShelVO.setAge(3);
 								break;
 						}
 					}
 					if("size".equals(key)) {
 						catInfoVO.setSize(value);
+						catAndShelVO.setSize(value);
 					}
 					if("Gender".equals(key)) {
 						catInfoVO.setSex(value);
+						catAndShelVO.setSex(value);
 					}
 					if("Color".equals(key)) {
 						catInfoVO.setCoatColor(value);
+						catAndShelVO.setCoatColor(value);
 					}
 					if("Color".equals(key)) {
 						catInfoVO.setCoatColor(value);
+						catAndShelVO.setCoatColor(value);
 					}
 					if("shelter_day".equals(key)) {
 //						System.out.println("in age" + value);
 						java.sql.Date now = null;
 						long oneday = 86400000;
 						switch (value) {
-						case "1":
-							now = new java.sql.Date(System.currentTimeMillis() - oneday*1);
+						case "30":
+							now = new java.sql.Date(System.currentTimeMillis() - oneday * 30);
 //							System.out.println("在1 裡面 " + now);
 							catInfoVO.setCreateDate(now);
+							catAndShelVO.setCreateDate(now);
 							break;
-						case "7":
-							now = new java.sql.Date(System.currentTimeMillis() - oneday*7);
+						case "90":
+							now = new java.sql.Date(System.currentTimeMillis() - oneday * 90);
 							catInfoVO.setCreateDate(now);
+							catAndShelVO.setCreateDate(now);
 							break;
-						case "14":
-							now = new java.sql.Date(System.currentTimeMillis() - oneday*14);
+						case "180":
+							now = new java.sql.Date(System.currentTimeMillis() - oneday * 180);
 							catInfoVO.setCreateDate(now);
+							catAndShelVO.setCreateDate(now);
 							break;
-						case "30":
-							now = new java.sql.Date(System.currentTimeMillis() - oneday*30);
+						case "1000":
+							now = new java.sql.Date(System.currentTimeMillis() - oneday * 1000);
 //							System.out.println(now);
 							catInfoVO.setCreateDate(now);
+							catAndShelVO.setCreateDate(now);
 							break;
 					}
 					}
@@ -162,11 +180,15 @@ public class CatInfoServlet extends HttpServlet {
 			
 //			catInfoVO.setBreed(value);
 			List<CatInfoVO> lists = catInfoService.getMulti(catInfoVO);
+			List<CatAndShelVO> listss = catInfoService.getMulti(catAndShelVO);
+			System.out.println(listss);
 			
 //			System.out.println(lists.size());
 //			req.setAttribute("lists", lists);
 			req.getSession().setAttribute("lists", lists);
+			req.getSession().setAttribute("listss", listss);
 			req.getSession().setAttribute("catInfoVO", catInfoVO); //這個是給留給分頁存放多值條件
+			req.getSession().setAttribute("catAndShelVO", catAndShelVO); //這個是給留給分頁存放多值條件
 //			req.setAttribute("size", lists.size());
 //			req.getSession().getAttribute("lists");
 //			int n = (int) req.getSession().getAttribute("size");
