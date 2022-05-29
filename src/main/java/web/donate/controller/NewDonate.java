@@ -20,6 +20,7 @@ import ecpay.payment.integration.AllInOne;
 import ecpay.payment.integration.domain.AioCheckOutALL;
 import web.donate.entity.DonateVO;
 import web.donate.service.DonateService;
+import web.tools.AuthCode;
 
 /**
  * Servlet implementation class NewDonate
@@ -149,13 +150,17 @@ public class NewDonate extends HttpServlet {
 				
 				
 //===========================================綠界金流=================================================
+				AuthCode authcode = new AuthCode();
+				authcode.setTargetStringLength(10);
+				String ListID = authcode.givenUsingJava8_whenGeneratingRandomAlphanumericString_thenCorrect();
+				
 				SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 				String Donatedate = sdf.format(new Date());
 				String itemName ="Adopets平台-貓咪愛心援助捐款";
 				allInOne = new AllInOne("");
 
 				AioCheckOutALL aCheckOut = new AioCheckOutALL();
-				aCheckOut.setMerchantTradeNo(donVO.getDonateID() + "tga101");
+				aCheckOut.setMerchantTradeNo(donVO.getDonateID() + ListID);
 				aCheckOut.setMerchantTradeDate(Donatedate);
 				aCheckOut.setTotalAmount(donateAmo + "");
 				aCheckOut.setTradeDesc("test");
